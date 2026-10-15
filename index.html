@@ -161,19 +161,22 @@ select.input-styled { appearance: none; background-image: url("data:image/svg+xm
 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-analytics.js";
 import { initializeFirestore, persistentLocalCache, collection, doc, onSnapshot, addDoc, updateDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
-// ⚠️ WPISZ SWOJĄ KONFIGURACJĘ FIREBASE TUTAJ:
+// Konfiguracja Firebase dla projektu planjulki-7e81e
 const firebaseConfig = {
-  apiKey: "TWÓJ_API_KEY",
-  authDomain: "twoj-projekt.firebaseapp.com",
-  projectId: "twoj-projekt",
-  storageBucket: "twoj-projekt.appspot.com",
-  messagingSenderId: "123456789",
-  appId: "1:123456789:web:abcde"
+  apiKey: "AIzaSyDnlwPRXJEkosQ4grxnMz2vxyaWUP8wfzM",
+  authDomain: "planjulki-7e81e.firebaseapp.com",
+  projectId: "planjulki-7e81e",
+  storageBucket: "planjulki-7e81e.firebasestorage.app",
+  messagingSenderId: "574338621523",
+  appId: "1:574338621523:web:935d7a788343e70a8a26a6",
+  measurementId: "G-K2TV1SKDQJ"
 };
 
 const app = initializeApp(firebaseConfig);
+const analytics = getAnalytics(app);
 const db = initializeFirestore(app, { localCache: persistentLocalCache() });
 
 let currentTab = 'plan';
@@ -373,7 +376,6 @@ function openModal() {
       <button class="btn-large btn-primary" data-act="save-info">Opublikuj komunikat</button>
     `;
   } else {
-    // Na zakładce plan domyślnie dodajemy przedmiot
     currentTab = 'subjects';
     openModal();
   }
