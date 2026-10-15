@@ -4,145 +4,512 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="theme-color" content="#fff0f5" media="(prefers-color-scheme: light)">
-<meta name="theme-color" content="#1c1c1e" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#121214" media="(prefers-color-scheme: dark)">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="apple-mobile-web-app-title" content="StudyPlanner">
 <title>StudyPlanner Julii</title>
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%23ff85b3'/%3E%3Ctext x='50' y='72' font-size='60' text-anchor='middle'%3E📚%3C/text%3E%3C/svg%3E">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%23ff5c97'/%3E%3Ctext x='50' y='70' font-size='56' text-anchor='middle'%3E📚%3C/text%3E%3C/svg%3E">
 <style>
 :root {
-  --primary: #ff5c97; --primary-bg: #ffe4ee;
-  --success: #34c759; --success-bg: #e4f8ea;
-  --danger: #ff3b30; --danger-bg: #ffeceb;
-  --warning: #ff9500; --warning-bg: #fff5e5;
-  --bg: #fff0f5; --surface: #ffffff; --text: #2c2c2e; --muted: #8e8e93;
-  --border: #f2d6e0; --seg-bg: #fce8f0; --nav-bg: rgba(255,255,255,.9);
-  --shadow: 0 4px 16px rgba(255, 92, 151, 0.08);
+  --primary: #ff5c97;
+  --primary-hover: #f04885;
+  --primary-bg: #ffe4ee;
+  --primary-soft: #fff5f8;
+  --success: #34c759;
+  --success-bg: #e4f8ea;
+  --danger: #ff3b30;
+  --danger-bg: #ffeceb;
+  --warning: #ff9500;
+  --warning-bg: #fff5e5;
+  --bg: #fff0f5;
+  --surface: #ffffff;
+  --text: #2c2c2e;
+  --muted: #8e8e93;
+  --border: #f2d6e0;
+  --seg-bg: #fce8f0;
+  --nav-bg: rgba(255, 255, 255, 0.88);
+  --shadow: 0 6px 20px rgba(255, 92, 151, 0.09);
   --card-border: #fae1ec;
 }
+
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
-    --primary: #ff79a8; --primary-bg: rgba(255, 121, 168, .15);
-    --success: #32d74b; --success-bg: rgba(50,215,75,.15);
-    --danger: #ff453a; --danger-bg: rgba(255,69,58,.15);
-    --warning: #ff9f0a; --warning-bg: rgba(255,159,10,.15);
-    --bg: #121214; --surface: #1c1c1e; --text: #f2f2f7; --muted: #98989d;
-    --border: #2c2c2e; --seg-bg: #2c2c2e; --nav-bg: rgba(28,28,30,.9);
-    --shadow: none; --card-border: #2c2c2e;
+    --primary: #ff79a8;
+    --primary-hover: #ff94b9;
+    --primary-bg: rgba(255, 121, 168, 0.16);
+    --primary-soft: rgba(255, 121, 168, 0.08);
+    --success: #32d74b;
+    --success-bg: rgba(50, 215, 75, 0.15);
+    --danger: #ff453a;
+    --danger-bg: rgba(255, 69, 58, 0.16);
+    --warning: #ff9f0a;
+    --warning-bg: rgba(255, 159, 10, 0.16);
+    --bg: #121214;
+    --surface: #1c1c1e;
+    --text: #f2f2f7;
+    --muted: #98989d;
+    --border: #2c2c2e;
+    --seg-bg: #2a2427;
+    --nav-bg: rgba(28, 28, 30, 0.88);
+    --shadow: 0 6px 20px rgba(0, 0, 0, 0.35);
+    --card-border: #2c2c2e;
   }
 }
+
+:root[data-theme="dark"] {
+  --primary: #ff79a8;
+  --primary-hover: #ff94b9;
+  --primary-bg: rgba(255, 121, 168, 0.16);
+  --primary-soft: rgba(255, 121, 168, 0.08);
+  --success: #32d74b;
+  --success-bg: rgba(50, 215, 75, 0.15);
+  --danger: #ff453a;
+  --danger-bg: rgba(255, 69, 58, 0.16);
+  --warning: #ff9f0a;
+  --warning-bg: rgba(255, 159, 10, 0.16);
+  --bg: #121214;
+  --surface: #1c1c1e;
+  --text: #f2f2f7;
+  --muted: #98989d;
+  --border: #2c2c2e;
+  --seg-bg: #2a2427;
+  --nav-bg: rgba(28, 28, 30, 0.88);
+  --shadow: 0 6px 20px rgba(0, 0, 0, 0.35);
+  --card-border: #2c2c2e;
+}
+
 :root[data-theme="light"] {
-  --primary: #ff5c97; --primary-bg: #ffe4ee;
-  --success: #34c759; --success-bg: #e4f8ea;
-  --danger: #ff3b30; --danger-bg: #ffeceb;
-  --warning: #ff9500; --warning-bg: #fff5e5;
-  --bg: #fff0f5; --surface: #ffffff; --text: #2c2c2e; --muted: #8e8e93;
-  --border: #f2d6e0; --seg-bg: #fce8f0; --nav-bg: rgba(255,255,255,.9);
-  --shadow: 0 4px 16px rgba(255, 92, 151, 0.08);
+  --primary: #ff5c97;
+  --primary-hover: #f04885;
+  --primary-bg: #ffe4ee;
+  --primary-soft: #fff5f8;
+  --success: #34c759;
+  --success-bg: #e4f8ea;
+  --danger: #ff3b30;
+  --danger-bg: #ffeceb;
+  --warning: #ff9500;
+  --warning-bg: #fff5e5;
+  --bg: #fff0f5;
+  --surface: #ffffff;
+  --text: #2c2c2e;
+  --muted: #8e8e93;
+  --border: #f2d6e0;
+  --seg-bg: #fce8f0;
+  --nav-bg: rgba(255, 255, 255, 0.88);
+  --shadow: 0 6px 20px rgba(255, 92, 151, 0.09);
   --card-border: #fae1ec;
 }
-* { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, sans-serif; -webkit-tap-highlight-color: transparent; }
-html { -webkit-text-size-adjust: 100%; }
-body { background: var(--bg); color: var(--text); padding-bottom: calc(90px + env(safe-area-inset-bottom)); overscroll-behavior-y: none; transition: background-color 0.3s; }
-button { font: inherit; color: inherit; cursor: pointer; border: none; background: none; }
-button:active, .pressable:active { transform: scale(.97); }
-button, .pressable { transition: transform .12s ease, background .2s, opacity .2s; }
-.top-nav { background: var(--bg); padding: calc(12px + env(safe-area-inset-top)) 16px 10px; position: sticky; top: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; }
-.top-title { font-size: 26px; font-weight: 800; letter-spacing: -.5px; color: var(--primary); }
-.header-actions { display: flex; gap: 10px; align-items: center; }
-.theme-btn { width: 38px; height: 38px; font-size: 18px; display: flex; justify-content: center; align-items: center; background: var(--surface); border-radius: 19px; box-shadow: var(--shadow); border: 1px solid var(--card-border); }
-.container { display: none; padding: 8px 16px 16px; max-width: 600px; margin: 0 auto; animation: fadeIn .3s ease; }
-.container.active { display: block; }
-@keyframes fadeIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
 
-.card { background: var(--surface); border-radius: 18px; margin-bottom: 14px; padding: 16px; box-shadow: var(--shadow); border: 1px solid var(--card-border); }
-.card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
-.card-title { font-size: 17px; font-weight: 700; }
-.badge { font-size: 11px; font-weight: 700; padding: 3px 8px; border-radius: 20px; text-transform: uppercase; }
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, sans-serif;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html { -webkit-text-size-adjust: 100%; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  padding-bottom: calc(96px + env(safe-area-inset-bottom));
+  overscroll-behavior-y: none;
+  transition: background-color 0.25s ease, color 0.25s ease;
+}
+
+button { font: inherit; color: inherit; cursor: pointer; border: none; background: none; }
+button:active, .pressable:active { transform: scale(0.97); }
+button, .pressable { transition: transform 0.12s ease, background 0.2s, opacity 0.2s; }
+
+/* Górny pasek */
+.top-nav {
+  background: var(--nav-bg);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  padding: calc(12px + env(safe-area-inset-top)) 16px 12px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--border);
+}
+.top-title-wrap { display: flex; flex-direction: column; }
+.top-subtitle { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.6px; color: var(--muted); }
+.top-title { font-size: 24px; font-weight: 800; letter-spacing: -0.5px; color: var(--primary); }
+.header-actions { display: flex; gap: 10px; align-items: center; }
+.theme-btn {
+  width: 40px;
+  height: 40px;
+  font-size: 19px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: var(--surface);
+  border-radius: 20px;
+  box-shadow: var(--shadow);
+  border: 1px solid var(--card-border);
+}
+
+/* Widoki zakładek */
+.container {
+  display: none;
+  padding: 14px 16px 20px;
+  max-width: 640px;
+  margin: 0 auto;
+  animation: fadeIn 0.25s ease;
+}
+.container.active { display: block; }
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: none; }
+}
+
+/* Karty i elementy */
+.card {
+  background: var(--surface);
+  border-radius: 18px;
+  margin-bottom: 14px;
+  padding: 16px;
+  box-shadow: var(--shadow);
+  border: 1px solid var(--card-border);
+  transition: opacity 0.2s ease, transform 0.2s ease, border-color 0.2s ease;
+}
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+.card-title { font-size: 17px; font-weight: 700; line-height: 1.3; }
+
+/* Wizualne odróżnienie zadań ukończonych */
+.card.hw-done {
+  opacity: 0.62;
+  background: var(--primary-soft);
+}
+.card.hw-done .card-title,
+.card.hw-done .hw-desc {
+  text-decoration: line-through;
+  color: var(--muted);
+}
+
+/* Karty odwołanych zajęć */
+.card.info-cancelled {
+  border: 2px solid var(--danger);
+}
+
+/* Odznaki (Badges) */
+.badge {
+  font-size: 11px;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 20px;
+  text-transform: uppercase;
+  white-space: nowrap;
+  letter-spacing: 0.3px;
+}
 .badge-pending { background: var(--warning-bg); color: var(--warning); }
 .badge-progress { background: var(--primary-bg); color: var(--primary); }
 .badge-done { background: var(--success-bg); color: var(--success); }
 .badge-cancelled { background: var(--danger-bg); color: var(--danger); }
 
-.btn-large { width: 100%; padding: 14px; border-radius: 14px; font-size: 15px; font-weight: 600; display: flex; justify-content: center; align-items: center; gap: 8px; }
-.btn-primary { background: var(--primary); color: #fff; box-shadow: 0 4px 12px rgba(255,92,151,0.3); }
-.btn-danger { background: var(--danger-bg); color: var(--danger); }
-.btn-action { padding: 6px 12px; border-radius: 8px; font-size: 13px; font-weight: 600; background: var(--seg-bg); color: var(--primary); }
+/* Przyciski */
+.btn-large {
+  width: 100%;
+  padding: 14px;
+  border-radius: 14px;
+  font-size: 15px;
+  font-weight: 700;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+}
+.btn-primary {
+  background: var(--primary);
+  color: #fff;
+  box-shadow: 0 4px 12px rgba(255, 92, 151, 0.3);
+}
+.btn-action {
+  padding: 6px 12px;
+  border-radius: 10px;
+  font-size: 12px;
+  font-weight: 600;
+  background: var(--seg-bg);
+  color: var(--primary);
+}
+.btn-action.active-status {
+  background: var(--primary);
+  color: #fff;
+}
+.btn-action.danger {
+  background: var(--danger-bg);
+  color: var(--danger);
+}
 
-.input-styled { width: 100%; padding: 12px 14px; border-radius: 12px; border: 1px solid var(--border); background: var(--surface); color: var(--text); font-size: 15px; outline: none; margin-bottom: 12px; }
+/* Wiersze w planie zajęć */
+.plan-row {
+  padding: 10px 0;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+}
+.plan-row:last-child { border-bottom: none; padding-bottom: 2px; }
+.plan-time {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--primary);
+  background: var(--primary-bg);
+  padding: 3px 8px;
+  border-radius: 8px;
+  display: inline-block;
+  margin-bottom: 4px;
+}
+
+/* Formularze */
+.form-label {
+  display: block;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--muted);
+  margin: 0 0 6px 4px;
+  text-transform: uppercase;
+}
+.input-styled {
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+  font-size: 15px;
+  outline: none;
+  margin-bottom: 14px;
+  transition: border-color 0.2s;
+}
 .input-styled:focus { border-color: var(--primary); }
-select.input-styled { appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23ff5c97' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 12px center; padding-right: 34px; }
+select.input-styled {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23ff5c97' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  padding-right: 36px;
+}
 
-.modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,.4); z-index: 1000; justify-content: center; align-items: flex-end; backdrop-filter: blur(4px); }
+/* Pasek filtrów */
+.filter-banner {
+  display: none;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--primary-bg);
+  padding: 10px 14px;
+  border-radius: 14px;
+  margin-bottom: 14px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--primary);
+}
+
+/* Modal (iOS Bottom Sheet) */
+.modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  z-index: 1000;
+  justify-content: center;
+  align-items: flex-end;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
 .modal.open { display: flex; }
-.sheet { background: var(--bg); width: 100%; max-width: 600px; border-radius: 24px 24px 0 0; display: flex; flex-direction: column; max-height: 85vh; animation: slideUp .3s cubic-bezier(.1,.9,.2,1); }
-@keyframes slideUp { from { transform: translateY(100%); } to { transform: none; } }
-.sheet-header { padding: 16px 20px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border); background: var(--surface); border-radius: 24px 24px 0 0; }
-.sheet-title { font-size: 18px; font-weight: 700; }
-.sheet-close { font-size: 24px; color: var(--muted); }
-.sheet-body { overflow-y: auto; padding: 20px; }
+.sheet {
+  background: var(--bg);
+  width: 100%;
+  max-width: 600px;
+  border-radius: 24px 24px 0 0;
+  display: flex;
+  flex-direction: column;
+  max-height: 88vh;
+  animation: slideUp 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+}
+@keyframes slideUp {
+  from { transform: translateY(100%); }
+  to { transform: none; }
+}
+.sheet-header {
+  padding: 16px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--border);
+  background: var(--surface);
+  border-radius: 24px 24px 0 0;
+}
+.sheet-title { font-size: 18px; font-weight: 700; color: var(--primary); }
+.sheet-close {
+  width: 32px;
+  height: 32px;
+  border-radius: 16px;
+  background: var(--seg-bg);
+  color: var(--primary);
+  font-size: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.sheet-body {
+  overflow-y: auto;
+  padding: 20px;
+  padding-bottom: calc(24px + env(safe-area-inset-bottom));
+}
 
-.fab { position: fixed; bottom: calc(85px + env(safe-area-inset-bottom)); right: 20px; width: 56px; height: 56px; background: var(--primary); color: #fff; border-radius: 28px; display: flex; justify-content: center; align-items: center; font-size: 30px; box-shadow: 0 4px 14px rgba(255,92,151,0.4); z-index: 90; }
-.bottom-nav { position: fixed; bottom: 0; left: 0; width: 100%; background: var(--nav-bg); backdrop-filter: blur(14px); display: flex; border-top: 1px solid var(--border); padding-bottom: env(safe-area-inset-bottom); z-index: 100; }
-.nav-tab { flex: 1; padding: 10px 0 8px; font-size: 11px; font-weight: 600; color: var(--muted); display: flex; flex-direction: column; align-items: center; gap: 3px; }
-.nav-tab svg { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+/* Pływający przycisk + (FAB) */
+.fab {
+  position: fixed;
+  bottom: calc(82px + env(safe-area-inset-bottom));
+  right: 20px;
+  width: 56px;
+  height: 56px;
+  background: var(--primary);
+  color: #fff;
+  border-radius: 28px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 30px;
+  box-shadow: 0 6px 18px rgba(255, 92, 151, 0.45);
+  z-index: 90;
+}
+
+/* Dolna nawigacja */
+.bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: var(--nav-bg);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  display: flex;
+  border-top: 1px solid var(--border);
+  padding-bottom: env(safe-area-inset-bottom);
+  z-index: 100;
+}
+.nav-tab {
+  flex: 1;
+  padding: 10px 0 8px;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--muted);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+.nav-tab svg {
+  width: 22px;
+  height: 22px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
 .nav-tab.active { color: var(--primary); }
 
-.empty-state { text-align: center; padding: 40px 20px; color: var(--muted); }
-.empty-state .big { font-size: 48px; margin-bottom: 8px; }
-#toast { position: fixed; left: 50%; bottom: calc(90px + env(safe-area-inset-bottom)); transform: translate(-50%,20px); background: rgba(40,40,42,.95); color: #fff; padding: 12px 18px; border-radius: 24px; font-size: 14px; font-weight: 600; z-index: 3000; opacity: 0; pointer-events: none; transition: .25s; }
-#toast.show { opacity: 1; transform: translate(-50%,0); }
+/* Puste stany i Toast */
+.empty-state {
+  text-align: center;
+  padding: 48px 20px;
+  color: var(--muted);
+}
+.empty-state .big { font-size: 48px; margin-bottom: 10px; }
+.empty-state .hint { font-size: 13px; margin-top: 6px; opacity: 0.8; }
+
+#toast {
+  position: fixed;
+  left: 50%;
+  bottom: calc(90px + env(safe-area-inset-bottom));
+  transform: translate(-50%, 20px);
+  background: rgba(44, 44, 46, 0.95);
+  color: #fff;
+  padding: 12px 20px;
+  border-radius: 24px;
+  font-size: 14px;
+  font-weight: 600;
+  z-index: 3000;
+  opacity: 0;
+  pointer-events: none;
+  transition: 0.25s ease;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.2);
+}
+#toast.show { opacity: 1; transform: translate(-50%, 0); }
 </style>
 </head>
 <body>
 
 <header class="top-nav">
-  <div class="top-title" id="topTitle">Plan Zajęć</div>
+  <div class="top-title-wrap">
+    <span class="top-subtitle">StudyPlanner Julii</span>
+    <div class="top-title" id="topTitle">Plan Zajęć</div>
+  </div>
   <div class="header-actions">
-    <button class="theme-btn" data-act="toggle-theme" aria-label="Motyw">🌸</button>
+    <button class="theme-btn" data-act="toggle-theme" id="themeBtn" aria-label="Zmień motyw">🌸</button>
   </div>
 </header>
 
-<!-- PLAN -->
+<!-- 1. ZAKŁADKA: PLAN -->
 <main id="view-plan" class="container active">
   <div id="plan-list"></div>
 </main>
 
-<!-- ZADANIA DOMOWE -->
+<!-- 2. ZAKŁADKA: ZADANIA DOMOWE -->
 <main id="view-homework" class="container">
-  <div id="homework-filter-banner" style="display:none; align-items:center; justify-content:space-between; background:var(--primary-bg); padding:10px 14px; border-radius:12px; margin-bottom:12px; font-size:14px; font-weight:600; color:var(--primary);">
+  <div id="homework-filter-banner" class="filter-banner">
     <span id="homework-filter-text">Filtrowanie po przedmiocie</span>
     <button class="btn-action" data-act="clear-homework-filter">Pokaż wszystkie</button>
   </div>
   <div id="homework-list"></div>
 </main>
 
-<!-- PRZEDMIOTY -->
+<!-- 3. ZAKŁADKA: PRZEDMIOTY -->
 <main id="view-subjects" class="container">
   <div id="subjects-list"></div>
 </main>
 
-<!-- INFORMACJE / ODWOŁANE -->
+<!-- 4. ZAKŁADKA: INFORMACJE / ODWOŁANE -->
 <main id="view-info" class="container">
   <div id="info-list"></div>
 </main>
 
-<button class="fab" data-act="open-modal">+</button>
+<!-- Przycisk dodawania (+) -->
+<button class="fab" data-act="open-modal" aria-label="Dodaj">+</button>
 
+<!-- Dolna nawigacja -->
 <nav class="bottom-nav">
   <button class="nav-tab active" data-act="tab" data-tab="plan">
-    <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>Plan
+    <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+    <span>Plan</span>
   </button>
   <button class="nav-tab" data-act="tab" data-tab="homework">
-    <svg viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>Zadania
+    <svg viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+    <span>Zadania</span>
   </button>
   <button class="nav-tab" data-act="tab" data-tab="subjects">
-    <svg viewBox="0 0 24 24"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"/><path d="M6 6h10M6 10h10"/></svg>Przedmioty
+    <svg viewBox="0 0 24 24"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"/><path d="M6 6h10M6 10h10"/></svg>
+    <span>Przedmioty</span>
   </button>
   <button class="nav-tab" data-act="tab" data-tab="info">
-    <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>Informacje
+    <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+    <span>Informacje</span>
   </button>
 </nav>
 
@@ -151,7 +518,7 @@ select.input-styled { appearance: none; background-image: url("data:image/svg+xm
   <div class="sheet">
     <div class="sheet-header">
       <h3 class="sheet-title" id="modalTitle">Dodaj element</h3>
-      <button class="sheet-close" data-act="close-modal">&times;</button>
+      <button class="sheet-close" data-act="close-modal" aria-label="Zamknij">&times;</button>
     </div>
     <div class="sheet-body" id="modalBody"></div>
   </div>
@@ -162,7 +529,16 @@ select.input-styled { appearance: none; background-image: url("data:image/svg+xm
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
 import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-analytics.js";
-import { initializeFirestore, persistentLocalCache, collection, doc, onSnapshot, addDoc, updateDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+import {
+  initializeFirestore,
+  persistentLocalCache,
+  collection,
+  doc,
+  onSnapshot,
+  addDoc,
+  updateDoc,
+  deleteDoc
+} from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
 // Konfiguracja Firebase dla projektu planjulki-7e81e
 const firebaseConfig = {
@@ -176,7 +552,7 @@ const firebaseConfig = {
 };
 
 const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
+try { getAnalytics(app); } catch (err) { console.warn("Analytics pominięte:", err); }
 const db = initializeFirestore(app, { localCache: persistentLocalCache() });
 
 let currentTab = 'plan';
@@ -186,32 +562,54 @@ let infoList = [];
 let homeworkFilterSubject = null;
 
 const $ = id => document.getElementById(id);
-const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({
+  '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+}[c]));
+
+// Inicjalizacja motywu
+function initTheme() {
+  const saved = localStorage.getItem('julia_theme');
+  if (saved === 'dark' || saved === 'light') {
+    document.documentElement.setAttribute('data-theme', saved);
+    $('themeBtn').textContent = saved === 'dark' ? '🌙' : '🌸';
+  }
+}
+initTheme();
 
 function toast(msg) {
   const t = $('toast');
   t.textContent = msg;
   t.classList.add('show');
-  setTimeout(() => t.classList.remove('show'), 2200);
+  clearTimeout(t._timer);
+  t._timer = setTimeout(() => t.classList.remove('show'), 2200);
 }
 
-// Nawigacja
+// Nawigacja między zakładkami
 function switchTab(tab) {
   currentTab = tab;
   document.querySelectorAll('.container').forEach(c => c.classList.remove('active'));
   document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
-  $(`view-${tab}`).classList.add('active');
-  document.querySelector(`[data-tab="${tab}"]`).classList.add('active');
-  const titles = { plan: 'Plan Zajęć', homework: 'Zadania Domowe', subjects: 'Przedmioty', info: 'Tablica Informacyjna' };
-  $('topTitle').textContent = titles[tab];
-  window.scrollTo(0,0);
+
+  const targetView = $(`view-${tab}`);
+  const targetNav = document.querySelector(`[data-tab="${tab}"]`);
+  if (targetView) targetView.classList.add('active');
+  if (targetNav) targetNav.classList.add('active');
+
+  const titles = {
+    plan: 'Plan Zajęć',
+    homework: 'Zadania Domowe',
+    subjects: 'Przedmioty',
+    info: 'Tablica Informacyjna'
+  };
+  $('topTitle').textContent = titles[tab] || 'Plan Zajęć';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
-// Pobieranie danych z Firestore w czasie rzeczywistym
+// Nasłuchiwanie kolekcji Firestore na żywo
 onSnapshot(collection(db, "subjects"), snap => {
   subjects = [];
   snap.forEach(d => subjects.push({ id: d.id, ...d.data() }));
-  subjects.sort((a,b) => (a.name||'').localeCompare(b.name||'','pl'));
+  subjects.sort((a, b) => (a.name || '').localeCompare(b.name || '', 'pl'));
   renderSubjects();
   renderPlan();
 });
@@ -220,234 +618,421 @@ onSnapshot(collection(db, "homework"), snap => {
   homework = [];
   snap.forEach(d => homework.push({ id: d.id, ...d.data() }));
   renderHomework();
+  renderSubjects();
 });
 
 onSnapshot(collection(db, "info"), snap => {
   infoList = [];
   snap.forEach(d => infoList.push({ id: d.id, ...d.data() }));
+  infoList.sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
   renderInfo();
+  renderPlan();
 });
 
-// Renderowanie: PRZEDMIOTY
-function renderSubjects() {
-  const c = $('subjects-list');
-  if (!subjects.length) {
-    c.innerHTML = `<div class="empty-state"><div class="big">📚</div><div>Brak przedmiotów</div></div>`;
-    return;
-  }
-  c.innerHTML = subjects.map(s => `
-    <div class="card" style="cursor:pointer;" data-act="filter-hw" data-sub="${esc(s.name)}">
-      <div class="card-header">
-        <div class="card-title">${esc(s.name)}</div>
-        <button class="btn-action" data-act="del-sub" data-id="${s.id}">Usuń</button>
-      </div>
-      <div style="font-size:14px;color:var(--muted);line-height:1.5;">
-        👩‍🏫 Wykładowca: <b>${esc(s.lecturer || 'Brak')}</b><br>
-        🚪 Sala: <b>${esc(s.room || 'Brak')}</b><br>
-        ⏰ Godzina: <b>${esc(s.time || 'Brak')}</b> (${esc(s.day || 'Brak')})
-      </div>
-      <div style="margin-top:10px;font-size:12px;color:var(--primary);font-weight:600;">Kliknij, aby zobaczyć zadania z tego przedmiotu →</div>
-    </div>
-  `).join('');
-}
-
-// Renderowanie: PLAN
+// 1. Renderowanie: PLAN ZAJĘĆ
 function renderPlan() {
   const c = $('plan-list');
   const dni = ['Poniedziałek', 'Wtorek', 'Środa', 'Czwartek', 'Piątek'];
-  c.innerHTML = dni.map(dzien => {
-    const daySubjects = subjects.filter(s => s.day === dzien);
+  const todayIdx = new Date().getDay(); // 1 = Pon, 5 = Pt
+
+  c.innerHTML = dni.map((dzien, idx) => {
+    const isToday = (idx + 1) === todayIdx;
+    const daySubjects = subjects
+      .filter(s => s.day === dzien)
+      .sort((a, b) => (a.time || '').localeCompare(b.time || ''));
+
     return `
-      <div class="card">
-        <div class="card-title" style="margin-bottom:8px;color:var(--primary);">${dzien}</div>
-        ${daySubjects.length ? daySubjects.map(s => `
-          <div style="padding:8px 0;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;">
-            <div><b>${esc(s.name)}</b><div style="font-size:12px;color:var(--muted);">${esc(s.time \vert{}\vert{} '')} \vert{} Sala${esc(s.room || '')}</div></div>
-            <span class="badge badge-progress">${esc(s.lecturer || '')}</span>
-          </div>
-        `).join('') : '<div style="font-size:13px;color:var(--muted);padding:6px 0;">Brak zajęć</div>'}
+      <div class="card" style="${isToday ? 'border-color:var(--primary);' : ''}">
+        <div class="card-header" style="margin-bottom:10px;">
+          <div class="card-title" style="color:var(--primary);">${dzien}</div>
+          ${isToday ? '<span class="badge badge-progress">Dzisiaj</span>' : ''}
+        </div>
+        ${daySubjects.length ? daySubjects.map(s => {
+          const cancelledInfo = infoList.find(i => i.cancelled && i.subject === s.name);
+          return `
+            <div class="plan-row" style="cursor:pointer;" data-act="filter-hw" data-sub="${esc(s.name)}">
+              <div>
+                ${s.time ? `<span class="plan-time">⏰ ${esc(s.time)}</span>` : ''}
+                <div style="font-weight:700;font-size:15px;${cancelledInfo ? 'text-decoration:line-through;color:var(--danger);' : ''}">${esc(s.name)}</div>
+                <div style="font-size:13px;color:var(--muted);margin-top:2px;">
+                  🚪 Sala: <b>${esc(s.room \vert{}\vert{} 'Brak')}</b> &bull; 👩‍🏫 ${esc(s.lecturer || 'Brak')}
+                </div>
+                ${cancelledInfo ? `<div style="font-size:12px;color:var(--danger);font-weight:600;margin-top:3px;">⚠️ Odwołane (${esc(cancelledInfo.date || 'brak daty')})</div>` : ''}
+              </div>
+              <span class="badge ${cancelledInfo ? 'badge-cancelled' : 'badge-progress'}">
+                ${cancelledInfo ? 'Odwołane' : 'Zajęcia'}
+              </span>
+            </div>
+          `;
+        }).join('') : '<div style="font-size:13px;color:var(--muted);padding:4px 0;">Brak zaplanowanych zajęć 🌸</div>'}
       </div>
     `;
   }).join('');
 }
 
-// Renderowanie: ZADANIA DOMOWE
+// 2. Renderowanie: ZADANIA DOMOWE
 function renderHomework() {
   const c = $('homework-list');
   const banner = $('homework-filter-banner');
+
   if (homeworkFilterSubject) {
     banner.style.display = 'flex';
-    $('homework-filter-text').textContent = `Przedmiot: ${homeworkFilterSubject}`;
+    $('homework-filter-text').textContent = `📚 Przedmiot: ${homeworkFilterSubject}`;
   } else {
     banner.style.display = 'none';
   }
 
-  const list = homework.filter(h => !homeworkFilterSubject || h.subject === homeworkFilterSubject);
+  const list = homework
+    .filter(h => !homeworkFilterSubject || h.subject === homeworkFilterSubject)
+    .sort((a, b) => {
+      // Zadania skończone na sam dół
+      if ((a.status === 'done') !== (b.status === 'done')) {
+        return a.status === 'done' ? 1 : -1;
+      }
+      return (b.createdAt || 0) - (a.createdAt || 0);
+    });
+
   if (!list.length) {
-    c.innerHTML = `<div class="empty-state"><div class="big">✨</div><div>Brak zadań domowych</div></div>`;
+    c.innerHTML = `
+      <div class="empty-state">
+        <div class="big">✨</div>
+        <div>Brak zadań domowych${homeworkFilterSubject ? ` z przedmiotu „${esc(homeworkFilterSubject)}”` : ''}</div>
+        <div class="hint">Kliknij przycisk „+” w rogu, aby dodać nowe zadanie</div>
+      </div>`;
     return;
   }
 
   const statusLabels = { pending: 'Nie rozpoczęte', progress: 'W trakcie', done: 'Skończone' };
   const statusClasses = { pending: 'badge-pending', progress: 'badge-progress', done: 'badge-done' };
 
-  c.innerHTML = list.map(h => `
-    <div class="card">
-      <div class="card-header">
-        <div class="card-title">${esc(h.title)}</div>
-        <span class="badge ${statusClasses[h.status] || 'badge-pending'}">${statusLabels[h.status] || 'Nie rozpoczęte'}</span>
+  c.innerHTML = list.map(h => {
+    const st = h.status || 'pending';
+    return `
+      <div class="card ${st === 'done' ? 'hw-done' : ''}">
+        <div class="card-header">
+          <div class="card-title">${esc(h.title)}</div>
+          <span class="badge ${statusClasses[st] || 'badge-pending'}">${statusLabels[st] || 'Nie rozpoczęte'}</span>
+        </div>
+        <div style="font-size:13px;color:var(--muted);margin-bottom:8px;">
+          📚 Przedmiot: <b>${esc(h.subject || 'Ogólne')}</b> &bull; ⏳ Termin: <b>${esc(h.deadline || 'Brak')}</b>
+        </div>
+        ${h.desc ? `<div class="hw-desc" style="font-size:14px;margin-bottom:12px;line-height:1.45;white-space:pre-wrap;">${esc(h.desc)}</div>` : ''}
+        <div style="display:flex;gap:6px;flex-wrap:wrap;padding-top:6px;border-top:1px solid var(--border);">
+          <button class="btn-action ${st === 'pending' ? 'active-status' : ''}" data-act="set-hw-status" data-id="${h.id}" data-status="pending">Nie rozpoczęte</button>
+          <button class="btn-action ${st === 'progress' ? 'active-status' : ''}" data-act="set-hw-status" data-id="${h.id}" data-status="progress">W trakcie</button>
+          <button class="btn-action ${st === 'done' ? 'active-status' : ''}" data-act="set-hw-status" data-id="${h.id}" data-status="done">Skończone</button>
+          <button class="btn-action" style="margin-left:auto;" data-act="edit-hw" data-id="${h.id}">Edytuj</button>
+          <button class="btn-action danger" data-act="del-hw" data-id="${h.id}">Usuń</button>
+        </div>
       </div>
-      <div style="font-size:13px;color:var(--muted);margin-bottom:8px;">Przedmiot: <b>${esc(h.subject)}</b> | Termin: <b>${esc(h.deadline || 'Brak')}</b></div>
-      ${h.desc ? `<div style="font-size:14px;margin-bottom:10px;">${esc(h.desc)}</div>` : ''}
-      <div style="display:flex;gap:6px;flex-wrap:wrap;">
-        <button class="btn-action" data-act="set-hw-status" data-id="${h.id}" data-status="pending">Nie rozpoczęte</button>
-        <button class="btn-action" data-act="set-hw-status" data-id="${h.id}" data-status="progress">W trakcie</button>
-        <button class="btn-action" data-act="set-hw-status" data-id="${h.id}" data-status="done">Skończone</button>
-        <button class="btn-action" style="background:var(--danger-bg);color:var(--danger);" data-act="del-hw" data-id="${h.id}">Usuń</button>
-      </div>
-    </div>
-  `).join('');
+    `;
+  }).join('');
 }
 
-// Renderowanie: INFORMACJE / ODWOŁANE
+// 3. Renderowanie: PRZEDMIOTY
+function renderSubjects() {
+  const c = $('subjects-list');
+  if (!subjects.length) {
+    c.innerHTML = `
+      <div class="empty-state">
+        <div class="big">📚</div>
+        <div>Brak dodanych przedmiotów</div>
+        <div class="hint">Dodaj pierwszy przedmiot przyciskiem „+”</div>
+      </div>`;
+    return;
+  }
+
+  c.innerHTML = subjects.map(s => {
+    const activeHwCount = homework.filter(h => h.subject === s.name && h.status !== 'done').length;
+    return `
+      <div class="card" style="cursor:pointer;" data-act="filter-hw" data-sub="${esc(s.name)}">
+        <div class="card-header">
+          <div>
+            <div class="card-title">${esc(s.name)}</div>
+            <span class="badge ${activeHwCount ? 'badge-progress' : 'badge-done'}" style="display:inline-block;margin-top:4px;">
+              ${activeHwCount ? `Aktywne zadania: ${activeHwCount}` : 'Brak zaległych zadań'}
+            </span>
+          </div>
+          <div style="display:flex;gap:6px;">
+            <button class="btn-action" data-act="edit-sub" data-id="${s.id}">Edytuj</button>
+            <button class="btn-action danger" data-act="del-sub" data-id="${s.id}">Usuń</button>
+          </div>
+        </div>
+        <div style="font-size:14px;color:var(--muted);line-height:1.6;margin-top:6px;">
+          👩‍🏫 Wykładowca: <b style="color:var(--text);">${esc(s.lecturer || 'Brak')}</b><br>
+          🚪 Sala: <b style="color:var(--text);">${esc(s.room || 'Brak')}</b><br>
+          ⏰ Termin: <b style="color:var(--text);">${esc(s.day || 'Brak')}, ${esc(s.time || 'Brak godziny')}</b>
+        </div>
+        <div style="margin-top:10px;font-size:12px;color:var(--primary);font-weight:700;">
+          Kliknij kartę, aby zobaczyć powiązane zadania domowe →
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+// 4. Renderowanie: INFORMACJE / ODWOŁANE
 function renderInfo() {
   const c = $('info-list');
   if (!infoList.length) {
-    c.innerHTML = `<div class="empty-state"><div class="big">📢</div><div>Brak ogłoszeń i komunikatów</div></div>`;
+    c.innerHTML = `
+      <div class="empty-state">
+        <div class="big">📢</div>
+        <div>Brak ogłoszeń i komunikatów</div>
+        <div class="hint">Dodaj informację o zastępstwie, kolokwium lub odwołanych zajęciach</div>
+      </div>`;
     return;
   }
+
   c.innerHTML = infoList.map(item => `
-    <div class="card" style="${item.cancelled ? 'border:2px solid var(--danger);' : ''}">
+    <div class="card ${item.cancelled ? 'info-cancelled' : ''}">
       <div class="card-header">
         <div class="card-title">${esc(item.title)}</div>
-        ${item.cancelled ? '<span class="badge badge-cancelled">Zajęcia odwołane</span>' : '<span class="badge badge-progress">Informacja</span>'}
+        ${item.cancelled
+          ? '<span class="badge badge-cancelled">⚠️ Zajęcia odwołane</span>'
+          : '<span class="badge badge-progress">📌 Informacja</span>'}
       </div>
-      <div style="font-size:13px;color:var(--muted);margin-bottom:6px;">Data: <b>${esc(item.date || 'Brak')}</b> | Przedmiot: <b>${esc(item.subject || 'Ogólne')}</b></div>
-      <div style="font-size:14px;margin-bottom:10px;">${esc(item.content)}</div>
-      <button class="btn-action" style="background:var(--danger-bg);color:var(--danger);" data-act="del-info" data-id="${item.id}">Usuń komunikat</button>
+      <div style="font-size:13px;color:var(--muted);margin-bottom:8px;">
+        📅 Data: <b>${esc(item.date || 'Brak')}</b> &bull; 📚 Przedmiot: <b>${esc(item.subject || 'Ogólne')}</b>
+      </div>
+      ${item.content ? `<div style="font-size:14px;margin-bottom:12px;line-height:1.45;white-space:pre-wrap;">${esc(item.content)}</div>` : ''}
+      <div style="display:flex;gap:6px;justify-content:flex-end;padding-top:6px;border-top:1px solid var(--border);">
+        <button class="btn-action" data-act="edit-info" data-id="${item.id}">Edytuj</button>
+        <button class="btn-action danger" data-act="del-info" data-id="${item.id}">Usuń komunikat</button>
+      </div>
     </div>
   `).join('');
 }
 
-// Obsługa modali i formularzy
-function openModal() {
+// Otwieranie modala dla dodawania i edycji
+function openModal(mode = null, editId = null) {
   const m = $('mainModal');
   const title = $('modalTitle');
   const body = $('modalBody');
   m.classList.add('open');
 
-  if (currentTab === 'subjects') {
-    title.textContent = 'Nowy przedmiot';
+  const targetMode = mode || (currentTab === 'plan' ? 'subjects' : currentTab);
+  const dni = ['Poniedziałek', 'Wtorek', 'Środa', 'Czwartek', 'Piątek'];
+
+  if (targetMode === 'subjects') {
+    const existing = editId ? subjects.find(s => s.id === editId) : null;
+    title.textContent = existing ? 'Edytuj przedmiot' : 'Nowy przedmiot';
     body.innerHTML = `
-      <input type="text" id="subName" class="input-styled" placeholder="Nazwa przedmiotu">
-      <input type="text" id="subLecturer" class="input-styled" placeholder="Wykładowca">
-      <input type="text" id="subRoom" class="input-styled" placeholder="Sala">
-      <input type="text" id="subTime" class="input-styled" placeholder="Godzina (np. 11:30 - 13:00)">
+      <label class="form-label">Nazwa przedmiotu</label>
+      <input type="text" id="subName" class="input-styled" placeholder="np. Psychologia ogólna" value="${esc(existing?.name || '')}">
+      <label class="form-label">Wykładowca</label>
+      <input type="text" id="subLecturer" class="input-styled" placeholder="np. dr Anna Kowalska" value="${esc(existing?.lecturer || '')}">
+      <label class="form-label">Sala</label>
+      <input type="text" id="subRoom" class="input-styled" placeholder="np. A-204" value="${esc(existing?.room || '')}">
+      <label class="form-label">Dzień tygodnia</label>
       <select id="subDay" class="input-styled">
-        <option value="Poniedziałek">Poniedziałek</option>
-        <option value="Wtorek">Wtorek</option>
-        <option value="Środa">Środa</option>
-        <option value="Czwartek">Czwartek</option>
-        <option value="Piątek">Piątek</option>
+        ${dni.map(d => `<option value="${d}" ${existing?.day === d ? 'selected' : ''}>${d}</option>`).join('')}
       </select>
-      <button class="btn-large btn-primary" data-act="save-sub">Zapisz przedmiot</button>
+      <label class="form-label">Godzina zajęć</label>
+      <input type="text" id="subTime" class="input-styled" placeholder="np. 11:30 - 13:00" value="${esc(existing?.time || '')}">
+      <button class="btn-large btn-primary" data-act="save-sub" ${existing ? `data-id="${existing.id}" data-oldname="${esc(existing.name)}"` : ''}>
+        ${existing ? 'Zapisz zmiany' : 'Dodaj przedmiot'}
+      </button>
     `;
-  } else if (currentTab === 'homework') {
-    title.textContent = 'Nowe zadanie domowe';
-    const subOpts = subjects.map(s => `<option value="${esc(s.name)}">${esc(s.name)}</option>`).join('');
+  } else if (targetMode === 'homework') {
+    const existing = editId ? homework.find(h => h.id === editId) : null;
+    title.textContent = existing ? 'Edytuj zadanie domowe' : 'Nowe zadanie domowe';
+    const selectedSub = existing?.subject || homeworkFilterSubject || '';
+    const subOpts = subjects.map(s =>
+      `<option value="${esc(s.name)}" ${s.name === selectedSub ? 'selected' : ''}>${esc(s.name)}</option>`
+    ).join('');
+
     body.innerHTML = `
-      <select id="hwSub" class="input-styled">${subOpts || '<option>Najpierw dodaj przedmiot</option>'}</select>
-      <input type="text" id="hwTitle" class="input-styled" placeholder="Nazwa / tytuł zadania">
-      <input type="text" id="hwDeadline" class="input-styled" placeholder="Termin (np. piątek, 20:00)">
-      <textarea id="hwDesc" class="input-styled" placeholder="Opis / szczegóły zadania" style="height:90px;resize:none;"></textarea>
-      <button class="btn-large btn-primary" data-act="save-hw">Dodaj zadanie</button>
+      <label class="form-label">Przedmiot</label>
+      <select id="hwSub" class="input-styled">
+        ${subOpts || '<option value="Ogólne">Ogólne (najpierw dodaj przedmioty)</option>'}
+      </select>
+      <label class="form-label">Nazwa / tytuł zadania</label>
+      <input type="text" id="hwTitle" class="input-styled" placeholder="np. Przygotować prezentację" value="${esc(existing?.title || '')}">
+      <label class="form-label">Termin wykonania (deadline)</label>
+      <input type="text" id="hwDeadline" class="input-styled" placeholder="np. Piątek, 20:00 lub 24.10" value="${esc(existing?.deadline || '')}">
+      <label class="form-label">Opis zadania</label>
+      <textarea id="hwDesc" class="input-styled" placeholder="Szczegóły, rozdziały, wymagania..." style="height:95px;resize:none;">${esc(existing?.desc || '')}</textarea>
+      <button class="btn-large btn-primary" data-act="save-hw" ${existing ? `data-id="${existing.id}"` : ''}>
+        ${existing ? 'Zapisz zmiany' : 'Dodaj zadanie'}
+      </button>
     `;
-  } else if (currentTab === 'info') {
-    title.textContent = 'Nowy komunikat / Odwołanie';
-    const subOpts = subjects.map(s => `<option value="${esc(s.name)}">${esc(s.name)}</option>`).join('');
+  } else if (targetMode === 'info') {
+    const existing = editId ? infoList.find(i => i.id === editId) : null;
+    title.textContent = existing ? 'Edytuj komunikat' : 'Nowy komunikat / Odwołanie';
+    const subOpts = subjects.map(s =>
+      `<option value="${esc(s.name)}" ${existing?.subject === s.name ? 'selected' : ''}>${esc(s.name)}</option>`
+    ).join('');
+
     body.innerHTML = `
-      <input type="text" id="infoTitle" class="input-styled" placeholder="Tytuł ogłoszenia">
-      <select id="infoSub" class="input-styled"><option value="Ogólne">Ogólne (cała uczelnia)</option>${subOpts}</select>
-      <input type="date" id="infoDate" class="input-styled">
-      <label style="display:flex;align-items:center;gap:10px;margin-bottom:12px;font-weight:600;font-size:14px;">
-        <input type="checkbox" id="infoCancelled" style="width:20px;height:20px;accent-color:var(--danger);"> Zajęcia odwołane
+      <label class="form-label">Tytuł ogłoszenia</label>
+      <input type="text" id="infoTitle" class="input-styled" placeholder="np. Odwołany wykład / Zmiana sali" value="${esc(existing?.title || '')}">
+      <label class="form-label">Dotyczy przedmiotu</label>
+      <select id="infoSub" class="input-styled">
+        <option value="Ogólne">Ogólne (cała uczelnia)</option>
+        ${subOpts}
+      </select>
+      <label class="form-label">Data wydarzenia</label>
+      <input type="date" id="infoDate" class="input-styled" value="${esc(existing?.date || '')}">
+      <label style="display:flex;align-items:center;gap:10px;margin:4px 0 14px;font-weight:700;font-size:14px;color:var(--danger);cursor:pointer;">
+        <input type="checkbox" id="infoCancelled" style="width:20px;height:20px;accent-color:var(--danger);" ${existing?.cancelled ? 'checked' : ''}>
+        Oznacz jako „Zajęcia odwołane”
       </label>
-      <textarea id="infoContent" class="input-styled" placeholder="Treść komunikatu..." style="height:90px;resize:none;"></textarea>
-      <button class="btn-large btn-primary" data-act="save-info">Opublikuj komunikat</button>
+      <label class="form-label">Powód / treść komunikatu</label>
+      <textarea id="infoContent" class="input-styled" placeholder="Wpisz powód odwołania lub szczegóły ogłoszenia..." style="height:95px;resize:none;">${esc(existing?.content || '')}</textarea>
+      <button class="btn-large btn-primary" data-act="save-info" ${existing ? `data-id="${existing.id}"` : ''}>
+        ${existing ? 'Zapisz zmiany' : 'Opublikuj komunikat'}
+      </button>
     `;
-  } else {
-    currentTab = 'subjects';
-    openModal();
   }
 }
 
-function closeModal() { $('mainModal').classList.remove('open'); }
+function closeModal() {
+  $('mainModal').classList.remove('open');
+}
 
-// Akcje kliknięć
+// Zamknięcie modala po kliknięciu w tło
+$('mainModal').addEventListener('click', e => {
+  if (e.target === $('mainModal')) closeModal();
+});
+
+// Centralna obsługa kliknięć
 document.addEventListener('click', async e => {
   const el = e.target.closest('[data-act]');
   if (!el) return;
   const act = el.dataset.act;
 
-  if (act === 'tab') switchTab(el.dataset.tab);
-  if (act === 'open-modal') openModal();
-  if (act === 'close-modal') closeModal();
-  if (act === 'toggle-theme') {
-    const cur = document.documentElement.getAttribute('data-theme');
-    const next = cur === 'dark' ? 'light' : 'dark';
-    document.documentElement.setAttribute('data-theme', next);
-    toast(`Motyw zmieniony`);
-  }
-  if (act === 'filter-hw') {
-    homeworkFilterSubject = el.dataset.sub;
-    switchTab('homework');
-    toast(`Filtruję zadania dla: ${homeworkFilterSubject}`);
-  }
-  if (act === 'clear-homework-filter') {
-    homeworkFilterSubject = null;
-    renderHomework();
-  }
+  try {
+    if (act === 'tab') {
+      switchTab(el.dataset.tab);
+    } else if (act === 'open-modal') {
+      openModal();
+    } else if (act === 'close-modal') {
+      closeModal();
+    } else if (act === 'toggle-theme') {
+      const cur = document.documentElement.getAttribute('data-theme');
+      const isDarkNow = cur === 'dark' || (!cur && window.matchMedia('(prefers-color-scheme: dark)').matches);
+      const next = isDarkNow ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', next);
+      localStorage.setItem('julia_theme', next);
+      $('themeBtn').textContent = next === 'dark' ? '🌙' : '🌸';
+      toast(next === 'dark' ? 'Tryb ciemny 🌙' : 'Tryb jasny 🌸');
+    } else if (act === 'filter-hw') {
+      homeworkFilterSubject = el.dataset.sub;
+      renderHomework();
+      switchTab('homework');
+      toast(`Zadania: ${homeworkFilterSubject}`);
+    } else if (act === 'clear-homework-filter') {
+      homeworkFilterSubject = null;
+      renderHomework();
+    }
 
-  // Zapisywanie / usuwanie
-  if (act === 'save-sub') {
-    const name = $('subName').value.trim();
-    if (!name) return toast('Podaj nazwę przedmiotu');
-    await addDoc(collection(db, "subjects"), {
-      name, lecturer: $('subLecturer').value.trim(),
-      room: $('subRoom').value.trim(), time: $('subTime').value.trim(), day:$('subDay').value
-    });
-    closeModal(); toast('Dodano przedmiot!');
-  }
-  if (act === 'del-sub') {
-    if (confirm('Usunąć przedmiot?')) { await deleteDoc(doc(db, "subjects", el.dataset.id)); toast('Usunięto'); }
-  }
-  if (act === 'save-hw') {
-    const title = $('hwTitle').value.trim();
-    if (!title) return toast('Podaj tytuł zadania');
-    await addDoc(collection(db, "homework"), {
-      subject: $('hwSub').value, title, deadline:$('hwDeadline').value.trim(),
-      desc: $('hwDesc').value.trim(), status: 'pending', createdAt: Date.now()
-    });
-    closeModal(); toast('Dodano zadanie!');
-  }
-  if (act === 'set-hw-status') {
-    await updateDoc(doc(db, "homework", el.dataset.id), { status: el.dataset.status });
-    toast('Zmieniono status');
-  }
-  if (act === 'del-hw') {
-    await deleteDoc(doc(db, "homework", el.dataset.id)); toast('Usunięto zadanie');
-  }
-  if (act === 'save-info') {
-    const title = $('infoTitle').value.trim();
-    if (!title) return toast('Podaj tytuł');
-    await addDoc(collection(db, "info"), {
-      title, subject: $('infoSub').value, date:$('infoDate').value,
-      cancelled: $('infoCancelled').checked, content:$('infoContent').value.trim(), createdAt: Date.now()
-    });
-    closeModal(); toast('Dodano komunikat!');
-  }
-  if (act === 'del-info') {
-    await deleteDoc(doc(db, "info", el.dataset.id)); toast('Usunięto komunikat');
+    // PRZEDMIOTY: Zapis / Edycja / Usuwanie
+    else if (act === 'edit-sub') {
+      openModal('subjects', el.dataset.id);
+    } else if (act === 'save-sub') {
+      const name = $('subName').value.trim();
+      if (!name) return toast('Podaj nazwę przedmiotu!');
+      const payload = {
+        name,
+        lecturer: $('subLecturer').value.trim(),
+        room: $('subRoom').value.trim(),
+        time: $('subTime').value.trim(),
+        day: $('subDay').value
+      };
+
+      if (el.dataset.id) {
+        await updateDoc(doc(db, "subjects", el.dataset.id), payload);
+        // Aktualizacja nazwy przedmiotu w powiązanych zadaniach, jeśli się zmieniła
+        const oldName = el.dataset.oldname;
+        if (oldName && oldName !== name) {
+          const linkedHw = homework.filter(h => h.subject === oldName);
+          for (const hw of linkedHw) {
+            await updateDoc(doc(db, "homework", hw.id), { subject: name });
+          }
+        }
+        toast('Zaktualizowano przedmiot!');
+      } else {
+        await addDoc(collection(db, "subjects"), payload);
+        toast('Dodano przedmiot!');
+      }
+      closeModal();
+    } else if (act === 'del-sub') {
+      if (confirm('Czy na pewno chcesz usunąć ten przedmiot?')) {
+        await deleteDoc(doc(db, "subjects", el.dataset.id));
+        toast('Usunięto przedmiot');
+      }
+    }
+
+    // ZADANIA DOMOWE: Zapis / Edycja / Status / Usuwanie
+    else if (act === 'edit-hw') {
+      openModal('homework', el.dataset.id);
+    } else if (act === 'save-hw') {
+      const title = $('hwTitle').value.trim();
+      if (!title) return toast('Podaj tytuł zadania!');
+      const payload = {
+        subject: $('hwSub').value,
+        title,
+        deadline: $('hwDeadline').value.trim(),
+        desc: $('hwDesc').value.trim()
+      };
+
+      if (el.dataset.id) {
+        await updateDoc(doc(db, "homework", el.dataset.id), payload);
+        toast('Zaktualizowano zadanie!');
+      } else {
+        await addDoc(collection(db, "homework"), {
+          ...payload,
+          status: 'pending',
+          createdAt: Date.now()
+        });
+        toast('Dodano zadanie!');
+      }
+      closeModal();
+    } else if (act === 'set-hw-status') {
+      await updateDoc(doc(db, "homework", el.dataset.id), { status: el.dataset.status });
+      toast('Zmieniono status zadania');
+    } else if (act === 'del-hw') {
+      if (confirm('Usunąć to zadanie domowe?')) {
+        await deleteDoc(doc(db, "homework", el.dataset.id));
+        toast('Usunięto zadanie');
+      }
+    }
+
+    // INFORMACJE: Zapis / Edycja / Usuwanie
+    else if (act === 'edit-info') {
+      openModal('info', el.dataset.id);
+    } else if (act === 'save-info') {
+      const title = $('infoTitle').value.trim();
+      if (!title) return toast('Podaj tytuł komunikatu!');
+      const payload = {
+        title,
+        subject: $('infoSub').value,
+        date: $('infoDate').value,
+        cancelled: $('infoCancelled').checked,
+        content: $('infoContent').value.trim()
+      };
+
+      if (el.dataset.id) {
+        await updateDoc(doc(db, "info", el.dataset.id), payload);
+        toast('Zaktualizowano komunikat!');
+      } else {
+        await addDoc(collection(db, "info"), {
+          ...payload,
+          createdAt: Date.now()
+        });
+        toast('Opublikowano komunikat!');
+      }
+      closeModal();
+    } else if (act === 'del-info') {
+      if (confirm('Usunąć ten komunikat?')) {
+        await deleteDoc(doc(db, "info", el.dataset.id));
+        toast('Usunięto komunikat');
+      }
+    }
+  } catch (err) {
+    console.error("Błąd operacji Firebase:", err);
+    toast('Błąd zapisu – sprawdź połączenie lub reguły Firestore');
   }
 });
 </script>
