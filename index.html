@@ -22,6 +22,8 @@
   --danger-bg: #ffeceb;
   --warning: #ff9500;
   --warning-bg: #fff5e5;
+  --info: #007aff;
+  --info-bg: #e5f1ff;
   --bg: #fff0f5;
   --surface: #ffffff;
   --text: #2c2c2e;
@@ -44,6 +46,8 @@
     --danger-bg: rgba(255, 69, 58, 0.16);
     --warning: #ff9f0a;
     --warning-bg: rgba(255, 159, 10, 0.16);
+    --info: #0a84ff;
+    --info-bg: rgba(10, 132, 255, 0.16);
     --bg: #121214;
     --surface: #1c1c1e;
     --text: #f2f2f7;
@@ -66,6 +70,8 @@
   --danger-bg: rgba(255, 69, 58, 0.16);
   --warning: #ff9f0a;
   --warning-bg: rgba(255, 159, 10, 0.16);
+  --info: #0a84ff;
+  --info-bg: rgba(10, 132, 255, 0.16);
   --bg: #121214;
   --surface: #1c1c1e;
   --text: #f2f2f7;
@@ -87,6 +93,8 @@
   --danger-bg: #ffeceb;
   --warning: #ff9500;
   --warning-bg: #fff5e5;
+  --info: #007aff;
+  --info-bg: #e5f1ff;
   --bg: #fff0f5;
   --surface: #ffffff;
   --text: #2c2c2e;
@@ -191,7 +199,7 @@ button:disabled { opacity: 0.45; pointer-events: none; }
   to { opacity: 1; transform: none; }
 }
 
-/* Pasek narzędzi planu (Czyszczenie + Cofanie) */
+/* Pasek narzędzi planu */
 .plan-toolbar {
   display: flex;
   gap: 8px;
@@ -225,6 +233,19 @@ button:disabled { opacity: 0.45; pointer-events: none; }
   border-color: var(--primary);
 }
 
+/* Widget "Teraz / Następne zajęcia" */
+.next-class-card {
+  background: linear-gradient(135deg, var(--primary), #ff8fb7);
+  color: #fff;
+  border-radius: 18px;
+  padding: 16px;
+  margin-bottom: 16px;
+  box-shadow: 0 8px 22px rgba(255, 92, 151, 0.3);
+}
+.next-class-card .nc-title { font-size: 11px; text-transform: uppercase; font-weight: 700; letter-spacing: 0.5px; opacity: 0.9; margin-bottom: 4px; }
+.next-class-card .nc-name { font-size: 19px; font-weight: 800; margin-bottom: 6px; }
+.next-class-card .nc-details { font-size: 13px; opacity: 0.95; display: flex; flex-wrap: wrap; gap: 10px; }
+
 /* Karty */
 .card {
   background: var(--surface);
@@ -249,12 +270,17 @@ button:disabled { opacity: 0.45; pointer-events: none; }
   background: var(--primary-soft);
 }
 .card.hw-done .card-title,
-.card.hw-done .hw-desc {
+.card.hw-done .hw-desc,
+.card.hw-done .subtask-text {
   text-decoration: line-through;
   color: var(--muted);
 }
 
-/* Karty odwołanych zajęć */
+/* Ważne przypięte ogłoszenia */
+.card.info-pinned {
+  border: 2px solid var(--primary);
+  background: var(--primary-soft);
+}
 .card.info-cancelled {
   border: 2px solid var(--danger);
 }
@@ -273,6 +299,51 @@ button:disabled { opacity: 0.45; pointer-events: none; }
 .badge-done { background: var(--success-bg); color: var(--success); }
 .badge-cancelled { background: var(--danger-bg); color: var(--danger); }
 .badge-muted { background: var(--seg-bg); color: var(--muted); }
+.badge-exam { background: var(--danger-bg); color: var(--danger); }
+.badge-project { background: var(--info-bg); color: var(--info); }
+
+/* Typy zajęć */
+.type-tag {
+  font-size: 10px;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 6px;
+  text-transform: uppercase;
+  background: var(--seg-bg);
+  color: var(--primary);
+  display: inline-block;
+  margin-right: 6px;
+}
+.type-tag.Wykład { background: var(--info-bg); color: var(--info); }
+.type-tag.Laboratorium { background: var(--warning-bg); color: var(--warning); }
+.type-tag.Seminarium { background: var(--success-bg); color: var(--success); }
+
+/* Liczniki nieobecności */
+.abs-box {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--seg-bg);
+  padding: 8px 12px;
+  border-radius: 12px;
+  margin-top: 10px;
+  font-size: 13px;
+  font-weight: 600;
+}
+.abs-controls { display: flex; gap: 6px; align-items: center; }
+.abs-btn {
+  width: 26px;
+  height: 26px;
+  border-radius: 8px;
+  background: var(--surface);
+  color: var(--primary);
+  font-weight: 700;
+  font-size: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+}
 
 /* Przyciski */
 .btn-large {
@@ -317,7 +388,7 @@ button:disabled { opacity: 0.45; pointer-events: none; }
   color: var(--warning);
 }
 
-/* Wiersze w planie zajęć */
+/* Wiersze w planie */
 .plan-row {
   padding: 10px 0;
   border-bottom: 1px solid var(--border);
@@ -338,24 +409,23 @@ button:disabled { opacity: 0.45; pointer-events: none; }
   margin-bottom: 4px;
 }
 
-/* Terminy wewnątrz karty przedmiotu */
-.slot-pill-list {
+/* Podzadania (checklista) */
+.subtasks-list {
+  margin: 10px 0 12px;
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
   gap: 6px;
-  margin-top: 8px;
 }
-.slot-pill {
-  font-size: 12px;
-  font-weight: 600;
-  background: var(--primary-soft);
-  border: 1px solid var(--border);
-  color: var(--text);
-  padding: 4px 10px;
-  border-radius: 10px;
+.subtask-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  cursor: pointer;
 }
+.subtask-item input { width: 16px; height: 16px; accent-color: var(--primary); cursor: pointer; }
 
-/* Formularze i wiersze wielu terminów */
+/* Formularze */
 .form-label {
   display: block;
   font-size: 12px;
@@ -413,17 +483,13 @@ select.input-styled {
   padding: 10px;
   margin-bottom: 10px;
 }
-.slot-editor-top {
+.slot-editor-top, .slot-editor-middle, .slot-editor-bottom {
   display: flex;
   gap: 8px;
   align-items: center;
   margin-bottom: 8px;
 }
-.slot-editor-bottom {
-  display: flex;
-  gap: 8px;
-  align-items: center;
-}
+.slot-editor-bottom { margin-bottom: 0; }
 .slot-editor-row .input-styled {
   margin-bottom: 0;
   padding: 9px 11px;
@@ -453,7 +519,32 @@ select.input-styled {
   line-height: 1.45;
 }
 
-/* Pasek filtrów */
+/* Pasek filtrów zadań */
+.filter-bar {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 14px;
+  background: var(--seg-bg);
+  padding: 4px;
+  border-radius: 14px;
+  overflow-x: auto;
+}
+.filter-tab {
+  flex: 1;
+  padding: 8px 10px;
+  font-size: 12px;
+  font-weight: 700;
+  border-radius: 10px;
+  color: var(--muted);
+  text-align: center;
+  white-space: nowrap;
+}
+.filter-tab.active {
+  background: var(--surface);
+  color: var(--primary);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+}
+
 .filter-banner {
   display: none;
   align-items: center;
@@ -467,7 +558,7 @@ select.input-styled {
   color: var(--primary);
 }
 
-/* Modal (iOS Bottom Sheet) */
+/* Modal */
 .modal {
   display: none;
   position: fixed;
@@ -521,7 +612,7 @@ select.input-styled {
   padding-bottom: calc(26px + env(safe-area-inset-bottom));
 }
 
-/* Pływający przycisk + (FAB) */
+/* FAB */
 .fab {
   position: fixed;
   bottom: calc(82px + env(safe-area-inset-bottom));
@@ -539,7 +630,7 @@ select.input-styled {
   z-index: 90;
 }
 
-/* Dolna nawigacja */
+/* Bottom Nav */
 .bottom-nav {
   position: fixed;
   bottom: 0;
@@ -577,12 +668,7 @@ select.input-styled {
 .nav-tab span { pointer-events: none; }
 .nav-tab.active { color: var(--primary); }
 
-/* Puste stany i Toast */
-.empty-state {
-  text-align: center;
-  padding: 48px 20px;
-  color: var(--muted);
-}
+.empty-state { text-align: center; padding: 48px 20px; color: var(--muted); }
 .empty-state .big { font-size: 48px; margin-bottom: 10px; }
 .empty-state .hint { font-size: 13px; margin-top: 6px; opacity: 0.8; }
 
@@ -625,19 +711,21 @@ select.input-styled {
 
 <!-- 1. ZAKŁADKA: PLAN -->
 <main id="view-plan" class="container active">
+  <div id="nextClassWidget"></div>
   <div class="plan-toolbar">
-    <button type="button" class="toolbar-btn" id="undoPlanBtn" disabled>
-      ↩️ Cofnij zmianę
-    </button>
-    <button type="button" class="toolbar-btn danger" id="clearPlanBtn">
-      🗑️ Wyczyść cały plan
-    </button>
+    <button type="button" class="toolbar-btn" id="undoPlanBtn" disabled>↩️ Cofnij zmianę</button>
+    <button type="button" class="toolbar-btn danger" id="clearPlanBtn">🗑️ Wyczyść cały plan</button>
   </div>
   <div id="plan-list"></div>
 </main>
 
 <!-- 2. ZAKŁADKA: ZADANIA DOMOWE -->
 <main id="view-homework" class="container">
+  <div class="filter-bar">
+    <button type="button" class="filter-tab active" data-hwtab="all">Wszystkie</button>
+    <button type="button" class="filter-tab" data-hwtab="todo">Do zrobienia</button>
+    <button type="button" class="filter-tab" data-hwtab="done">Skończone</button>
+  </div>
   <div id="homework-filter-banner" class="filter-banner">
     <span id="homework-filter-text">Filtrowanie po przedmiocie</span>
     <button type="button" class="btn-action" id="clearFilterBtn">Pokaż wszystkie</button>
@@ -655,10 +743,10 @@ select.input-styled {
   <div id="info-list"></div>
 </main>
 
-<!-- Przycisk dodawania (+) -->
+<!-- FAB -->
 <button type="button" class="fab" id="fabBtn" aria-label="Dodaj">+</button>
 
-<!-- Dolna nawigacja -->
+<!-- Bottom Nav -->
 <nav class="bottom-nav">
   <button type="button" class="nav-tab active" data-tab="plan">
     <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
@@ -678,7 +766,7 @@ select.input-styled {
   </button>
 </nav>
 
-<!-- MODAL UNIWERSALNY -->
+<!-- MODAL -->
 <div id="mainModal" class="modal">
   <div class="sheet">
     <div class="sheet-header">
@@ -695,6 +783,7 @@ select.input-styled {
 (function() {
   var $ = function(id) { return document.getElementById(id); };
   var DNI = ['Poniedziałek', 'Wtorek', 'Środa', 'Czwartek', 'Piątek'];
+  var ZAJECIA_TYPY = ['Wykład', 'Ćwiczenia', 'Laboratorium', 'Seminarium', 'Inne'];
 
   var statusEl = $('jsStatus');
   if (statusEl) statusEl.textContent = '🌸 Aktywny';
@@ -725,22 +814,18 @@ select.input-styled {
     return 'id_' + Date.now().toString(36) + '_' + Math.random().toString(36).slice(2, 7);
   };
 
-  // Stan aplikacji + historia wersji planu do cofania (Undo)
   var state = {
     currentTab: 'plan',
     subjects: safeStore.get('sp_subjects', []),
     homework: safeStore.get('sp_homework', []),
     infoList: safeStore.get('sp_info', []),
     planHistory: safeStore.get('sp_plan_history', []),
-    homeworkFilterSubject: null
+    homeworkFilterSubject: null,
+    hwTabFilter: 'all' // 'all', 'todo', 'done'
   };
 
-  var fbBridge = {
-    upsert: function() {},
-    remove: function() {}
-  };
+  var fbBridge = { upsert: function() {}, remove: function() {} };
 
-  // Normalizacja terminów przedmiotu (obsługuje wiele dni/godzin lub brak dnia + starsze wpisy)
   function getSubjectSlots(sub) {
     if (!sub) return [];
     if (Array.isArray(sub.slots)) {
@@ -751,13 +836,13 @@ select.input-styled {
         slotId: 'legacy_' + (sub.id || '0'),
         day: sub.day,
         time: sub.time || '',
-        room: sub.room || ''
+        room: sub.room || '',
+        type: sub.type || 'Wykład'
       }];
     }
     return [];
   }
 
-  // Zapis migawki planu przed zmianą (do przycisku "Cofnij zmianę")
   function pushPlanSnapshot(reasonLabel) {
     var snapshotItems = state.subjects.map(function(s) {
       return {
@@ -773,18 +858,13 @@ select.input-styled {
       label: reasonLabel || 'Zmiana w planie',
       items: snapshotItems
     });
-    if (state.planHistory.length > 15) {
-      state.planHistory.shift();
-    }
+    if (state.planHistory.length > 15) state.planHistory.shift();
     safeStore.set('sp_plan_history', state.planHistory);
     updateToolbarState();
   }
 
-  // Przywrócenie poprzedniej wersji planu
   function undoLastPlanChange() {
-    if (!state.planHistory.length) {
-      return toast('Brak wcześniejszych zmian do cofnięcia');
-    }
+    if (!state.planHistory.length) return toast('Brak wcześniejszych zmian do cofnięcia');
     var lastSnap = state.planHistory.pop();
     safeStore.set('sp_plan_history', state.planHistory);
 
@@ -794,21 +874,19 @@ select.input-styled {
         name: savedSub.name,
         lecturer: savedSub.lecturer,
         room: savedSub.room,
-        slots: slots,
-        day: slots.length ? slots[0].day : '',
-        time: slots.length ? slots[0].time : ''
+        slots: slots
       };
       var existingIdx = state.subjects.findIndex(function(s) { return s.id === savedSub.id; });
       if (existingIdx >= 0) {
-        state.subjects[existingIdx] = Object.assign({ id: savedSub.id }, payload);
+        state.subjects[existingIdx] = Object.assign({}, state.subjects[existingIdx], payload);
       } else {
         state.subjects.push(Object.assign({ id: savedSub.id }, payload));
       }
-      fbBridge.upsert('subjects', savedSub.id, payload);
+      fbBridge.upsert('subjects', savedSub.id, state.subjects.find(function(s){return s.id === savedSub.id;}));
     });
 
     renderAll();
-    toast('Przywrócono: ' + (lastSnap.label || 'poprzednią wersję planu') + ' ↩️');
+    toast('Przywrócono: ' + (lastSnap.label || 'poprzednią wersję') + ' ↩️');
   }
 
   function updateToolbarState() {
@@ -817,13 +895,8 @@ select.input-styled {
     if (undoBtn) {
       var count = state.planHistory.length;
       undoBtn.disabled = count === 0;
-      if (count > 0) {
-        undoBtn.classList.add('undo-active');
-        undoBtn.textContent = '↩️ Cofnij zmianę (' + count + ')';
-      } else {
-        undoBtn.classList.remove('undo-active');
-        undoBtn.textContent = '↩️ Cofnij zmianę';
-      }
+      undoBtn.textContent = count > 0 ? ('↩️ Cofnij zmianę (' + count + ')') : '↩️ Cofnij zmianę';
+      if (count > 0) undoBtn.classList.add('undo-active'); else undoBtn.classList.remove('undo-active');
     }
     if (clearBtn) {
       var anySlot = state.subjects.some(function(s) { return getSubjectSlots(s).length > 0; });
@@ -840,7 +913,6 @@ select.input-styled {
     t._timer = setTimeout(function() { t.classList.remove('show'); }, 2500);
   }
 
-  // Inicjalizacja motywu
   var savedTheme = safeStore.get('julia_theme', null);
   if (savedTheme === 'dark' || savedTheme === 'light') {
     document.documentElement.setAttribute('data-theme', savedTheme);
@@ -850,8 +922,7 @@ select.input-styled {
   function toggleTheme() {
     var cur = document.documentElement.getAttribute('data-theme');
     var sysDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-    var isDarkNow = cur === 'dark' || (!cur && sysDark);
-    var next = isDarkNow ? 'light' : 'dark';
+    var next = (cur === 'dark' || (!cur && sysDark)) ? 'light' : 'dark';
     document.documentElement.setAttribute('data-theme', next);
     safeStore.set('julia_theme', next);
     $('themeBtn').textContent = next === 'dark' ? '🌙' : '🌸';
@@ -861,33 +932,21 @@ select.input-styled {
   function switchTab(tab) {
     state.currentTab = tab;
     var containers = document.querySelectorAll('.container');
-    for (var i = 0; i < containers.length; i++) {
-      containers[i].classList.remove('active');
-    }
+    for (var i = 0; i < containers.length; i++) containers[i].classList.remove('active');
     var tabs = document.querySelectorAll('.nav-tab');
     for (var j = 0; j < tabs.length; j++) {
-      if (tabs[j].getAttribute('data-tab') === tab) {
-        tabs[j].classList.add('active');
-      } else {
-        tabs[j].classList.remove('active');
-      }
+      if (tabs[j].getAttribute('data-tab') === tab) tabs[j].classList.add('active');
+      else tabs[j].classList.remove('active');
     }
     var targetView = $('view-' + tab);
     if (targetView) targetView.classList.add('active');
 
-    var titles = {
-      plan: 'Plan Zajęć',
-      homework: 'Zadania Domowe',
-      subjects: 'Przedmioty',
-      info: 'Tablica Informacyjna'
-    };
+    var titles = { plan: 'Plan Zajęć', homework: 'Zadania Domowe', subjects: 'Przedmioty', info: 'Tablica Informacyjna' };
     $('topTitle').textContent = titles[tab] || 'Plan Zajęć';
     window.scrollTo(0, 0);
   }
 
-  function closeModal() {
-    $('mainModal').classList.remove('open');
-  }
+  function closeModal() { $('mainModal').classList.remove('open'); }
 
   function confirmAction(titleText, messageHtml, confirmBtnText, onYes) {
     $('modalTitle').textContent = titleText;
@@ -899,28 +958,48 @@ select.input-styled {
       '</div>';
     $('mainModal').classList.add('open');
     $('cancelConfirmBtn').onclick = closeModal;
-    $('okConfirmBtn').onclick = function() {
-      onYes();
-      closeModal();
-    };
+    $('okConfirmBtn').onclick = function() { onYes(); closeModal(); };
   }
 
-  // Generator pojedynczego wiersza terminu (Dzień + Godzina + Sala) w modalu
+  // Formatowanie odliczania dni do deadline'u
+  function formatDeadlineBadge(deadlineStr) {
+    if (!deadlineStr) return '';
+    var cleanStr = deadlineStr.trim();
+    // Sprawdź czy to data YYYY-MM-DD
+    var dateMatch = cleanStr.match(/^(\d{4})-(\d{2})-(\d{2})$/);
+    if (dateMatch) {
+      var targetDate = new Date(dateMatch[1], dateMatch[2] - 1, dateMatch[3]);
+      var today = new Date();
+      today.setHours(0,0,0,0);
+      var diffDays = Math.round((targetDate - today) / (1000 * 60 * 60 * 24));
+
+      if (diffDays < 0) return '<span class="badge badge-cancelled">⚠️ Po terminie (' + Math.abs(diffDays) + ' dni temu)</span>';
+      if (diffDays === 0) return '<span class="badge badge-exam">🔥 Dzisiaj!</span>';
+      if (diffDays === 1) return '<span class="badge badge-pending">⏳ Jutro</span>';
+      if (diffDays <= 7) return '<span class="badge badge-progress">⏳ Za ' + diffDays + ' dni</span>';
+      return '<span class="badge badge-muted">📅 ' + esc(cleanStr) + '</span>';
+    }
+    return '<span class="badge badge-muted">⏳ ' + esc(cleanStr) + '</span>';
+  }
+
+  // Edytor slotów w modalu przedmiotu
   function createSlotRowHtml(slotData) {
     var dVal = (slotData && slotData.day) ? slotData.day : 'Poniedziałek';
     var tVal = (slotData && slotData.time) ? slotData.time : '';
     var rVal = (slotData && slotData.room) ? slotData.room : '';
+    var typeVal = (slotData && slotData.type) ? slotData.type : 'Wykład';
     var sId = (slotData && slotData.slotId) ? slotData.slotId : uid();
 
     return (
       '<div class="slot-editor-row" data-slot-id="' + esc(sId) + '">' +
         '<div class="slot-editor-top">' +
           '<select class="input-styled slot-day-input" style="flex:1;">' +
-            DNI.map(function(d) {
-              return '<option value="' + d + '" ' + (d === dVal ? 'selected' : '') + '>' + d + '</option>';
-            }).join('') +
+            DNI.map(function(d) { return '<option value="' + d + '" ' + (d === dVal ? 'selected' : '') + '>' + d + '</option>'; }).join('') +
           '</select>' +
-          '<button type="button" class="slot-remove-btn" data-act="remove-slot-row" title="Usuń ten termin">&times;</button>' +
+          '<select class="input-styled slot-type-input" style="flex:1;">' +
+            ZAJECIA_TYPY.map(function(t) { return '<option value="' + t + '" ' + (t === typeVal ? 'selected' : '') + '>' + t + '</option>'; }).join('') +
+          '</select>' +
+          '<button type="button" class="slot-remove-btn" data-act="remove-slot-row" title="Usuń">&times;</button>' +
         '</div>' +
         '<div class="slot-editor-bottom">' +
           '<input type="text" class="input-styled slot-time-input" style="flex:1.2;" placeholder="Godzina (np. 11:30 - 13:00)" value="' + esc(tVal) + '">' +
@@ -934,8 +1013,7 @@ select.input-styled {
     var container = $('slotsContainer');
     var notice = $('noSlotsNotice');
     if (!container || !notice) return;
-    var hasRows = container.querySelectorAll('.slot-editor-row').length > 0;
-    notice.style.display = hasRows ? 'none' : 'block';
+    notice.style.display = container.querySelectorAll('.slot-editor-row').length > 0 ? 'none' : 'block';
   }
 
   function collectSlotsFromModal(defaultRoom) {
@@ -945,29 +1023,23 @@ select.input-styled {
     var result = [];
     for (var i = 0; i < rows.length; i++) {
       var r = rows[i];
-      var dayEl = r.querySelector('.slot-day-input');
-      var timeEl = r.querySelector('.slot-time-input');
-      var roomEl = r.querySelector('.slot-room-input');
-      var day = dayEl ? dayEl.value : 'Poniedziałek';
-      var time = timeEl ? timeEl.value.trim() : '';
-      var room = roomEl ? roomEl.value.trim() : '';
       result.push({
         slotId: r.getAttribute('data-slot-id') || uid(),
-        day: day,
-        time: time,
-        room: room || defaultRoom || ''
+        day: r.querySelector('.slot-day-input').value,
+        type: r.querySelector('.slot-type-input').value,
+        time: r.querySelector('.slot-time-input').value.trim(),
+        room: r.querySelector('.slot-room-input').value.trim() || defaultRoom || ''
       });
     }
     return result;
   }
 
-  // Renderowanie formularza przedmiotu / planu wewnątrz modala
   function renderSubjectModalContent(subMode, editId) {
     var title = $('modalTitle');
     var body = $('modalBody');
     var existingSub = editId ? state.subjects.find(function(s) { return s.id === editId; }) : null;
-
     var canPickExisting = !editId && state.subjects.length > 0;
+
     var switchHtml = canPickExisting ? (
       '<div class="seg-switch">' +
         '<button type="button" class="seg-btn ' + (subMode === 'new' ? 'active' : '') + '" data-act="modal-sub-mode" data-mode="new">Nowy przedmiot</button>' +
@@ -978,23 +1050,22 @@ select.input-styled {
     if (subMode === 'existing' && canPickExisting) {
       title.textContent = 'Dopisz przedmiot do planu';
       var opts = state.subjects.map(function(s) {
-        return '<option value="' + esc(s.id) + '">' + esc(s.name) + (s.lecturer ? ' (' + esc(s.lecturer) + ')' : '') + '</option>';
+        return '<option value="' + esc(s.id) + '">' + esc(s.name) + '</option>';
       }).join('');
-
       body.innerHTML =
         switchHtml +
         '<label class="form-label">Wybierz przedmiot z bazy</label>' +
         '<select id="existingSubSelect" class="input-styled">' + opts + '</select>' +
-        '<label class="form-label">Dni i godziny do dopisania w planie</label>' +
+        '<label class="form-label">Terminy do dopisania</label>' +
         '<div id="slotsContainer">' + createSlotRowHtml(null) + '</div>' +
-        '<div id="noSlotsNotice" class="no-slots-box" style="display:none;">Brak wybranych terminów. Kliknij poniżej, aby dodać dzień i godzinę.</div>' +
-        '<button type="button" class="btn-large btn-secondary" data-act="add-slot-row">+ Dodaj kolejny dzień / godzinę</button>' +
-        '<button type="button" class="btn-large btn-primary" data-act="save-existing-to-plan">Dopisz terminy do planu</button>';
+        '<div id="noSlotsNotice" class="no-slots-box" style="display:none;">Brak terminów.</div>' +
+        '<button type="button" class="btn-large btn-secondary" data-act="add-slot-row">+ Dodaj termin</button>' +
+        '<button type="button" class="btn-large btn-primary" data-act="save-existing-to-plan">Dopisz do planu</button>';
       return;
     }
 
-    title.textContent = existingSub ? 'Edytuj przedmiot i terminy' : 'Nowy przedmiot';
-    var initialSlots = existingSub ? getSubjectSlots(existingSub) : (state.currentTab === 'plan' ? [{ slotId: uid(), day: 'Poniedziałek', time: '', room: '' }] : []);
+    title.textContent = existingSub ? 'Edytuj przedmiot' : 'Nowy przedmiot';
+    var initialSlots = existingSub ? getSubjectSlots(existingSub) : [{ slotId: uid(), day: 'Poniedziałek', type: 'Wykład', time: '', room: '' }];
 
     body.innerHTML =
       switchHtml +
@@ -1002,131 +1073,140 @@ select.input-styled {
       '<input type="text" id="subName" class="input-styled" placeholder="np. Psychologia ogólna" value="' + esc(existingSub ? existingSub.name : '') + '">' +
       '<label class="form-label">Wykładowca</label>' +
       '<input type="text" id="subLecturer" class="input-styled" placeholder="np. dr Anna Kowalska" value="' + esc(existingSub ? existingSub.lecturer : '') + '">' +
+      '<label class="form-label">E-mail wykładowcy</label>' +
+      '<input type="email" id="subEmail" class="input-styled" placeholder="np. a.kowalska@uczelnia.edu.pl" value="' + esc(existingSub ? existingSub.email : '') + '">' +
+      '<label class="form-label">Godziny konsultacji (dyżur)</label>' +
+      '<input type="text" id="subConsult" class="input-styled" placeholder="np. Wtorek 14:00 - 15:00, pok. 302" value="' + esc(existingSub ? existingSub.consultations : '') + '">' +
+      '<label class="form-label">Link do materiałów / Teams</label>' +
+      '<input type="url" id="subLink" class="input-styled" placeholder="https://teams.microsoft.com/..." value="' + esc(existingSub ? existingSub.link : '') + '">' +
+      '<label class="form-label">Zasady zaliczenia</label>' +
+      '<input type="text" id="subRules" class="input-styled" placeholder="np. Obecność + egzamin pisemny" value="' + esc(existingSub ? existingSub.rules : '') + '">' +
+      '<label class="form-label">Status zaliczenia</label>' +
+      '<select id="subStatus" class="input-styled">' +
+        '<option value="W toku" ' + (existingSub && existingSub.status === 'W toku' ? 'selected' : '') + '>W toku ⏳</option>' +
+        '<option value="Zaliczone" ' + (existingSub && existingSub.status === 'Zaliczone' ? 'selected' : '') + '>Zaliczone ✅</option>' +
+        '<option value="Niezaliczone" ' + (existingSub && existingSub.status === 'Niezaliczone' ? 'selected' : '') + '>Niezaliczone ❌</option>' +
+      '</select>' +
       '<label class="form-label">Domyślna sala</label>' +
       '<input type="text" id="subRoom" class="input-styled" placeholder="np. A-204" value="' + esc(existingSub ? existingSub.room : '') + '">' +
       '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">' +
-        '<label class="form-label" style="margin:0 0 0 4px;">Dni i godziny w planie (opcjonalnie)</label>' +
-        '<button type="button" class="btn-action danger" style="padding:4px 8px;font-size:11px;" data-act="clear-modal-slots">Bez dnia w planie</button>' +
+        '<label class="form-label" style="margin:0;">Dni i godziny w planie</label>' +
+        '<button type="button" class="btn-action danger" style="padding:4px 8px;font-size:11px;" data-act="clear-modal-slots">Usuń z planu</button>' +
       '</div>' +
-      '<div id="slotsContainer">' +
-        initialSlots.map(function(sl) { return createSlotRowHtml(sl); }).join('') +
-      '</div>' +
-      '<div id="noSlotsNotice" class="no-slots-box" style="display:' + (initialSlots.length ? 'none' : 'block') + ';">' +
-        '🌸 Ten przedmiot <b>nie ma przypisanego żadnego dnia</b> (będzie widoczny w bazie przedmiotów i zadaniach, ale poza planem). Kliknij poniżej, jeśli chcesz przypisać mu dni i godziny.' +
-      '</div>' +
-      '<button type="button" class="btn-large btn-secondary" data-act="add-slot-row">+ Dodaj dzień i godzinę</button>' +
-      '<button type="button" class="btn-large btn-primary" data-act="save-sub" ' +
-        (existingSub ? 'data-id="' + esc(existingSub.id) + '" data-oldname="' + esc(existingSub.name) + '"' : '') + '>' +
+      '<div id="slotsContainer">' + initialSlots.map(function(sl) { return createSlotRowHtml(sl); }).join('') + '</div>' +
+      '<div id="noSlotsNotice" class="no-slots-box" style="display:' + (initialSlots.length ? 'none' : 'block') + ';">Przedmiot poza planem.</div>' +
+      '<button type="button" class="btn-large btn-secondary" data-act="add-slot-row">+ Dodaj termin</button>' +
+      '<button type="button" class="btn-large btn-primary" data-act="save-sub" ' + (existingSub ? 'data-id="' + esc(existingSub.id) + '" data-oldname="' + esc(existingSub.name) + '"' : '') + '>' +
         (existingSub ? 'Zapisz zmiany' : 'Zapisz przedmiot') +
       '</button>';
   }
 
-  // Otwieranie modala
   function openModal(mode, editId) {
     var m = $('mainModal');
-    var title = $('modalTitle');
-    var body = $('modalBody');
+    var title = $('modalTitle'), body = $('modalBody');
     m.classList.add('open');
-
     var targetMode = mode || (state.currentTab === 'plan' ? 'subjects' : state.currentTab);
 
     if (targetMode === 'subjects') {
       renderSubjectModalContent('new', editId);
     } else if (targetMode === 'homework') {
       var existingHw = editId ? state.homework.find(function(h) { return h.id === editId; }) : null;
-      title.textContent = existingHw ? 'Edytuj zadanie domowe' : 'Nowe zadanie domowe';
+      title.textContent = existingHw ? 'Edytuj zadanie' : 'Nowe zadanie / kolokwium';
       var selectedSub = (existingHw && existingHw.subject) ? existingHw.subject : (state.homeworkFilterSubject || '');
       var subOpts = state.subjects.map(function(s) {
         return '<option value="' + esc(s.name) + '" ' + (s.name === selectedSub ? 'selected' : '') + '>' + esc(s.name) + '</option>';
       }).join('');
 
+      var subtasksJson = existingHw && Array.isArray(existingHw.subtasks) ? existingHw.subtasks : [];
+
       body.innerHTML =
         '<label class="form-label">Przedmiot</label>' +
-        '<select id="hwSub" class="input-styled">' +
-          (subOpts || '<option value="Ogólne">Ogólne (dodaj przedmioty w zakładce Przedmioty)</option>') +
+        '<select id="hwSub" class="input-styled">' + (subOpts || '<option value="Ogólne">Ogólne</option>') + '</select>' +
+        '<label class="form-label">Typ wpisu</label>' +
+        '<select id="hwType" class="input-styled">' +
+          '<option value="Zadanie domowe" ' + (existingHw && existingHw.type === 'Zadanie domowe' ? 'selected' : '') + '>Zadanie domowe 📝</option>' +
+          '<option value="Kolokwium" ' + (existingHw && existingHw.type === 'Kolokwium' ? 'selected' : '') + '>Kolokwium 🎓</option>' +
+          '<option value="Egzamin" ' + (existingHw && existingHw.type === 'Egzamin' ? 'selected' : '') + '>Egzamin 📚</option>' +
+          '<option value="Projekt" ' + (existingHw && existingHw.type === 'Projekt' ? 'selected' : '') + '>Projekt 💻</option>' +
+          '<option value="Prezentacja" ' + (existingHw && existingHw.type === 'Prezentacja' ? 'selected' : '') + '>Prezentacja 🎤</option>' +
         '</select>' +
-        '<label class="form-label">Nazwa / tytuł zadania</label>' +
-        '<input type="text" id="hwTitle" class="input-styled" placeholder="np. Przygotować prezentację" value="' + esc(existingHw ? existingHw.title : '') + '">' +
-        '<label class="form-label">Termin wykonania (deadline)</label>' +
-        '<input type="text" id="hwDeadline" class="input-styled" placeholder="np. Piątek, 20:00 lub 24.10" value="' + esc(existingHw ? existingHw.deadline : '') + '">' +
-        '<label class="form-label">Opis zadania</label>' +
-        '<textarea id="hwDesc" class="input-styled" placeholder="Szczegóły, rozdziały, wymagania..." style="height:95px;resize:none;">' + esc(existingHw ? existingHw.desc : '') + '</textarea>' +
-        '<button type="button" class="btn-large btn-primary" data-act="save-hw" ' + (existingHw ? 'data-id="' + esc(existingHw.id) + '"' : '') + '>' +
-          (existingHw ? 'Zapisz zmiany' : 'Dodaj zadanie') +
-        '</button>';
+        '<label class="form-label">Tytuł</label>' +
+        '<input type="text" id="hwTitle" class="input-styled" placeholder="np. Sprawozdanie z laboratoriów" value="' + esc(existingHw ? existingHw.title : '') + '">' +
+        '<label class="form-label">Termin / Data (np. 2026-10-25 lub Piątek)</label>' +
+        '<input type="text" id="hwDeadline" class="input-styled" placeholder="np. 2026-10-30" value="' + esc(existingHw ? existingHw.deadline : '') + '">' +
+        '<label class="form-label">Opis i wymagania</label>' +
+        '<textarea id="hwDesc" class="input-styled" placeholder="Szczegóły..." style="height:80px;resize:none;">' + esc(existingHw ? existingHw.desc : '') + '</textarea>' +
+        '<label class="form-label">Mini-checklista kroków (opcjonalnie)</label>' +
+        '<div id="subtasksContainer" style="margin-bottom:10px;">' +
+          subtasksJson.map(function(st, idx) {
+            return '<div class="slot-editor-top" style="margin-bottom:6px;"><input type="text" class="input-styled st-input" style="margin-bottom:0;" value="' + esc(st.text) + '"><button type="button" class="slot-remove-btn" onclick="this.parentElement.remove()">&times;</button></div>';
+          }).join('') +
+        '</div>' +
+        '<button type="button" class="btn-large btn-secondary" style="margin-bottom:14px;" onclick="document.getElementById(\'subtasksContainer\').insertAdjacentHTML(\'beforeend\', \'<div class=\\\'slot-editor-top\\\' style=\\\'margin-bottom:6px;\\\'' + '><input type=\\\'text\\\'' + ' class=\\\'input-styled st-input\\\' style=\\\'margin-bottom:0;\\\' placeholder=\\\'Krok do wykonania...\\\'' + '><button type=\\\'button\\\' class=\\\'slot-remove-btn\\\' onclick=\\\'this.parentElement.remove()\\\'>&times;</button></div>\')">+ Dodaj krok do checklisty</button>' +
+        '<button type="button" class="btn-large btn-primary" data-act="save-hw" ' + (existingHw ? 'data-id="' + esc(existingHw.id) + '"' : '') + '>' + (existingHw ? 'Zapisz zmiany' : 'Dodaj zadanie') + '</button>';
     } else if (targetMode === 'info') {
       var existingInfo = editId ? state.infoList.find(function(i) { return i.id === editId; }) : null;
-      title.textContent = existingInfo ? 'Edytuj komunikat' : 'Nowy komunikat / Odwołanie';
+      title.textContent = existingInfo ? 'Edytuj komunikat' : 'Nowy komunikat';
       var infoSubOpts = state.subjects.map(function(s) {
         return '<option value="' + esc(s.name) + '" ' + (existingInfo && existingInfo.subject === s.name ? 'selected' : '') + '>' + esc(s.name) + '</option>';
       }).join('');
 
       body.innerHTML =
         '<label class="form-label">Tytuł ogłoszenia</label>' +
-        '<input type="text" id="infoTitle" class="input-styled" placeholder="np. Odwołany wykład / Zmiana sali" value="' + esc(existingInfo ? existingInfo.title : '') + '">' +
-        '<label class="form-label">Dotyczy przedmiotu</label>' +
-        '<select id="infoSub" class="input-styled">' +
-          '<option value="Ogólne">Ogólne (cała uczelnia)</option>' +
-          infoSubOpts +
-        '</select>' +
-        '<label class="form-label">Data wydarzenia</label>' +
+        '<input type="text" id="infoTitle" class="input-styled" placeholder="np. Zmiana sali wykładowej" value="' + esc(existingInfo ? existingInfo.title : '') + '">' +
+        '<label class="form-label">Przedmiot</label>' +
+        '<select id="infoSub" class="input-styled"><option value="Ogólne">Ogólne</option>' + infoSubOpts + '</select>' +
+        '<label class="form-label">Data</label>' +
         '<input type="date" id="infoDate" class="input-styled" value="' + esc(existingInfo ? existingInfo.date : '') + '">' +
-        '<label style="display:flex;align-items:center;gap:10px;margin:4px 0 14px;font-weight:700;font-size:14px;color:var(--danger);cursor:pointer;">' +
-          '<input type="checkbox" id="infoCancelled" style="width:20px;height:20px;accent-color:var(--danger);" ' + (existingInfo && existingInfo.cancelled ? 'checked' : '') + '>' +
-          'Oznacz jako „Zajęcia odwołane”' +
+        '<label style="display:flex;align-items:center;gap:10px;margin:6px 0;font-weight:700;font-size:14px;color:var(--primary);cursor:pointer;">' +
+          '<input type="checkbox" id="infoPinned" style="width:20px;height:20px;accent-color:var(--primary);" ' + (existingInfo && existingInfo.pinned ? 'checked' : '') + '> Przypnij ogłoszenie na górze tablicy (📌)' +
         '</label>' +
-        '<label class="form-label">Powód / treść komunikatu</label>' +
-        '<textarea id="infoContent" class="input-styled" placeholder="Wpisz powód odwołania lub szczegóły ogłoszenia..." style="height:95px;resize:none;">' + esc(existingInfo ? existingInfo.content : '') + '</textarea>' +
-        '<button type="button" class="btn-large btn-primary" data-act="save-info" ' + (existingInfo ? 'data-id="' + esc(existingInfo.id) + '"' : '') + '>' +
-          (existingInfo ? 'Zapisz zmiany' : 'Opublikuj komunikat') +
-        '</button>';
+        '<label style="display:flex;align-items:center;gap:10px;margin:4px 0 14px;font-weight:700;font-size:14px;color:var(--danger);cursor:pointer;">' +
+          '<input type="checkbox" id="infoCancelled" style="width:20px;height:20px;accent-color:var(--danger);" ' + (existingInfo && existingInfo.cancelled ? 'checked' : '') + '> Zajęcia odwołane ⚠️' +
+        '</label>' +
+        '<label class="form-label">Treść</label>' +
+        '<textarea id="infoContent" class="input-styled" placeholder="Szczegóły..." style="height:90px;resize:none;">' + esc(existingInfo ? existingInfo.content : '') + '</textarea>' +
+        '<button type="button" class="btn-large btn-primary" data-act="save-info" ' + (existingInfo ? 'data-id="' + esc(existingInfo.id) + '"' : '') + '>' + (existingInfo ? 'Zapisz zmiany' : 'Opublikuj') + '</button>';
     }
   }
 
-  // Podpięcie stałych przycisków
+  // Event Listeners
   $('themeBtn').addEventListener('click', toggleTheme);
   $('fabBtn').addEventListener('click', function() { openModal(); });
   $('closeModalBtn').addEventListener('click', closeModal);
-  $('clearFilterBtn').addEventListener('click', function() {
-    state.homeworkFilterSubject = null;
-    renderHomework();
-  });
-  $('mainModal').addEventListener('click', function(e) {
-    if (e.target === $('mainModal')) closeModal();
-  });
-
-  // Przyciski na pasku narzędzi Planu (Cofnij + Wyczyść cały plan)
+  $('clearFilterBtn').addEventListener('click', function() { state.homeworkFilterSubject = null; renderHomework(); });
   $('undoPlanBtn').addEventListener('click', undoLastPlanChange);
+  $('mainModal').addEventListener('click', function(e) { if (e.target === $('mainModal')) closeModal(); });
+
   $('clearPlanBtn').addEventListener('click', function() {
     confirmAction(
-      'Wyczyścić cały plan zajęć?',
-      'Wszystkie przedmioty zostaną <b>wypisane z dni tygodnia</b>, ale <b>nie zostaną usunięte z bazy</b> (nadal będą w zakładce Przedmioty).<br><br>W razie pomyłki możesz od razu kliknąć <b>„↩️ Cofnij zmianę”</b>.',
+      'Wyczyścić cały plan?',
+      'Wszystkie przedmioty zostaną wypisane z dni tygodnia, ale pozostaną w bazie.<br><br>W razie pomyłki kliknij <b>„↩️ Cofnij zmianę”</b>.',
       'Wyczyść plan',
       function() {
         pushPlanSnapshot('Wyczyszczenie całego planu');
         state.subjects.forEach(function(s) {
           s.slots = [];
-          s.day = '';
-          s.time = '';
-          fbBridge.upsert('subjects', s.id, {
-            name: s.name,
-            lecturer: s.lecturer || '',
-            room: s.room || '',
-            slots: [],
-            day: '',
-            time: ''
-          });
+          fbBridge.upsert('subjects', s.id, s);
         });
         renderAll();
-        toast('Wyczyszczono plan zajęć (przedmioty zostały w bazie)');
+        toast('Wyczyszczono plan zajęć');
       }
     );
   });
 
   var navButtons = document.querySelectorAll('.nav-tab');
   for (var i = 0; i < navButtons.length; i++) {
-    navButtons[i].addEventListener('click', function() {
-      switchTab(this.getAttribute('data-tab'));
+    navButtons[i].addEventListener('click', function() { switchTab(this.getAttribute('data-tab')); });
+  }
+
+  var hwFilterTabs = document.querySelectorAll('.filter-tab');
+  for (var k = 0; k < hwFilterTabs.length; k++) {
+    hwFilterTabs[k].addEventListener('click', function() {
+      for (var x = 0; x < hwFilterTabs.length; x++) hwFilterTabs[x].classList.remove('active');
+      this.classList.add('active');
+      state.hwTabFilter = this.getAttribute('data-hwtab');
+      renderHomework();
     });
   }
 
@@ -1135,25 +1215,68 @@ select.input-styled {
     safeStore.set('sp_homework', state.homework);
     safeStore.set('sp_info', state.infoList);
     updateToolbarState();
+    renderNextClassWidget();
     renderPlan();
     renderHomework();
     renderSubjects();
     renderInfo();
   }
 
-  // 1. Renderowanie: PLAN ZAJĘĆ
+  // Widget: Następne zajęcia / Teraz
+  function renderNextClassWidget() {
+    var widget = $('nextClassWidget');
+    if (!widget) return;
+
+    var now = new Date();
+    var currentDayIdx = now.getDay(); // 0 = Nd, 1 = Pon, ... 5 = Pt
+    var dniMap = { 1: 'Poniedziałek', 2: 'Wtorek', 3: 'Środa', 4: 'Czwartek', 5: 'Piątek' };
+    var todayName = dniMap[currentDayIdx];
+
+    if (!todayName) {
+      widget.innerHTML = '';
+      widget.style.display = 'none';
+      return;
+    }
+
+    // Zbieramy dzisiejsze zajęcia
+    var todayEntries = [];
+    state.subjects.forEach(function(s) {
+      getSubjectSlots(s).forEach(function(sl) {
+        if (sl.day === todayName) {
+          todayEntries.push({ name: s.name, time: sl.time, room: sl.room || s.room, type: sl.type });
+        }
+      });
+    });
+
+    if (!todayEntries.length) {
+      widget.innerHTML = '<div class="card" style="background:var(--surface);text-align:center;padding:12px;color:var(--muted);font-size:13px;">🌸 Dzisiaj brak zajęć w planie. Odpoczywaj!</div>';
+      return;
+    }
+
+    var entry = todayEntries[0]; // Pierwsze dzisiejsze
+    widget.innerHTML =
+      '<div class="next-class-card">' +
+        '<div class="nc-title">✨ Dzisiejsze zajęcia w planie</div>' +
+        '<div class="nc-name">' + esc(entry.name) + ' <span style="font-size:13px;opacity:0.9;font-weight:600;">(' + esc(entry.type || 'Wykład') + ')</span></div>' +
+        '<div class="nc-details">' +
+          (entry.time ? '<span>⏰ ' + esc(entry.time) + '</span>' : '') +
+          (entry.room ? '<span>🚪 Sala: ' + esc(entry.room) + '</span>' : '') +
+        '</div>' +
+      '</div>';
+    widget.style.display = 'block';
+  }
+
+  // 1. PLAN
   function renderPlan() {
     var c = $('plan-list');
     var todayIdx = new Date().getDay();
 
     c.innerHTML = DNI.map(function(dzien, idx) {
       var isToday = (idx + 1) === todayIdx;
-
-      // Zbieramy wszystkie terminy wszystkich przedmiotów przypadające na dany dzień
       var dayEntries = [];
+
       state.subjects.forEach(function(s) {
-        var slots = getSubjectSlots(s);
-        slots.forEach(function(sl) {
+        getSubjectSlots(s).forEach(function(sl) {
           if (sl.day === dzien) {
             dayEntries.push({
               subId: s.id,
@@ -1161,38 +1284,39 @@ select.input-styled {
               name: s.name,
               lecturer: s.lecturer || '',
               room: sl.room || s.room || '',
-              time: sl.time || ''
+              time: sl.time || '',
+              type: sl.type || 'Wykład'
             });
           }
         });
       });
 
-      dayEntries.sort(function(a, b) {
-        return (a.time || '').localeCompare(b.time || '');
-      });
+      dayEntries.sort(function(a, b) { return (a.time || '').localeCompare(b.time || ''); });
 
       var rowsHtml = dayEntries.length ? dayEntries.map(function(entry) {
         var cancelledInfo = state.infoList.find(function(inf) {
-          return inf.cancelled && inf.subject === entry.name;
+          if (!inf.cancelled || inf.subject !== entry.name) return false;
+          if (inf.date) {
+            var infDate = new Date(inf.date);
+            var todayDate = new Date();
+            todayDate.setHours(0,0,0,0);
+            if (infDate < todayDate) return false; // wygasłe odwołanie
+          }
+          return true;
         });
 
         return (
           '<div class="plan-row" style="cursor:pointer;" data-act="filter-hw" data-sub="' + esc(entry.name) + '">' +
             '<div style="flex:1;">' +
+              '<span class="type-tag ' + esc(entry.type) + '">' + esc(entry.type) + '</span>' +
               (entry.time ? '<span class="plan-time">⏰ ' + esc(entry.time) + '</span>' : '') +
-              '<div style="font-weight:700;font-size:15px;' + (cancelledInfo ? 'text-decoration:line-through;color:var(--danger);' : '') + '">' +
-                esc(entry.name) +
-              '</div>' +
-              '<div style="font-size:13px;color:var(--muted);margin-top:2px;">' +
-                '🚪 Sala: <b>' + esc(entry.room || 'Brak') + '</b> &bull; 👩‍🏫 ' + esc(entry.lecturer || 'Brak') +
-              '</div>' +
-              (cancelledInfo ? '<div style="font-size:12px;color:var(--danger);font-weight:600;margin-top:3px;">⚠️ Odwołane (' + esc(cancelledInfo.date || 'brak daty') + ')</div>' : '') +
+              '<div style="font-weight:700;font-size:15px;' + (cancelledInfo ? 'text-decoration:line-through;color:var(--danger);' : '') + '">' + esc(entry.name) + '</div>' +
+              '<div style="font-size:13px;color:var(--muted);margin-top:2px;">🚪 Sala: <b>' + esc(entry.room || 'Brak') + '</b> &bull; 👩‍🏫 ' + esc(entry.lecturer || 'Brak') + '</div>' +
+              (cancelledInfo ? '<div style="font-size:12px;color:var(--danger);font-weight:600;margin-top:3px;">⚠️ Odwołane (' + esc(cancelledInfo.date || '') + ')</div>' : '') +
             '</div>' +
             '<div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px;">' +
               (cancelledInfo ? '<span class="badge badge-cancelled">Odwołane</span>' : '') +
-              '<button type="button" class="btn-action warning" data-act="remove-slot-from-plan" data-subid="' + esc(entry.subId) + '" data-slotid="' + esc(entry.slotId) + '" title="Usuń z planu bez usuwania przedmiotu z bazy">' +
-                'Z planu &times;' +
-              '</button>' +
+              '<button type="button" class="btn-action warning" data-act="remove-slot-from-plan" data-subid="' + esc(entry.subId) + '" data-slotid="' + esc(entry.slotId) + '">Z planu &times;</button>' +
             '</div>' +
           '</div>'
         );
@@ -1210,7 +1334,7 @@ select.input-styled {
     }).join('');
   }
 
-  // 2. Renderowanie: ZADANIA DOMOWE
+  // 2. ZADANIA
   function renderHomework() {
     var c = $('homework-list');
     var banner = $('homework-filter-banner');
@@ -1222,40 +1346,53 @@ select.input-styled {
       banner.style.display = 'none';
     }
 
-    var list = state.homework
-      .filter(function(h) { return !state.homeworkFilterSubject || h.subject === state.homeworkFilterSubject; })
-      .sort(function(a, b) {
-        if ((a.status === 'done') !== (b.status === 'done')) {
-          return a.status === 'done' ? 1 : -1;
-        }
-        return (b.createdAt || 0) - (a.createdAt || 0);
-      });
+    var list = state.homework.filter(function(h) {
+      if (state.homeworkFilterSubject && h.subject !== state.homeworkFilterSubject) return false;
+      if (state.hwTabFilter === 'todo' && h.status === 'done') return false;
+      if (state.hwTabFilter === 'done' && h.status !== 'done') return false;
+      return true;
+    }).sort(function(a, b) {
+      if ((a.status === 'done') !== (b.status === 'done')) return a.status === 'done' ? 1 : -1;
+      return (b.createdAt || 0) - (a.createdAt || 0);
+    });
 
     if (!list.length) {
-      c.innerHTML =
-        '<div class="empty-state">' +
-          '<div class="big">✨</div>' +
-          '<div>Brak zadań domowych' + (state.homeworkFilterSubject ? ' z przedmiotu „' + esc(state.homeworkFilterSubject) + '”' : '') + '</div>' +
-          '<div class="hint">Kliknij przycisk „+” w prawym dolnym rogu, aby dodać zadanie</div>' +
-        '</div>';
+      c.innerHTML = '<div class="empty-state"><div class="big">✨</div><div>Brak zadań w tej kategorii</div></div>';
       return;
     }
 
-    var statusLabels = { pending: 'Nie rozpoczęte', progress: 'W trakcie', done: 'Skończone' };
-    var statusClasses = { pending: 'badge-pending', progress: 'badge-progress', done: 'badge-done' };
+    var typeBadges = {
+      'Zadanie domowe': '<span class="badge badge-pending">📝 Zadanie</span>',
+      'Kolokwium': '<span class="badge badge-exam">🎓 Kolokwium</span>',
+      'Egzamin': '<span class="badge badge-exam">📚 Egzamin</span>',
+      'Projekt': '<span class="badge badge-project">💻 Projekt</span>',
+      'Prezentacja': '<span class="badge badge-progress">🎤 Prezentacja</span>'
+    };
 
-    c.innerHTML = list.map(function(h) {
+    c.innerHTML = list.map(h => {
       var st = h.status || 'pending';
+      var subtasks = Array.isArray(h.subtasks) ? h.subtasks : [];
       return (
         '<div class="card ' + (st === 'done' ? 'hw-done' : '') + '">' +
           '<div class="card-header">' +
-            '<div class="card-title">' + esc(h.title) + '</div>' +
-            '<span class="badge ' + (statusClasses[st] || 'badge-pending') + '">' + (statusLabels[st] || 'Nie rozpoczęte') + '</span>' +
+            '<div>' +
+              (typeBadges[h.type] || '<span class="badge badge-pending">Zadanie</span>') +
+              '<div class="card-title" style="margin-top:6px;">' + esc(h.title) + '</div>' +
+            '</div>' +
+            formatDeadlineBadge(h.deadline) +
           '</div>' +
-          '<div style="font-size:13px;color:var(--muted);margin-bottom:8px;">' +
-            '📚 Przedmiot: <b>' + esc(h.subject || 'Ogólne') + '</b> &bull; ⏳ Termin: <b>' + esc(h.deadline || 'Brak') + '</b>' +
-          '</div>' +
-          (h.desc ? '<div class="hw-desc" style="font-size:14px;margin-bottom:12px;line-height:1.45;white-space:pre-wrap;">' + esc(h.desc) + '</div>' : '') +
+          '<div style="font-size:13px;color:var(--muted);margin-bottom:8px;">📚 Przedmiot: <b>' + esc(h.subject || 'Ogólne') + '</b></div>' +
+          (h.desc ? '<div class="hw-desc" style="font-size:14px;margin-bottom:10px;line-height:1.45;white-space:pre-wrap;">' + esc(h.desc) + '</div>' : '') +
+          (subtasks.length ? (
+            '<div class="subtasks-list">' +
+              subtasks.map((stsk, stIdx) => (
+                '<label class="subtask-item">' +
+                  '<input type="checkbox" ' + (stsk.done ? 'checked' : '') + ' data-act="toggle-subtask" data-hwid="' + esc(h.id) + '" data-stidx="' + stIdx + '">' +
+                  '<span class="subtask-text">' + esc(stsk.text) + '</span>' +
+                '</label>'
+              )).join('') +
+            '</div>'
+          ) : '') +
           '<div style="display:flex;gap:6px;flex-wrap:wrap;padding-top:8px;border-top:1px solid var(--border);">' +
             '<button type="button" class="btn-action ' + (st === 'pending' ? 'active-status' : '') + '" data-act="set-hw-status" data-id="' + esc(h.id) + '" data-status="pending">Nie rozpoczęte</button>' +
             '<button type="button" class="btn-action ' + (st === 'progress' ? 'active-status' : '') + '" data-act="set-hw-status" data-id="' + esc(h.id) + '" data-status="progress">W trakcie</button>' +
@@ -1268,35 +1405,26 @@ select.input-styled {
     }).join('');
   }
 
-  // 3. Renderowanie: PRZEDMIOTY
+  // 3. PRZEDMIOTY
   function renderSubjects() {
     var c = $('subjects-list');
     if (!state.subjects.length) {
-      c.innerHTML =
-        '<div class="empty-state">' +
-          '<div class="big">📚</div>' +
-          '<div>Brak dodanych przedmiotów w bazie</div>' +
-          '<div class="hint">Kliknij przycisk „+” w prawym dolnym rogu, aby dodać pierwszy przedmiot</div>' +
-        '</div>';
+      c.innerHTML = '<div class="empty-state"><div class="big">📚</div><div>Brak przedmiotów</div><div class="hint">Dodaj pierwszy przedmiot przyciskiem „+”</div></div>';
       return;
     }
 
-    var sorted = state.subjects.slice().sort(function(a, b) {
-      return (a.name || '').localeCompare(b.name || '', 'pl');
-    });
+    var sorted = state.subjects.slice().sort(function(a, b) { return (a.name || '').localeCompare(b.name || '', 'pl'); });
 
-    c.innerHTML = sorted.map(function(s) {
+    c.innerHTML = sorted.map(s => {
       var activeHwCount = state.homework.filter(function(h) { return h.subject === s.name && h.status !== 'done'; }).length;
       var slots = getSubjectSlots(s);
+      var absCount = typeof s.absences === 'number' ? s.absences : 0;
+      var absLimit = 2; // limit nieobecności
+      var absColor = absCount >= absLimit ? 'var(--danger)' : (absCount > 0 ? 'var(--warning)' : 'var(--success)');
 
       var slotsHtml = slots.length ? (
         '<div class="slot-pill-list">' +
-          slots.map(function(sl) {
-            return '<span class="slot-pill">📅 <b>' + esc(sl.day) + '</b>' +
-              (sl.time ? ' &bull; ' + esc(sl.time) : '') +
-              (sl.room ? ' (s. ' + esc(sl.room) + ')' : '') +
-            '</span>';
-          }).join('') +
+          slots.map(sl => '<span class="slot-pill">📅 <b>' + esc(sl.day) + '</b> (' + esc(sl.type || 'Wykład') + ')' + (sl.time ? ' &bull; ' + esc(sl.time) : '') + (sl.room ? ' s. ' + esc(sl.room) : '') + '</span>').join('') +
         '</div>'
       ) : '<div style="margin-top:6px;"><span class="badge badge-muted">Poza planem (brak przypisanego dnia)</span></div>';
 
@@ -1305,66 +1433,63 @@ select.input-styled {
           '<div class="card-header">' +
             '<div>' +
               '<div class="card-title">' + esc(s.name) + '</div>' +
-              '<span class="badge ' + (activeHwCount ? 'badge-progress' : 'badge-done') + '" style="display:inline-block;margin-top:4px;">' +
-                (activeHwCount ? 'Aktywne zadania: ' + activeHwCount : 'Brak zaległych zadań') +
-              '</span>' +
+              '<span class="badge ' + (activeHwCount ? 'badge-progress' : 'badge-done') + '" style="display:inline-block;margin-top:4px;">' + (activeHwCount ? 'Aktywne zadania: ' + activeHwCount : 'Brak zaległych zadań') + '</span>' +
             '</div>' +
             '<div style="display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end;">' +
               '<button type="button" class="btn-action" data-act="edit-sub" data-id="' + esc(s.id) + '">Edytuj</button>' +
-              (slots.length ? '<button type="button" class="btn-action warning" data-act="clear-sub-plan" data-id="' + esc(s.id) + '">Wypisz z planu</button>' : '') +
-              '<button type="button" class="btn-action danger" data-act="del-sub" data-id="' + esc(s.id) + '">Usuń z bazy</button>' +
+              (slots.length ? '<button type="button" class="btn-action warning" data-act="clear-sub-plan" data-id="' + esc(s.id) + '">Wypisz</button>' : '') +
+              '<button type="button" class="btn-action danger" data-act="del-sub" data-id="' + esc(s.id) + '">Usuń</button>' +
             '</div>' +
           '</div>' +
           '<div style="font-size:14px;color:var(--muted);line-height:1.6;margin-top:6px;">' +
-            '👩‍🏫 Wykładowca: <b style="color:var(--text);">' + esc(s.lecturer || 'Brak') + '</b> &bull; ' +
-            '🚪 Domyślna sala: <b style="color:var(--text);">' + esc(s.room || 'Brak') + '</b>' +
+            '👩‍🏫 Wykładowca: <b style="color:var(--text);">' + esc(s.lecturer || 'Brak') + '</b>' +
+            (s.email ? '<br>📧 E-mail: <a href="mailto:' + esc(s.email) + '" style="color:var(--primary);text-decoration:none;" onclick="event.stopPropagation()">' + esc(s.email) + '</a>' : '') +
+            (s.consultations ? '<br>🕒 Konsultacje: <b style="color:var(--text);">' + esc(s.consultations) + '</b>' : '') +
+            (s.link ? '<br>🔗 <a href="' + esc(s.link) + '" target="_blank" style="color:var(--primary);text-decoration:underline;" onclick="event.stopPropagation()">Materiały / Teams</a>' : '') +
+            (s.rules ? '<br>📋 Zaliczenie: <b style="color:var(--text);">' + esc(s.rules) + '</b>' : '') +
+            '<br>🎓 Status: <b style="color:' + (s.status === 'Zaliczone' ? 'var(--success)' : (s.status === 'Niezaliczone' ? 'var(--danger)' : 'var(--warning')) + ';">' + esc(s.status || 'W toku') + '</b>' +
           '</div>' +
           slotsHtml +
-          '<div style="margin-top:10px;font-size:12px;color:var(--primary);font-weight:700;">' +
-            'Kliknij kartę, aby zobaczyć powiązane zadania domowe →' +
+          '<div class="abs-box" onclick="event.stopPropagation()">' +
+            '<span>Nieobecności: <b style="color:' + absColor + ';">' + absCount + ' / ' + absLimit + '</b></span>' +
+            '<div class="abs-controls">' +
+              '<button type="button" class="abs-btn" data-act="abs-minus" data-id="' + esc(s.id) + '">-</button>' +
+              '<button type="button" class="abs-btn" data-act="abs-plus" data-id="' + esc(s.id) + '">+</button>' +
+            '</div>' +
           '</div>' +
+          '<div style="margin-top:10px;font-size:12px;color:var(--primary);font-weight:700;">Kliknij, aby zobaczyć zadania z przedmiotu →</div>' +
         '</div>'
       );
     }).join('');
   }
 
-  // 4. Renderowanie: INFORMACJE / ODWOŁANE
+  // 4. INFORMACJE
   function renderInfo() {
     var c = $('info-list');
     if (!state.infoList.length) {
-      c.innerHTML =
-        '<div class="empty-state">' +
-          '<div class="big">📢</div>' +
-          '<div>Brak ogłoszeń i komunikatów</div>' +
-          '<div class="hint">Dodaj informację o zastępstwie, kolokwium lub odwołanych zajęciach</div>' +
-        '</div>';
+      c.innerHTML = '<div class="empty-state"><div class="big">📢</div><div>Brak komunikatów</div></div>';
       return;
     }
 
     var sorted = state.infoList.slice().sort(function(a, b) {
+      if (!!b.pinned !== !!a.pinned) return b.pinned ? 1 : -1;
       return (b.createdAt || 0) - (a.createdAt || 0);
     });
 
-    c.innerHTML = sorted.map(function(item) {
-      return (
-        '<div class="card ' + (item.cancelled ? 'info-cancelled' : '') + '">' +
-          '<div class="card-header">' +
-            '<div class="card-title">' + esc(item.title) + '</div>' +
-            (item.cancelled
-              ? '<span class="badge badge-cancelled">⚠️ Zajęcia odwołane</span>'
-              : '<span class="badge badge-progress">📌 Informacja</span>') +
-          '</div>' +
-          '<div style="font-size:13px;color:var(--muted);margin-bottom:8px;">' +
-            '📅 Data: <b>' + esc(item.date || 'Brak') + '</b> &bull; 📚 Przedmiot: <b>' + esc(item.subject || 'Ogólne') + '</b>' +
-          '</div>' +
-          (item.content ? '<div style="font-size:14px;margin-bottom:12px;line-height:1.45;white-space:pre-wrap;">' + esc(item.content) + '</div>' : '') +
-          '<div style="display:flex;gap:6px;justify-content:flex-end;padding-top:8px;border-top:1px solid var(--border);">' +
-            '<button type="button" class="btn-action" data-act="edit-info" data-id="' + esc(item.id) + '">Edytuj</button>' +
-            '<button type="button" class="btn-action danger" data-act="del-info" data-id="' + esc(item.id) + '">Usuń komunikat</button>' +
-          '</div>' +
-        '</div>'
-      );
-    }).join('');
+    c.innerHTML = sorted.map(item => (
+      '<div class="card ' + (item.pinned ? 'info-pinned' : '') + ' ' + (item.cancelled ? 'info-cancelled' : '') + '">' +
+        '<div class="card-header">' +
+          '<div class="card-title">' + (item.pinned ? '📌 ' : '') + esc(item.title) + '</div>' +
+          (item.cancelled ? '<span class="badge badge-cancelled">⚠️ Odwołane</span>' : '<span class="badge badge-progress">Info</span>') +
+        '</div>' +
+        '<div style="font-size:13px;color:var(--muted);margin-bottom:8px;">📅 Data: <b>' + esc(item.date || 'Brak') + '</b> &bull; 📚 ' + esc(item.subject || 'Ogólne') + '</div>' +
+        (item.content ? '<div style="font-size:14px;margin-bottom:12px;line-height:1.45;white-space:pre-wrap;">' + esc(item.content) + '</div>' : '') +
+        '<div style="display:flex;gap:6px;justify-content:flex-end;padding-top:8px;border-top:1px solid var(--border);">' +
+          '<button type="button" class="btn-action" data-act="edit-info" data-id="' + esc(item.id) + '">Edytuj</button>' +
+          '<button type="button" class="btn-action danger" data-act="del-info" data-id="' + esc(item.id) + '">Usuń</button>' +
+        '</div>' +
+      '</div>'
+    )).join('');
   }
 
   // Centralna obsługa kliknięć
@@ -1376,305 +1501,225 @@ select.input-styled {
 
     var act = el.getAttribute('data-act');
 
-    // Przełącznik w modalu: Nowy przedmiot vs Dopisz istniejący do planu
     if (act === 'modal-sub-mode') {
       renderSubjectModalContent(el.getAttribute('data-mode'), null);
-    }
-    // Dodanie kolejnego wiersza (Dzień + Godzina + Sala) w modalu
-    else if (act === 'add-slot-row') {
+    } else if (act === 'add-slot-row') {
       var cont = $('slotsContainer');
-      if (cont) {
-        cont.insertAdjacentHTML('beforeend', createSlotRowHtml(null));
-        refreshEmptySlotsNotice();
-      }
-    }
-    // Usunięcie pojedynczego wiersza terminu w modalu
-    else if (act === 'remove-slot-row') {
+      if (cont) { cont.insertAdjacentHTML('beforeend', createSlotRowHtml(null)); refreshEmptySlotsNotice(); }
+    } else if (act === 'remove-slot-row') {
       var row = el.closest('.slot-editor-row');
-      if (row) {
-        row.remove();
-        refreshEmptySlotsNotice();
-      }
-    }
-    // Wyczyszczenie wszystkich terminów w modalu (przedmiot bez przypisanego dnia)
-    else if (act === 'clear-modal-slots') {
+      if (row) { row.remove(); refreshEmptySlotsNotice(); }
+    } else if (act === 'clear-modal-slots') {
       var sCont = $('slotsContainer');
-      if (sCont) {
-        sCont.innerHTML = '';
-        refreshEmptySlotsNotice();
-      }
-    }
-    // Dopisanie nowych dni/godzin do istniejącego już przedmiotu w bazie
-    else if (act === 'save-existing-to-plan') {
+      if (sCont) { sCont.innerHTML = ''; refreshEmptySlotsNotice(); }
+    } else if (act === 'save-existing-to-plan') {
       var subId = $('existingSubSelect').value;
       var targetSub = state.subjects.find(function(s) { return s.id === subId; });
-      if (!targetSub) return toast('Wybierz przedmiot!');
-
+      if (!targetSub) return;
       var newSlots = collectSlotsFromModal(targetSub.room || '');
-      if (!newSlots.length) return toast('Dodaj przynajmniej jeden dzień/godzinę!');
-
+      if (!newSlots.length) return toast('Dodaj terminy!');
       pushPlanSnapshot('Dopisanie do planu: ' + targetSub.name);
-      var mergedSlots = getSubjectSlots(targetSub).concat(newSlots);
-      var updPayload = {
-        name: targetSub.name,
-        lecturer: targetSub.lecturer || '',
-        room: targetSub.room || '',
-        slots: mergedSlots,
-        day: mergedSlots.length ? mergedSlots[0].day : '',
-        time: mergedSlots.length ? mergedSlots[0].time : ''
-      };
-
-      var tIdx = state.subjects.findIndex(function(s) { return s.id === subId; });
-      state.subjects[tIdx] = Object.assign({ id: subId }, updPayload);
+      var merged = getSubjectSlots(targetSub).concat(newSlots);
+      targetSub.slots = merged;
       renderAll();
       closeModal();
-      fbBridge.upsert('subjects', subId, updPayload);
-      toast('Dopisano terminy do planu!');
-    }
-
-    // Usunięcie pojedynczego terminu z Planu Zajęć BEZ usuwania przedmiotu z bazy
-    else if (act === 'remove-slot-from-plan') {
+      fbBridge.upsert('subjects', subId, targetSub);
+      toast('Dopisano do planu!');
+    } else if (act === 'remove-slot-from-plan') {
       e.stopPropagation();
-      var rSubId = el.getAttribute('data-subid');
-      var rSlotId = el.getAttribute('data-slotid');
+      var rSubId = el.getAttribute('data-subid'), rSlotId = el.getAttribute('data-slotid');
       var subObj = state.subjects.find(function(s) { return s.id === rSubId; });
       if (!subObj) return;
-
       pushPlanSnapshot('Usunięcie z planu: ' + subObj.name);
-      var remainingSlots = getSubjectSlots(subObj).filter(function(sl) {
-        return sl.slotId !== rSlotId;
-      });
-
-      var updatedSub = {
-        name: subObj.name,
-        lecturer: subObj.lecturer || '',
-        room: subObj.room || '',
-        slots: remainingSlots,
-        day: remainingSlots.length ? remainingSlots[0].day : '',
-        time: remainingSlots.length ? remainingSlots[0].time : ''
-      };
-
-      var sIdx = state.subjects.findIndex(function(s) { return s.id === rSubId; });
-      state.subjects[sIdx] = Object.assign({ id: rSubId }, updatedSub);
+      subObj.slots = getSubjectSlots(subObj).filter(function(sl) { return sl.slotId !== rSlotId; });
       renderAll();
-      fbBridge.upsert('subjects', rSubId, updatedSub);
-      toast('Usunięto z planu (przedmiot został w bazie)');
-    }
-
-    // Wypisanie przedmiotu ze wszystkich dni w planie (z poziomu zakładki Przedmioty)
-    else if (act === 'clear-sub-plan') {
+      fbBridge.upsert('subjects', rSubId, subObj);
+      toast('Usunięto z planu');
+    } else if (act === 'clear-sub-plan') {
       e.stopPropagation();
       var cSubId = el.getAttribute('data-id');
       var cSub = state.subjects.find(function(s) { return s.id === cSubId; });
       if (!cSub) return;
-
       pushPlanSnapshot('Wypisanie z planu: ' + cSub.name);
-      var clearedPayload = {
-        name: cSub.name,
-        lecturer: cSub.lecturer || '',
-        room: cSub.room || '',
-        slots: [],
-        day: '',
-        time: ''
-      };
-
-      var cIdx = state.subjects.findIndex(function(s) { return s.id === cSubId; });
-      state.subjects[cIdx] = Object.assign({ id: cSubId }, clearedPayload);
+      cSub.slots = [];
       renderAll();
-      fbBridge.upsert('subjects', cSubId, clearedPayload);
-      toast('Wypisano z planu (przedmiot został w bazie)');
-    }
-
-    // Wkliknięcie się w przedmiot -> pokazuje zadania domowe
-    else if (act === 'filter-hw') {
+      fbBridge.upsert('subjects', cSubId, cSub);
+      toast('Wypisano z planu');
+    } else if (act === 'abs-plus') {
+      e.stopPropagation();
+      var aId = el.getAttribute('data-id');
+      var subA = state.subjects.find(function(s) { return s.id === aId; });
+      if (subA) {
+        subA.absences = (typeof subA.absences === 'number' ? subA.absences : 0) + 1;
+        renderSubjects();
+        fbBridge.upsert('subjects', aId, subA);
+      }
+    } else if (act === 'abs-minus') {
+      e.stopPropagation();
+      var aId2 = el.getAttribute('data-id');
+      var subA2 = state.subjects.find(function(s) { return s.id === aId2; });
+      if (subA2 && (subA2.absences || 0) > 0) {
+        subA2.absences -= 1;
+        renderSubjects();
+        fbBridge.upsert('subjects', aId2, subA2);
+      }
+    } else if (act === 'toggle-subtask') {
+      var hwId = el.getAttribute('data-hwid');
+      var stIdx = parseInt(el.getAttribute('data-stidx'), 10);
+      var hwObj = state.homework.find(function(h) { return h.id === hwId; });
+      if (hwObj && hwObj.subtasks && hwObj.subtasks[stIdx]) {
+        hwObj.subtasks[stIdx].done = el.checked;
+        safeStore.set('sp_homework', state.homework);
+        fbBridge.upsert('homework', hwId, hwObj);
+      }
+    } else if (act === 'filter-hw') {
       state.homeworkFilterSubject = el.getAttribute('data-sub');
       renderHomework();
       switchTab('homework');
       toast('Zadania: ' + state.homeworkFilterSubject);
-    }
-
-    // Edycja / Zapis / Usunięcie przedmiotu z bazy
-    else if (act === 'edit-sub') {
+    } else if (act === 'edit-sub') {
       e.stopPropagation();
       openModal('subjects', el.getAttribute('data-id'));
-    }
-    else if (act === 'save-sub') {
+    } else if (act === 'save-sub') {
       var name = $('subName').value.trim();
       if (!name) return toast('Podaj nazwę przedmiotu!');
       var id = el.getAttribute('data-id') || uid();
-      var defaultRoom = $('subRoom').value.trim();
-      var collectedSlots = collectSlotsFromModal(defaultRoom);
+      var defRoom = $('subRoom').value.trim();
+      var collectedSlots = collectSlotsFromModal(defRoom);
 
-      pushPlanSnapshot(el.getAttribute('data-id') ? ('Edycja: ' + name) : ('Dodanie: ' + name));
+      pushPlanSnapshot('Edycja/Zapis przedmiotu');
 
-      var payload = {
+      var subPayload = {
         name: name,
         lecturer: $('subLecturer').value.trim(),
-        room: defaultRoom,
-        slots: collectedSlots,
-        day: collectedSlots.length ? collectedSlots[0].day : '',
-        time: collectedSlots.length ? collectedSlots[0].time : ''
+        email: $('subEmail').value.trim(),
+        consultations: $('subConsult').value.trim(),
+        link: $('subLink').value.trim(),
+        rules: $('subRules').value.trim(),
+        status: $('subStatus').value,
+        room: defRoom,
+        slots: collectedSlots
       };
 
       var idx = state.subjects.findIndex(function(s) { return s.id === id; });
       if (idx >= 0) {
-        state.subjects[idx] = Object.assign({ id: id }, payload);
+        state.subjects[idx] = Object.assign({}, state.subjects[idx], subPayload, { id: id });
         var oldName = el.getAttribute('data-oldname');
         if (oldName && oldName !== name) {
           state.homework.forEach(function(hw) {
             if (hw.subject === oldName) {
               hw.subject = name;
-              fbBridge.upsert('homework', hw.id, {
-                subject: hw.subject,
-                title: hw.title,
-                deadline: hw.deadline,
-                desc: hw.desc,
-                status: hw.status,
-                createdAt: hw.createdAt
-              });
+              fbBridge.upsert('homework', hw.id, hw);
             }
           });
         }
         toast('Zaktualizowano przedmiot!');
       } else {
-        state.subjects.push(Object.assign({ id: id }, payload));
-        toast(collectedSlots.length ? 'Dodano przedmiot i przypisano do planu!' : 'Dodano przedmiot (bez przypisanego dnia)!');
+        subPayload.id = id;
+        subPayload.absences = 0;
+        state.subjects.push(subPayload);
+        toast('Dodano przedmiot!');
       }
 
       renderAll();
       closeModal();
-      fbBridge.upsert('subjects', id, payload);
-    }
-    else if (act === 'del-sub') {
+      fbBridge.upsert('subjects', id, state.subjects.find(function(s){return s.id === id;}));
+    } else if (act === 'del-sub') {
       e.stopPropagation();
       var subIdToDel = el.getAttribute('data-id');
       var subItem = state.subjects.find(function(s) { return s.id === subIdToDel; });
-      confirmAction(
-        'Usunąć całkowicie z bazy?',
-        'Czy na pewno chcesz trwale usunąć przedmiot <b>' + esc(subItem ? subItem.name : '') + '</b> z bazy?<br><br><span style="font-size:13px;color:var(--muted);">Jeśli chcesz tylko usunąć go z rozkładu dnia, użyj przycisku „Wypisz z planu”.</span>',
-        'Usuń z bazy',
-        function() {
-          pushPlanSnapshot('Usunięcie przedmiotu: ' + (subItem ? subItem.name : ''));
-          state.subjects = state.subjects.filter(function(s) { return s.id !== subIdToDel; });
-          renderAll();
-          toast('Usunięto przedmiot z bazy');
-          fbBridge.remove('subjects', subIdToDel);
-        }
-      );
-    }
-
-    // ZADANIA DOMOWE
-    else if (act === 'edit-hw') {
+      confirmAction('Usunąć z bazy?', 'Trwale usunąć przedmiot <b>' + esc(subItem ? subItem.name : '') + '</b>?', 'Usuń', function() {
+        state.subjects = state.subjects.filter(function(s) { return s.id !== subIdToDel; });
+        renderAll();
+        toast('Usunięto');
+        fbBridge.remove('subjects', subIdToDel);
+      });
+    } else if (act === 'edit-hw') {
       openModal('homework', el.getAttribute('data-id'));
-    }
-    else if (act === 'save-hw') {
+    } else if (act === 'save-hw') {
       var hwTitle = $('hwTitle').value.trim();
-      if (!hwTitle) return toast('Podaj tytuł zadania!');
+      if (!hwTitle) return toast('Podaj tytuł!');
       var hwId = el.getAttribute('data-id') || uid();
       var existingHw = state.homework.find(function(h) { return h.id === hwId; });
 
+      // Zbieramy podzadania
+      var stInputs = document.querySelectorAll('.st-input');
+      var subtasksArr = [];
+      for(var si=0; si<stInputs.length; si++) {
+        var txt = stInputs[si].value.trim();
+        if(txt) {
+          var oldDone = (existingHw && existingHw.subtasks && existingHw.subtasks[si]) ? existingHw.subtasks[si].done : false;
+          subtasksArr.push({ text: txt, done: oldDone });
+        }
+      }
+
       var hwPayload = {
+        id: hwId,
         subject: $('hwSub').value,
+        type: $('hwType').value,
         title: hwTitle,
         deadline: $('hwDeadline').value.trim(),
         desc: $('hwDesc').value.trim(),
+        subtasks: subtasksArr,
         status: existingHw ? existingHw.status : 'pending',
         createdAt: existingHw ? existingHw.createdAt : Date.now()
       };
 
       var hwIdx = state.homework.findIndex(function(h) { return h.id === hwId; });
-      if (hwIdx >= 0) {
-        state.homework[hwIdx] = Object.assign({ id: hwId }, hwPayload);
-        toast('Zaktualizowano zadanie!');
-      } else {
-        state.homework.push(Object.assign({ id: hwId }, hwPayload));
-        toast('Dodano zadanie!');
-      }
+      if (hwIdx >= 0) state.homework[hwIdx] = hwPayload; else state.homework.push(hwPayload);
 
       renderAll();
       closeModal();
       fbBridge.upsert('homework', hwId, hwPayload);
-    }
-    else if (act === 'set-hw-status') {
-      var stId = el.getAttribute('data-id');
-      var newStatus = el.getAttribute('data-status');
+      toast('Zapisano zadanie!');
+    } else if (act === 'set-hw-status') {
+      var stId = el.getAttribute('data-id'), newStatus = el.getAttribute('data-status');
       var targetHw = state.homework.find(function(h) { return h.id === stId; });
       if (targetHw) {
         targetHw.status = newStatus;
         renderAll();
-        toast('Zmieniono status zadania');
-        fbBridge.upsert('homework', stId, {
-          subject: targetHw.subject,
-          title: targetHw.title,
-          deadline: targetHw.deadline,
-          desc: targetHw.desc,
-          status: targetHw.status,
-          createdAt: targetHw.createdAt
-        });
+        fbBridge.upsert('homework', stId, targetHw);
       }
-    }
-    else if (act === 'del-hw') {
+    } else if (act === 'del-hw') {
       var delHwId = el.getAttribute('data-id');
-      var delHwItem = state.homework.find(function(h) { return h.id === delHwId; });
-      confirmAction(
-        'Usunąć zadanie?',
-        'Czy na pewno chcesz usunąć zadanie: <b>' + esc(delHwItem ? delHwItem.title : '') + '</b>?',
-        'Usuń',
-        function() {
-          state.homework = state.homework.filter(function(h) { return h.id !== delHwId; });
-          renderAll();
-          toast('Usunięto zadanie');
-          fbBridge.remove('homework', delHwId);
-        }
-      );
-    }
-
-    // INFORMACJE / ODWOŁANE
-    else if (act === 'edit-info') {
+      confirmAction('Usunąć zadanie?', 'Usunąć to zadanie?', 'Usuń', function() {
+        state.homework = state.homework.filter(function(h) { return h.id !== delHwId; });
+        renderAll();
+        fbBridge.remove('homework', delHwId);
+      });
+    } else if (act === 'edit-info') {
       openModal('info', el.getAttribute('data-id'));
-    }
-    else if (act === 'save-info') {
+    } else if (act === 'save-info') {
       var infoTitle = $('infoTitle').value.trim();
-      if (!infoTitle) return toast('Podaj tytuł komunikatu!');
+      if (!infoTitle) return toast('Podaj tytuł!');
       var infoId = el.getAttribute('data-id') || uid();
       var existingInf = state.infoList.find(function(i) { return i.id === infoId; });
 
       var infoPayload = {
+        id: infoId,
         title: infoTitle,
         subject: $('infoSub').value,
         date: $('infoDate').value,
+        pinned: $('infoPinned').checked,
         cancelled: $('infoCancelled').checked,
         content: $('infoContent').value.trim(),
         createdAt: existingInf ? existingInf.createdAt : Date.now()
       };
 
       var infoIdx = state.infoList.findIndex(function(i) { return i.id === infoId; });
-      if (infoIdx >= 0) {
-        state.infoList[infoIdx] = Object.assign({ id: infoId }, infoPayload);
-        toast('Zaktualizowano komunikat!');
-      } else {
-        state.infoList.push(Object.assign({ id: infoId }, infoPayload));
-        toast('Opublikowano komunikat!');
-      }
+      if (infoIdx >= 0) state.infoList[infoIdx] = infoPayload; else state.infoList.push(infoPayload);
 
       renderAll();
       closeModal();
       fbBridge.upsert('info', infoId, infoPayload);
-    }
-    else if (act === 'del-info') {
+      toast('Opublikowano!');
+    } else if (act === 'del-info') {
       var delInfoId = el.getAttribute('data-id');
-      var delInfoItem = state.infoList.find(function(i) { return i.id === delInfoId; });
-      confirmAction(
-        'Usunąć komunikat?',
-        'Czy na pewno chcesz usunąć komunikat: <b>' + esc(delInfoItem ? delInfoItem.title : '') + '</b>?',
-        'Usuń',
-        function() {
-          state.infoList = state.infoList.filter(function(i) { return i.id !== delInfoId; });
-          renderAll();
-          toast('Usunięto komunikat');
-          fbBridge.remove('info', delInfoId);
-        }
-      );
+      confirmAction('Usunąć komunikat?', 'Usunąć komunikat?', 'Usuń', function() {
+        state.infoList = state.infoList.filter(function(i) { return i.id !== delInfoId; });
+        renderAll();
+        fbBridge.remove('info', delInfoId);
+      });
     }
   });
 
@@ -1689,17 +1734,10 @@ select.input-styled {
 })();
 </script>
 
-<!-- MODUŁ FIREBASE FIRESTORE (SDK v10) -->
+<!-- MODUŁ FIREBASE -->
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-import {
-  getFirestore,
-  collection,
-  doc,
-  onSnapshot,
-  setDoc,
-  deleteDoc
-} from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+import { getFirestore, collection, doc, onSnapshot, setDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyDnlwPRXJEkosQ4grxnMz2vxyaWUP8wfzM",
@@ -1720,20 +1758,12 @@ if (sp) {
 
     sp.setBridge({
       async upsert(colName, id, data) {
-        try {
-          await setDoc(doc(db, colName, id), data, { merge: true });
-        } catch (err) {
-          console.error("Błąd zapisu Firestore:", err);
-          if (statusEl) statusEl.textContent = '⚠️ Błąd zapisu FB';
-          sp.toast('Zapisano lokalnie (sprawdź reguły Firestore)');
-        }
+        try { await setDoc(doc(db, colName, id), data, { merge: true }); }
+        catch (err) { console.error(err); sp.toast('Zapisano lokalnie'); }
       },
       async remove(colName, id) {
-        try {
-          await deleteDoc(doc(db, colName, id));
-        } catch (err) {
-          console.error("Błąd usuwania Firestore:", err);
-        }
+        try { await deleteDoc(doc(db, colName, id)); }
+        catch (err) { console.error(err); }
       }
     });
 
@@ -1742,10 +1772,7 @@ if (sp) {
       snap.forEach(d => sp.state.subjects.push({ id: d.id, ...d.data() }));
       sp.renderAll();
       if (statusEl) statusEl.textContent = '☁️ Firebase Live';
-    }, err => {
-      console.warn("Błąd odczytu subjects z Firestore:", err);
-      if (statusEl) statusEl.textContent = '📱 Tryb lokalny (' + (err.code || 'offline') + ')';
-    });
+    }, err => { if (statusEl) statusEl.textContent = '📱 Tryb lokalny'; });
 
     onSnapshot(collection(db, "homework"), snap => {
       sp.state.homework = [];
@@ -1758,10 +1785,7 @@ if (sp) {
       snap.forEach(d => sp.state.infoList.push({ id: d.id, ...d.data() }));
       sp.renderAll();
     });
-  } catch (err) {
-    console.warn("Błąd inicjalizacji Firebase:", err);
-    if (statusEl) statusEl.textContent = '📱 Tryb lokalny';
-  }
+  } catch (err) { if (statusEl) statusEl.textContent = '📱 Tryb lokalny'; }
 }
 </script>
 </body>
