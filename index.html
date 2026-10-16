@@ -28,7 +28,7 @@
   --muted: #8e8e93;
   --border: #f2d6e0;
   --seg-bg: #fce8f0;
-  --nav-bg: rgba(255, 255, 255, 0.9);
+  --nav-bg: rgba(255, 255, 255, 0.92);
   --shadow: 0 6px 20px rgba(255, 92, 151, 0.09);
   --card-border: #fae1ec;
 }
@@ -50,7 +50,7 @@
     --muted: #98989d;
     --border: #2c2c2e;
     --seg-bg: #2a2427;
-    --nav-bg: rgba(28, 28, 30, 0.9);
+    --nav-bg: rgba(28, 28, 30, 0.92);
     --shadow: 0 6px 20px rgba(0, 0, 0, 0.35);
     --card-border: #2c2c2e;
   }
@@ -72,7 +72,7 @@
   --muted: #98989d;
   --border: #2c2c2e;
   --seg-bg: #2a2427;
-  --nav-bg: rgba(28, 28, 30, 0.9);
+  --nav-bg: rgba(28, 28, 30, 0.92);
   --shadow: 0 6px 20px rgba(0, 0, 0, 0.35);
   --card-border: #2c2c2e;
 }
@@ -93,7 +93,7 @@
   --muted: #8e8e93;
   --border: #f2d6e0;
   --seg-bg: #fce8f0;
-  --nav-bg: rgba(255, 255, 255, 0.9);
+  --nav-bg: rgba(255, 255, 255, 0.92);
   --shadow: 0 6px 20px rgba(255, 92, 151, 0.09);
   --card-border: #fae1ec;
 }
@@ -115,9 +115,17 @@ body {
   transition: background-color 0.25s ease, color 0.25s ease;
 }
 
-button { font: inherit; color: inherit; cursor: pointer; border: none; background: none; }
+button {
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+  border: none;
+  background: none;
+  touch-action: manipulation;
+  user-select: none;
+  -webkit-user-select: none;
+}
 button:active { transform: scale(0.96); }
-button { transition: transform 0.12s ease, background 0.2s, opacity 0.2s; }
 
 /* Górny pasek */
 .top-nav {
@@ -133,36 +141,37 @@ button { transition: transform 0.12s ease, background 0.2s, opacity 0.2s; }
   justify-content: space-between;
   border-bottom: 1px solid var(--border);
 }
-.top-title-wrap { display: flex; flex-direction: column; }
+.top-title-wrap { display: flex; flex-direction: column; gap: 2px; }
 .top-subtitle {
   font-size: 11px;
   font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.4px;
   color: var(--muted);
   display: flex;
   align-items: center;
   gap: 6px;
+  flex-wrap: wrap;
 }
 .sync-pill {
   font-size: 10px;
-  padding: 2px 7px;
+  padding: 2px 8px;
   border-radius: 10px;
   background: var(--seg-bg);
   color: var(--primary);
   font-weight: 700;
+  text-transform: none;
 }
 .top-title { font-size: 24px; font-weight: 800; letter-spacing: -0.5px; color: var(--primary); }
-.header-actions { display: flex; gap: 10px; align-items: center; }
 .theme-btn {
-  width: 40px;
-  height: 40px;
-  font-size: 19px;
+  width: 42px;
+  height: 42px;
+  font-size: 20px;
   display: flex;
   justify-content: center;
   align-items: center;
   background: var(--surface);
-  border-radius: 20px;
+  border-radius: 21px;
   box-shadow: var(--shadow);
   border: 1px solid var(--card-border);
 }
@@ -173,11 +182,11 @@ button { transition: transform 0.12s ease, background 0.2s, opacity 0.2s; }
   padding: 14px 16px 20px;
   max-width: 640px;
   margin: 0 auto;
-  animation: fadeIn 0.22s ease;
+  animation: fadeIn 0.2s ease;
 }
 .container.active { display: block; }
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(5px); }
+  from { opacity: 0; transform: translateY(4px); }
   to { opacity: 1; transform: none; }
 }
 
@@ -189,7 +198,6 @@ button { transition: transform 0.12s ease, background 0.2s, opacity 0.2s; }
   padding: 16px;
   box-shadow: var(--shadow);
   border: 1px solid var(--card-border);
-  transition: opacity 0.2s ease, transform 0.2s ease, border-color 0.2s ease;
 }
 .card-header {
   display: flex;
@@ -248,7 +256,7 @@ button { transition: transform 0.12s ease, background 0.2s, opacity 0.2s; }
   box-shadow: 0 4px 12px rgba(255, 92, 151, 0.3);
 }
 .btn-action {
-  padding: 6px 12px;
+  padding: 7px 12px;
   border-radius: 10px;
   font-size: 12px;
   font-weight: 600;
@@ -332,7 +340,7 @@ select.input-styled {
 .modal {
   display: none;
   position: fixed;
-  inset: 0;
+  top: 0; left: 0; right: 0; bottom: 0;
   background: rgba(0, 0, 0, 0.45);
   z-index: 1000;
   justify-content: center;
@@ -366,12 +374,12 @@ select.input-styled {
 }
 .sheet-title { font-size: 18px; font-weight: 700; color: var(--primary); }
 .sheet-close {
-  width: 32px;
-  height: 32px;
-  border-radius: 16px;
+  width: 34px;
+  height: 34px;
+  border-radius: 17px;
   background: var(--seg-bg);
   color: var(--primary);
-  font-size: 20px;
+  font-size: 22px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -379,7 +387,7 @@ select.input-styled {
 .sheet-body {
   overflow-y: auto;
   padding: 20px;
-  padding-bottom: calc(24px + env(safe-area-inset-bottom));
+  padding-bottom: calc(26px + env(safe-area-inset-bottom));
 }
 
 /* Pływający przycisk + (FAB) */
@@ -387,15 +395,15 @@ select.input-styled {
   position: fixed;
   bottom: calc(82px + env(safe-area-inset-bottom));
   right: 20px;
-  width: 56px;
-  height: 56px;
+  width: 58px;
+  height: 58px;
   background: var(--primary);
   color: #fff;
-  border-radius: 28px;
+  border-radius: 29px;
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 30px;
+  font-size: 32px;
   box-shadow: 0 6px 18px rgba(255, 92, 151, 0.45);
   z-index: 90;
 }
@@ -463,6 +471,8 @@ select.input-styled {
   pointer-events: none;
   transition: 0.25s ease;
   box-shadow: 0 4px 14px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  max-width: 90vw;
 }
 #toast.show { opacity: 1; transform: translate(-50%, 0); }
 </style>
@@ -473,12 +483,12 @@ select.input-styled {
   <div class="top-title-wrap">
     <div class="top-subtitle">
       <span>StudyPlanner Julii</span>
-      <span id="syncBadge" class="sync-pill">🌸 Gotowy</span>
+      <span id="jsStatus" class="sync-pill">⚠️ Brak JS (Odśwież / Otwórz w przeglądarce)</span>
     </div>
     <div class="top-title" id="topTitle">Plan Zajęć</div>
   </div>
   <div class="header-actions">
-    <button type="button" class="theme-btn" onclick="appActions.toggleTheme()" id="themeBtn" aria-label="Zmień motyw">🌸</button>
+    <button type="button" class="theme-btn" id="themeBtn" aria-label="Zmień motyw">🌸</button>
   </div>
 </header>
 
@@ -491,7 +501,7 @@ select.input-styled {
 <main id="view-homework" class="container">
   <div id="homework-filter-banner" class="filter-banner">
     <span id="homework-filter-text">Filtrowanie po przedmiocie</span>
-    <button type="button" class="btn-action" onclick="appActions.clearHwFilter()">Pokaż wszystkie</button>
+    <button type="button" class="btn-action" id="clearFilterBtn">Pokaż wszystkie</button>
   </div>
   <div id="homework-list"></div>
 </main>
@@ -507,34 +517,34 @@ select.input-styled {
 </main>
 
 <!-- Przycisk dodawania (+) -->
-<button type="button" class="fab" onclick="appActions.openModal()" aria-label="Dodaj">+</button>
+<button type="button" class="fab" id="fabBtn" aria-label="Dodaj">+</button>
 
 <!-- Dolna nawigacja -->
 <nav class="bottom-nav">
-  <button type="button" class="nav-tab active" data-tab="plan" onclick="appActions.switchTab('plan')">
+  <button type="button" class="nav-tab active" data-tab="plan">
     <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
     <span>Plan</span>
   </button>
-  <button type="button" class="nav-tab" data-tab="homework" onclick="appActions.switchTab('homework')">
+  <button type="button" class="nav-tab" data-tab="homework">
     <svg viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
     <span>Zadania</span>
   </button>
-  <button type="button" class="nav-tab" data-tab="subjects" onclick="appActions.switchTab('subjects')">
+  <button type="button" class="nav-tab" data-tab="subjects">
     <svg viewBox="0 0 24 24"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"/><path d="M6 6h10M6 10h10"/></svg>
     <span>Przedmioty</span>
   </button>
-  <button type="button" class="nav-tab" data-tab="info" onclick="appActions.switchTab('info')">
+  <button type="button" class="nav-tab" data-tab="info">
     <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
     <span>Informacje</span>
   </button>
 </nav>
 
 <!-- MODAL UNIWERSALNY -->
-<div id="mainModal" class="modal" onclick="if(event.target === this) appActions.closeModal()">
+<div id="mainModal" class="modal">
   <div class="sheet">
     <div class="sheet-header">
       <h3 class="sheet-title" id="modalTitle">Dodaj element</h3>
-      <button type="button" class="sheet-close" onclick="appActions.closeModal()" aria-label="Zamknij">&times;</button>
+      <button type="button" class="sheet-close" id="closeModalBtn" aria-label="Zamknij">&times;</button>
     </div>
     <div class="sheet-body" id="modalBody"></div>
   </div>
@@ -542,544 +552,614 @@ select.input-styled {
 
 <div id="toast">Zapisano!</div>
 
-<!-- 1. GŁÓWNY SKRYPT INTERFEJSU (Niezależny od sieci i blokerów reklam) -->
 <script>
-const $ = id => document.getElementById(id);
-const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({
-  '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
-}[c]));
-const uid = () => 'id_' + Date.now().toString(36) + '_' + Math.random().toString(36).slice(2, 7);
+(function() {
+  var $ = function(id) { return document.getElementById(id); };
 
-// Stan aplikacji (ładowany z pamięci podręcznej i synchronizowany z Firebase)
-const state = {
-  currentTab: 'plan',
-  subjects: JSON.parse(localStorage.getItem('sp_subjects') || '[]'),
-  homework: JSON.parse(localStorage.getItem('sp_homework') || '[]'),
-  infoList: JSON.parse(localStorage.getItem('sp_info') || '[]'),
-  homeworkFilterSubject: null
-};
+  // 1. Natychmiastowe potwierdzenie działania JS na pasku górnym
+  var statusEl = $('jsStatus');
+  if (statusEl) statusEl.textContent = '🌸 Aktywny';
 
-// Mostek do Firebase (podpinany przez moduł Firebase poniżej)
-window.fbBridge = {
-  upsert: async () => {},
-  remove: async () => {}
-};
-
-function saveLocalCache() {
-  try {
-    localStorage.setItem('sp_subjects', JSON.stringify(state.subjects));
-    localStorage.setItem('sp_homework', JSON.stringify(state.homework));
-    localStorage.setItem('sp_info', JSON.stringify(state.infoList));
-  } catch (e) {}
-}
-
-function toast(msg) {
-  const t = $('toast');
-  t.textContent = msg;
-  t.classList.add('show');
-  clearTimeout(t._timer);
-  t._timer = setTimeout(() => t.classList.remove('show'), 2200);
-}
-
-// Inicjalizacja motywu
-(function initTheme() {
-  const saved = localStorage.getItem('julia_theme');
-  if (saved === 'dark' || saved === 'light') {
-    document.documentElement.setAttribute('data-theme', saved);
-    $('themeBtn').textContent = saved === 'dark' ? '🌙' : '🌸';
-  }
-})();
-
-// Renderowanie wszystkich widoków
-function renderAll() {
-  saveLocalCache();
-  renderPlan();
-  renderHomework();
-  renderSubjects();
-  renderInfo();
-}
-
-// 1. Renderowanie: PLAN ZAJĘĆ
-function renderPlan() {
-  const c = $('plan-list');
-  const dni = ['Poniedziałek', 'Wtorek', 'Środa', 'Czwartek', 'Piątek'];
-  const todayIdx = new Date().getDay();
-
-  c.innerHTML = dni.map((dzien, idx) => {
-    const isToday = (idx + 1) === todayIdx;
-    const daySubjects = state.subjects
-      .filter(s => s.day === dzien)
-      .sort((a, b) => (a.time || '').localeCompare(b.time || ''));
-
-    return `
-      <div class="card" style="${isToday ? 'border-color:var(--primary);' : ''}">
-        <div class="card-header" style="margin-bottom:10px;">
-          <div class="card-title" style="color:var(--primary);">${dzien}</div>
-          ${isToday ? '<span class="badge badge-progress">Dzisiaj</span>' : ''}
-        </div>
-        ${daySubjects.length ? daySubjects.map(s => {
-          const cancelledInfo = state.infoList.find(i => i.cancelled && i.subject === s.name);
-          return `
-            <div class="plan-row" style="cursor:pointer;" data-act="filter-hw" data-sub="${esc(s.name)}">
-              <div>
-                ${s.time ? `<span class="plan-time">⏰ ${esc(s.time)}</span>` : ''}
-                <div style="font-weight:700;font-size:15px;${cancelledInfo ? 'text-decoration:line-through;color:var(--danger);' : ''}">${esc(s.name)}</div>
-                <div style="font-size:13px;color:var(--muted);margin-top:2px;">
-                  🚪 Sala: <b>${esc(s.room \vert{}\vert{} 'Brak')}</b> &bull; 👩‍🏫 ${esc(s.lecturer || 'Brak')}
-                </div>
-                ${cancelledInfo ? `<div style="font-size:12px;color:var(--danger);font-weight:600;margin-top:3px;">⚠️ Odwołane (${esc(cancelledInfo.date || 'brak daty')})</div>` : ''}
-              </div>
-              <span class="badge ${cancelledInfo ? 'badge-cancelled' : 'badge-progress'}">
-                ${cancelledInfo ? 'Odwołane' : 'Zajęcia'}
-              </span>
-            </div>
-          `;
-        }).join('') : '<div style="font-size:13px;color:var(--muted);padding:4px 0;">Brak zaplanowanych zajęć 🌸</div>'}
-      </div>
-    `;
-  }).join('');
-}
-
-// 2. Renderowanie: ZADANIA DOMOWE
-function renderHomework() {
-  const c = $('homework-list');
-  const banner = $('homework-filter-banner');
-
-  if (state.homeworkFilterSubject) {
-    banner.style.display = 'flex';
-    $('homework-filter-text').textContent = `📚 Przedmiot: ${state.homeworkFilterSubject}`;
-  } else {
-    banner.style.display = 'none';
-  }
-
-  const list = state.homework
-    .filter(h => !state.homeworkFilterSubject || h.subject === state.homeworkFilterSubject)
-    .sort((a, b) => {
-      if ((a.status === 'done') !== (b.status === 'done')) {
-        return a.status === 'done' ? 1 : -1;
+  // Bezpieczny wrapper na localStorage (nigdy nie wyrzuci błędu SecurityError)
+  var safeStore = {
+    get: function(key, fallback) {
+      try {
+        var val = window.localStorage.getItem(key);
+        return val ? JSON.parse(val) : fallback;
+      } catch (e) {
+        return fallback;
       }
-      return (b.createdAt || 0) - (a.createdAt || 0);
+    },
+    set: function(key, val) {
+      try {
+        window.localStorage.setItem(key, JSON.stringify(val));
+      } catch (e) {}
+    }
+  };
+
+  var esc = function(s) {
+    return String(s === null || s === undefined ? '' : s).replace(/[&<>"']/g, function(c) {
+      return {'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'}[c];
     });
+  };
 
-  if (!list.length) {
-    c.innerHTML = `
-      <div class="empty-state">
-        <div class="big">✨</div>
-        <div>Brak zadań domowych${state.homeworkFilterSubject ? ` z przedmiotu „${esc(state.homeworkFilterSubject)}”` : ''}</div>
-        <div class="hint">Kliknij przycisk „+” w prawym dolnym rogu, aby dodać nowe zadanie</div>
-      </div>`;
-    return;
+  var uid = function() {
+    return 'id_' + Date.now().toString(36) + '_' + Math.random().toString(36).slice(2, 7);
+  };
+
+  // Stan aplikacji
+  var state = {
+    currentTab: 'plan',
+    subjects: safeStore.get('sp_subjects', []),
+    homework: safeStore.get('sp_homework', []),
+    infoList: safeStore.get('sp_info', []),
+    homeworkFilterSubject: null
+  };
+
+  // Mostek do Firebase
+  var fbBridge = {
+    upsert: function() {},
+    remove: function() {}
+  };
+
+  function toast(msg) {
+    var t = $('toast');
+    if (!t) return;
+    t.textContent = msg;
+    t.classList.add('show');
+    clearTimeout(t._timer);
+    t._timer = setTimeout(function() { t.classList.remove('show'); }, 2400);
   }
 
-  const statusLabels = { pending: 'Nie rozpoczęte', progress: 'W trakcie', done: 'Skończone' };
-  const statusClasses = { pending: 'badge-pending', progress: 'badge-progress', done: 'badge-done' };
-
-  c.innerHTML = list.map(h => {
-    const st = h.status || 'pending';
-    return `
-      <div class="card ${st === 'done' ? 'hw-done' : ''}">
-        <div class="card-header">
-          <div class="card-title">${esc(h.title)}</div>
-          <span class="badge ${statusClasses[st] || 'badge-pending'}">${statusLabels[st] || 'Nie rozpoczęte'}</span>
-        </div>
-        <div style="font-size:13px;color:var(--muted);margin-bottom:8px;">
-          📚 Przedmiot: <b>${esc(h.subject || 'Ogólne')}</b> &bull; ⏳ Termin: <b>${esc(h.deadline || 'Brak')}</b>
-        </div>
-        ${h.desc ? `<div class="hw-desc" style="font-size:14px;margin-bottom:12px;line-height:1.45;white-space:pre-wrap;">${esc(h.desc)}</div>` : ''}
-        <div style="display:flex;gap:6px;flex-wrap:wrap;padding-top:8px;border-top:1px solid var(--border);">
-          <button type="button" class="btn-action ${st === 'pending' ? 'active-status' : ''}" data-act="set-hw-status" data-id="${h.id}" data-status="pending">Nie rozpoczęte</button>
-          <button type="button" class="btn-action ${st === 'progress' ? 'active-status' : ''}" data-act="set-hw-status" data-id="${h.id}" data-status="progress">W trakcie</button>
-          <button type="button" class="btn-action ${st === 'done' ? 'active-status' : ''}" data-act="set-hw-status" data-id="${h.id}" data-status="done">Skończone</button>
-          <button type="button" class="btn-action" style="margin-left:auto;" data-act="edit-hw" data-id="${h.id}">Edytuj</button>
-          <button type="button" class="btn-action danger" data-act="del-hw" data-id="${h.id}">Usuń</button>
-        </div>
-      </div>
-    `;
-  }).join('');
-}
-
-// 3. Renderowanie: PRZEDMIOTY
-function renderSubjects() {
-  const c = $('subjects-list');
-  if (!state.subjects.length) {
-    c.innerHTML = `
-      <div class="empty-state">
-        <div class="big">📚</div>
-        <div>Brak dodanych przedmiotów</div>
-        <div class="hint">Kliknij przycisk „+” w prawym dolnym rogu, aby dodać pierwszy przedmiot</div>
-      </div>`;
-    return;
+  // Inicjalizacja motywu
+  var savedTheme = safeStore.get('julia_theme', null);
+  if (savedTheme === 'dark' || savedTheme === 'light') {
+    document.documentElement.setAttribute('data-theme', savedTheme);
+    $('themeBtn').textContent = savedTheme === 'dark' ? '🌙' : '🌸';
   }
 
-  const sorted = [...state.subjects].sort((a, b) => (a.name || '').localeCompare(b.name || '', 'pl'));
-  c.innerHTML = sorted.map(s => {
-    const activeHwCount = state.homework.filter(h => h.subject === s.name && h.status !== 'done').length;
-    return `
-      <div class="card" style="cursor:pointer;" data-act="filter-hw" data-sub="${esc(s.name)}">
-        <div class="card-header">
-          <div>
-            <div class="card-title">${esc(s.name)}</div>
-            <span class="badge ${activeHwCount ? 'badge-progress' : 'badge-done'}" style="display:inline-block;margin-top:4px;">
-              ${activeHwCount ? `Aktywne zadania: ${activeHwCount}` : 'Brak zaległych zadań'}
-            </span>
-          </div>
-          <div style="display:flex;gap:6px;">
-            <button type="button" class="btn-action" data-act="edit-sub" data-id="${s.id}">Edytuj</button>
-            <button type="button" class="btn-action danger" data-act="del-sub" data-id="${s.id}">Usuń</button>
-          </div>
-        </div>
-        <div style="font-size:14px;color:var(--muted);line-height:1.6;margin-top:6px;">
-          👩‍🏫 Wykładowca: <b style="color:var(--text);">${esc(s.lecturer || 'Brak')}</b><br>
-          🚪 Sala: <b style="color:var(--text);">${esc(s.room || 'Brak')}</b><br>
-          ⏰ Termin: <b style="color:var(--text);">${esc(s.day || 'Brak')}, ${esc(s.time || 'Brak godziny')}</b>
-        </div>
-        <div style="margin-top:10px;font-size:12px;color:var(--primary);font-weight:700;">
-          Kliknij kartę, aby zobaczyć zadania domowe z tego przedmiotu →
-        </div>
-      </div>
-    `;
-  }).join('');
-}
-
-// 4. Renderowanie: INFORMACJE / ODWOŁANE
-function renderInfo() {
-  const c = $('info-list');
-  if (!state.infoList.length) {
-    c.innerHTML = `
-      <div class="empty-state">
-        <div class="big">📢</div>
-        <div>Brak ogłoszeń i komunikatów</div>
-        <div class="hint">Dodaj informację o zastępstwie, kolokwium lub odwołanych zajęciach</div>
-      </div>`;
-    return;
+  // Przełączanie motywu (Kwiatek / Księżyc)
+  function toggleTheme() {
+    var cur = document.documentElement.getAttribute('data-theme');
+    var sysDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+    var isDarkNow = cur === 'dark' || (!cur && sysDark);
+    var next = isDarkNow ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', next);
+    safeStore.set('julia_theme', next);
+    $('themeBtn').textContent = next === 'dark' ? '🌙' : '🌸';
+    toast(next === 'dark' ? 'Tryb ciemny 🌙' : 'Tryb jasny 🌸');
   }
 
-  const sorted = [...state.infoList].sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
-  c.innerHTML = sorted.map(item => `
-    <div class="card ${item.cancelled ? 'info-cancelled' : ''}">
-      <div class="card-header">
-        <div class="card-title">${esc(item.title)}</div>
-        ${item.cancelled
-          ? '<span class="badge badge-cancelled">⚠️ Zajęcia odwołane</span>'
-          : '<span class="badge badge-progress">📌 Informacja</span>'}
-      </div>
-      <div style="font-size:13px;color:var(--muted);margin-bottom:8px;">
-        📅 Data: <b>${esc(item.date || 'Brak')}</b> &bull; 📚 Przedmiot: <b>${esc(item.subject || 'Ogólne')}</b>
-      </div>
-      ${item.content ? `<div style="font-size:14px;margin-bottom:12px;line-height:1.45;white-space:pre-wrap;">${esc(item.content)}</div>` : ''}
-      <div style="display:flex;gap:6px;justify-content:flex-end;padding-top:8px;border-top:1px solid var(--border);">
-        <button type="button" class="btn-action" data-act="edit-info" data-id="${item.id}">Edytuj</button>
-        <button type="button" class="btn-action danger" data-act="del-info" data-id="${item.id}">Usuń komunikat</button>
-      </div>
-    </div>
-  `).join('');
-}
-
-// Akcje aplikacji
-window.appActions = {
-  switchTab(tab) {
+  // Przełączanie zakładek
+  function switchTab(tab) {
     state.currentTab = tab;
-    document.querySelectorAll('.container').forEach(c => c.classList.remove('active'));
-    document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+    var containers = document.querySelectorAll('.container');
+    for (var i = 0; i < containers.length; i++) {
+      containers[i].classList.remove('active');
+    }
+    var tabs = document.querySelectorAll('.nav-tab');
+    for (var j = 0; j < tabs.length; j++) {
+      if (tabs[j].getAttribute('data-tab') === tab) {
+        tabs[j].classList.add('active');
+      } else {
+        tabs[j].classList.remove('active');
+      }
+    }
+    var targetView = $('view-' + tab);
+    if (targetView) targetView.classList.add('active');
 
-    const view = $(`view-${tab}`);
-    const nav = document.querySelector(`[data-tab="${tab}"]`);
-    if (view) view.classList.add('active');
-    if (nav) nav.classList.add('active');
-
-    const titles = {
+    var titles = {
       plan: 'Plan Zajęć',
       homework: 'Zadania Domowe',
       subjects: 'Przedmioty',
       info: 'Tablica Informacyjna'
     };
     $('topTitle').textContent = titles[tab] || 'Plan Zajęć';
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  },
+    window.scrollTo(0, 0);
+  }
 
-  toggleTheme() {
-    const cur = document.documentElement.getAttribute('data-theme');
-    const isDarkNow = cur === 'dark' || (!cur && window.matchMedia('(prefers-color-scheme: dark)').matches);
-    const next = isDarkNow ? 'light' : 'dark';
-    document.documentElement.setAttribute('data-theme', next);
-    localStorage.setItem('julia_theme', next);
-    $('themeBtn').textContent = next === 'dark' ? '🌙' : '🌸';
-    toast(next === 'dark' ? 'Tryb ciemny 🌙' : 'Tryb jasny 🌸');
-  },
-
-  clearHwFilter() {
-    state.homeworkFilterSubject = null;
-    renderHomework();
-  },
-
-  closeModal() {
+  function closeModal() {
     $('mainModal').classList.remove('open');
-  },
+  }
 
-  confirmDelete(label, onYes) {
+  function confirmDelete(label, onYes) {
     $('modalTitle').textContent = 'Potwierdzenie usunięcia';
-    $('modalBody').innerHTML = `
-      <p style="font-size:15px;margin-bottom:18px;line-height:1.45;">Czy na pewno chcesz usunąć: <b>${esc(label)}</b>?</p>
-      <div style="display:flex;gap:10px;">
-        <button type="button" class="btn-large" style="background:var(--seg-bg);color:var(--text);" onclick="appActions.closeModal()">Anuluj</button>
-        <button type="button" class="btn-large" style="background:var(--danger);color:#fff;" id="confirmDelBtn">Usuń</button>
-      </div>
-    `;
-    $('mainModal').classList.add('open');$('confirmDelBtn').onclick = () => {
+    $('modalBody').innerHTML =
+      '<p style="font-size:15px;margin-bottom:18px;line-height:1.45;">Czy na pewno chcesz usunąć: <b>' + esc(label) + '</b>?</p>' +
+      '<div style="display:flex;gap:10px;">' +
+        '<button type="button" class="btn-large" style="background:var(--seg-bg);color:var(--text);" id="cancelDelBtn">Anuluj</button>' +
+        '<button type="button" class="btn-large" style="background:var(--danger);color:#fff;" id="confirmDelBtn">Usuń</button>' +
+      '</div>';
+    $('mainModal').classList.add('open');
+    $('cancelDelBtn').onclick = closeModal;
+    $('confirmDelBtn').onclick = function() {
       onYes();
-      appActions.closeModal();
+      closeModal();
     };
-  },
+  }
 
-  openModal(mode = null, editId = null) {
-    const m = $('mainModal');
-    const title = $('modalTitle');
-    const body = $('modalBody');
+  // Otwieranie formularza (+)
+  function openModal(mode, editId) {
+    var m = $('mainModal');
+    var title = $('modalTitle');
+    var body = $('modalBody');
     m.classList.add('open');
 
-    const targetMode = mode || (state.currentTab === 'plan' ? 'subjects' : state.currentTab);
-    const dni = ['Poniedziałek', 'Wtorek', 'Środa', 'Czwartek', 'Piątek'];
+    var targetMode = mode || (state.currentTab === 'plan' ? 'subjects' : state.currentTab);
+    var dni = ['Poniedziałek', 'Wtorek', 'Środa', 'Czwartek', 'Piątek'];
 
     if (targetMode === 'subjects') {
-      const existing = editId ? state.subjects.find(s => s.id === editId) : null;
-      title.textContent = existing ? 'Edytuj przedmiot' : 'Nowy przedmiot w planie';
-      body.innerHTML = `
-        <label class="form-label">Nazwa przedmiotu</label>
-        <input type="text" id="subName" class="input-styled" placeholder="np. Psychologia ogólna" value="${esc(existing?.name || '')}">
-        <label class="form-label">Wykładowca</label>
-        <input type="text" id="subLecturer" class="input-styled" placeholder="np. dr Anna Kowalska" value="${esc(existing?.lecturer || '')}">
-        <label class="form-label">Sala</label>
-        <input type="text" id="subRoom" class="input-styled" placeholder="np. A-204" value="${esc(existing?.room || '')}">
-        <label class="form-label">Dzień tygodnia</label>
-        <select id="subDay" class="input-styled">
-          ${dni.map(d => `<option value="${d}" ${existing?.day === d ? 'selected' : ''}>${d}</option>`).join('')}
-        </select>
-        <label class="form-label">Godzina zajęć</label>
-        <input type="text" id="subTime" class="input-styled" placeholder="np. 11:30 - 13:00" value="${esc(existing?.time || '')}">
-        <button type="button" class="btn-large btn-primary" data-act="save-sub" ${existing ? `data-id="${existing.id}" data-oldname="${esc(existing.name)}"` : ''}>
-          ${existing ? 'Zapisz zmiany' : 'Dodaj przedmiot'}
-        </button>
-      `;
+      var existingSub = editId ? state.subjects.find(function(s) { return s.id === editId; }) : null;
+      title.textContent = existingSub ? 'Edytuj przedmiot' : 'Nowy przedmiot w planie';
+      body.innerHTML =
+        '<label class="form-label">Nazwa przedmiotu</label>' +
+        '<input type="text" id="subName" class="input-styled" placeholder="np. Psychologia ogólna" value="' + esc(existingSub ? existingSub.name : '') + '">' +
+        '<label class="form-label">Wykładowca</label>' +
+        '<input type="text" id="subLecturer" class="input-styled" placeholder="np. dr Anna Kowalska" value="' + esc(existingSub ? existingSub.lecturer : '') + '">' +
+        '<label class="form-label">Sala</label>' +
+        '<input type="text" id="subRoom" class="input-styled" placeholder="np. A-204" value="' + esc(existingSub ? existingSub.room : '') + '">' +
+        '<label class="form-label">Dzień tygodnia</label>' +
+        '<select id="subDay" class="input-styled">' +
+          dni.map(function(d) {
+            return '<option value="' + d + '" ' + (existingSub && existingSub.day === d ? 'selected' : '') + '>' + d + '</option>';
+          }).join('') +
+        '</select>' +
+        '<label class="form-label">Godzina zajęć</label>' +
+        '<input type="text" id="subTime" class="input-styled" placeholder="np. 11:30 - 13:00" value="' + esc(existingSub ? existingSub.time : '') + '">' +
+        '<button type="button" class="btn-large btn-primary" data-act="save-sub" ' +
+          (existingSub ? 'data-id="' + esc(existingSub.id) + '" data-oldname="' + esc(existingSub.name) + '"' : '') + '>' +
+          (existingSub ? 'Zapisz zmiany' : 'Dodaj przedmiot') +
+        '</button>';
     } else if (targetMode === 'homework') {
-      const existing = editId ? state.homework.find(h => h.id === editId) : null;
-      title.textContent = existing ? 'Edytuj zadanie domowe' : 'Nowe zadanie domowe';
-      const selectedSub = existing?.subject || state.homeworkFilterSubject || '';
-      const subOpts = state.subjects.map(s =>
-        `<option value="${esc(s.name)}" ${s.name === selectedSub ? 'selected' : ''}>${esc(s.name)}</option>`
-      ).join('');
+      var existingHw = editId ? state.homework.find(function(h) { return h.id === editId; }) : null;
+      title.textContent = existingHw ? 'Edytuj zadanie domowe' : 'Nowe zadanie domowe';
+      var selectedSub = (existingHw && existingHw.subject) ? existingHw.subject : (state.homeworkFilterSubject || '');
+      var subOpts = state.subjects.map(function(s) {
+        return '<option value="' + esc(s.name) + '" ' + (s.name === selectedSub ? 'selected' : '') + '>' + esc(s.name) + '</option>';
+      }).join('');
 
-      body.innerHTML = `
-        <label class="form-label">Przedmiot</label>
-        <select id="hwSub" class="input-styled">
-          ${subOpts || '<option value="Ogólne">Ogólne (dodaj przedmioty w zakładce Przedmioty)</option>'}
-        </select>
-        <label class="form-label">Nazwa / tytuł zadania</label>
-        <input type="text" id="hwTitle" class="input-styled" placeholder="np. Przygotować prezentację" value="${esc(existing?.title || '')}">
-        <label class="form-label">Termin wykonania (deadline)</label>
-        <input type="text" id="hwDeadline" class="input-styled" placeholder="np. Piątek, 20:00 lub 24.10" value="${esc(existing?.deadline || '')}">
-        <label class="form-label">Opis zadania</label>
-        <textarea id="hwDesc" class="input-styled" placeholder="Szczegóły, rozdziały, wymagania..." style="height:95px;resize:none;">${esc(existing?.desc || '')}</textarea>
-        <button type="button" class="btn-large btn-primary" data-act="save-hw" ${existing ? `data-id="${existing.id}"` : ''}>
-          ${existing ? 'Zapisz zmiany' : 'Dodaj zadanie'}
-        </button>
-      `;
+      body.innerHTML =
+        '<label class="form-label">Przedmiot</label>' +
+        '<select id="hwSub" class="input-styled">' +
+          (subOpts || '<option value="Ogólne">Ogólne (dodaj przedmioty w zakładce Przedmioty)</option>') +
+        '</select>' +
+        '<label class="form-label">Nazwa / tytuł zadania</label>' +
+        '<input type="text" id="hwTitle" class="input-styled" placeholder="np. Przygotować prezentację" value="' + esc(existingHw ? existingHw.title : '') + '">' +
+        '<label class="form-label">Termin wykonania (deadline)</label>' +
+        '<input type="text" id="hwDeadline" class="input-styled" placeholder="np. Piątek, 20:00 lub 24.10" value="' + esc(existingHw ? existingHw.deadline : '') + '">' +
+        '<label class="form-label">Opis zadania</label>' +
+        '<textarea id="hwDesc" class="input-styled" placeholder="Szczegóły, rozdziały, wymagania..." style="height:95px;resize:none;">' + esc(existingHw ? existingHw.desc : '') + '</textarea>' +
+        '<button type="button" class="btn-large btn-primary" data-act="save-hw" ' + (existingHw ? 'data-id="' + esc(existingHw.id) + '"' : '') + '>' +
+          (existingHw ? 'Zapisz zmiany' : 'Dodaj zadanie') +
+        '</button>';
     } else if (targetMode === 'info') {
-      const existing = editId ? state.infoList.find(i => i.id === editId) : null;
-      title.textContent = existing ? 'Edytuj komunikat' : 'Nowy komunikat / Odwołanie';
-      const subOpts = state.subjects.map(s =>
-        `<option value="${esc(s.name)}" ${existing?.subject === s.name ? 'selected' : ''}>${esc(s.name)}</option>`
-      ).join('');
+      var existingInfo = editId ? state.infoList.find(function(i) { return i.id === editId; }) : null;
+      title.textContent = existingInfo ? 'Edytuj komunikat' : 'Nowy komunikat / Odwołanie';
+      var infoSubOpts = state.subjects.map(function(s) {
+        return '<option value="' + esc(s.name) + '" ' + (existingInfo && existingInfo.subject === s.name ? 'selected' : '') + '>' + esc(s.name) + '</option>';
+      }).join('');
 
-      body.innerHTML = `
-        <label class="form-label">Tytuł ogłoszenia</label>
-        <input type="text" id="infoTitle" class="input-styled" placeholder="np. Odwołany wykład / Zmiana sali" value="${esc(existing?.title || '')}">
-        <label class="form-label">Dotyczy przedmiotu</label>
-        <select id="infoSub" class="input-styled">
-          <option value="Ogólne">Ogólne (cała uczelnia)</option>
-          ${subOpts}
-        </select>
-        <label class="form-label">Data wydarzenia</label>
-        <input type="date" id="infoDate" class="input-styled" value="${esc(existing?.date || '')}">
-        <label style="display:flex;align-items:center;gap:10px;margin:4px 0 14px;font-weight:700;font-size:14px;color:var(--danger);cursor:pointer;">
-          <input type="checkbox" id="infoCancelled" style="width:20px;height:20px;accent-color:var(--danger);" ${existing?.cancelled ? 'checked' : ''}>
-          Oznacz jako „Zajęcia odwołane”
-        </label>
-        <label class="form-label">Powód / treść komunikatu</label>
-        <textarea id="infoContent" class="input-styled" placeholder="Wpisz powód odwołania lub szczegóły ogłoszenia..." style="height:95px;resize:none;">${esc(existing?.content || '')}</textarea>
-        <button type="button" class="btn-large btn-primary" data-act="save-info" ${existing ? `data-id="${existing.id}"` : ''}>
-          ${existing ? 'Zapisz zmiany' : 'Opublikuj komunikat'}
-        </button>
-      `;
+      body.innerHTML =
+        '<label class="form-label">Tytuł ogłoszenia</label>' +
+        '<input type="text" id="infoTitle" class="input-styled" placeholder="np. Odwołany wykład / Zmiana sali" value="' + esc(existingInfo ? existingInfo.title : '') + '">' +
+        '<label class="form-label">Dotyczy przedmiotu</label>' +
+        '<select id="infoSub" class="input-styled">' +
+          '<option value="Ogólne">Ogólne (cała uczelnia)</option>' +
+          infoSubOpts +
+        '</select>' +
+        '<label class="form-label">Data wydarzenia</label>' +
+        '<input type="date" id="infoDate" class="input-styled" value="' + esc(existingInfo ? existingInfo.date : '') + '">' +
+        '<label style="display:flex;align-items:center;gap:10px;margin:4px 0 14px;font-weight:700;font-size:14px;color:var(--danger);cursor:pointer;">' +
+          '<input type="checkbox" id="infoCancelled" style="width:20px;height:20px;accent-color:var(--danger);" ' + (existingInfo && existingInfo.cancelled ? 'checked' : '') + '>' +
+          'Oznacz jako „Zajęcia odwołane”' +
+        '</label>' +
+        '<label class="form-label">Powód / treść komunikatu</label>' +
+        '<textarea id="infoContent" class="input-styled" placeholder="Wpisz powód odwołania lub szczegóły ogłoszenia..." style="height:95px;resize:none;">' + esc(existingInfo ? existingInfo.content : '') + '</textarea>' +
+        '<button type="button" class="btn-large btn-primary" data-act="save-info" ' + (existingInfo ? 'data-id="' + esc(existingInfo.id) + '"' : '') + '>' +
+          (existingInfo ? 'Zapisz zmiany' : 'Opublikuj komunikat') +
+        '</button>';
     }
   }
-};
 
-// Delegacja kliknięć na kartach i w formularzach modalnych
-document.addEventListener('click', e => {
-  const target = e.target.nodeType === 1 ? e.target : e.target.parentElement;
-  if (!target) return;
-  const el = target.closest('[data-act]');
-  if (!el) return;
-
-  const act = el.dataset.act;
-
-  // Wkliknięcie się w przedmiot -> pokazuje zadania z tego przedmiotu
-  if (act === 'filter-hw') {
-    state.homeworkFilterSubject = el.dataset.sub;
+  // 2. Bezpośrednie podpięcie głównych przycisków
+  $('themeBtn').addEventListener('click', toggleTheme);
+  $('fabBtn').addEventListener('click', function() { openModal(); });
+  $('closeModalBtn').addEventListener('click', closeModal);
+  $('clearFilterBtn').addEventListener('click', function() {
+    state.homeworkFilterSubject = null;
     renderHomework();
-    appActions.switchTab('homework');
-    toast(`Zadania: ${state.homeworkFilterSubject}`);
+  });
+  $('mainModal').addEventListener('click', function(e) {
+    if (e.target === $('mainModal')) closeModal();
+  });
+
+  var navButtons = document.querySelectorAll('.nav-tab');
+  for (var i = 0; i < navButtons.length; i++) {
+    navButtons[i].addEventListener('click', function() {
+      switchTab(this.getAttribute('data-tab'));
+    });
   }
 
-  // PRZEDMIOTY: Edycja / Zapis / Usuwanie
-  else if (act === 'edit-sub') {
-    e.stopPropagation();
-    appActions.openModal('subjects', el.dataset.id);
-  } else if (act === 'save-sub') {
-    const name = $('subName').value.trim();
-    if (!name) return toast('Podaj nazwę przedmiotu!');
-    const id = el.dataset.id || uid();
-    const payload = {
-      name,
-      lecturer: $('subLecturer').value.trim(),
-      room: $('subRoom').value.trim(),
-      time: $('subTime').value.trim(),
-      day: $('subDay').value
-    };
+  // Renderowanie widoków
+  function renderAll() {
+    safeStore.set('sp_subjects', state.subjects);
+    safeStore.set('sp_homework', state.homework);
+    safeStore.set('sp_info', state.infoList);
+    renderPlan();
+    renderHomework();
+    renderSubjects();
+    renderInfo();
+  }
 
-    const idx = state.subjects.findIndex(s => s.id === id);
-    if (idx >= 0) {
-      state.subjects[idx] = { id, ...payload };
-      const oldName = el.dataset.oldname;
-      if (oldName && oldName !== name) {
-        state.homework.forEach(hw => {
-          if (hw.subject === oldName) {
-            hw.subject = name;
-            const { id: hwId, ...hwData } = hw;
-            window.fbBridge.upsert('homework', hwId, hwData);
-          }
+  function renderPlan() {
+    var c = $('plan-list');
+    var dni = ['Poniedziałek', 'Wtorek', 'Środa', 'Czwartek', 'Piątek'];
+    var todayIdx = new Date().getDay();
+
+    c.innerHTML = dni.map(function(dzien, idx) {
+      var isToday = (idx + 1) === todayIdx;
+      var daySubjects = state.subjects
+        .filter(function(s) { return s.day === dzien; })
+        .sort(function(a, b) { return (a.time || '').localeCompare(b.time || ''); });
+
+      var rowsHtml = daySubjects.length ? daySubjects.map(function(s) {
+        var cancelledInfo = state.infoList.find(function(inf) { return inf.cancelled && inf.subject === s.name; });
+        return (
+          '<div class="plan-row" style="cursor:pointer;" data-act="filter-hw" data-sub="' + esc(s.name) + '">' +
+            '<div>' +
+              (s.time ? '<span class="plan-time">⏰ ' + esc(s.time) + '</span>' : '') +
+              '<div style="font-weight:700;font-size:15px;' + (cancelledInfo ? 'text-decoration:line-through;color:var(--danger);' : '') + '">' + esc(s.name) + '</div>' +
+              '<div style="font-size:13px;color:var(--muted);margin-top:2px;">' +
+                '🚪 Sala: <b>' + esc(s.room || 'Brak') + '</b> &bull; 👩‍🏫 ' + esc(s.lecturer || 'Brak') +
+              '</div>' +
+              (cancelledInfo ? '<div style="font-size:12px;color:var(--danger);font-weight:600;margin-top:3px;">⚠️ Odwołane (' + esc(cancelledInfo.date || 'brak daty') + ')</div>' : '') +
+            '</div>' +
+            '<span class="badge ' + (cancelledInfo ? 'badge-cancelled' : 'badge-progress') + '">' +
+              (cancelledInfo ? 'Odwołane' : 'Zajęcia') +
+            '</span>' +
+          '</div>'
+        );
+      }).join('') : '<div style="font-size:13px;color:var(--muted);padding:4px 0;">Brak zaplanowanych zajęć 🌸</div>';
+
+      return (
+        '<div class="card" style="' + (isToday ? 'border-color:var(--primary);' : '') + '">' +
+          '<div class="card-header" style="margin-bottom:10px;">' +
+            '<div class="card-title" style="color:var(--primary);">' + dzien + '</div>' +
+            (isToday ? '<span class="badge badge-progress">Dzisiaj</span>' : '') +
+          '</div>' +
+          rowsHtml +
+        '</div>'
+      );
+    }).join('');
+  }
+
+  function renderHomework() {
+    var c = $('homework-list');
+    var banner = $('homework-filter-banner');
+
+    if (state.homeworkFilterSubject) {
+      banner.style.display = 'flex';
+      $('homework-filter-text').textContent = '📚 Przedmiot: ' + state.homeworkFilterSubject;
+    } else {
+      banner.style.display = 'none';
+    }
+
+    var list = state.homework
+      .filter(function(h) { return !state.homeworkFilterSubject || h.subject === state.homeworkFilterSubject; })
+      .sort(function(a, b) {
+        if ((a.status === 'done') !== (b.status === 'done')) {
+          return a.status === 'done' ? 1 : -1;
+        }
+        return (b.createdAt || 0) - (a.createdAt || 0);
+      });
+
+    if (!list.length) {
+      c.innerHTML =
+        '<div class="empty-state">' +
+          '<div class="big">✨</div>' +
+          '<div>Brak zadań domowych' + (state.homeworkFilterSubject ? ' z przedmiotu „' + esc(state.homeworkFilterSubject) + '”' : '') + '</div>' +
+          '<div class="hint">Kliknij przycisk „+” w prawym dolnym rogu, aby dodać zadanie</div>' +
+        '</div>';
+      return;
+    }
+
+    var statusLabels = { pending: 'Nie rozpoczęte', progress: 'W trakcie', done: 'Skończone' };
+    var statusClasses = { pending: 'badge-pending', progress: 'badge-progress', done: 'badge-done' };
+
+    c.innerHTML = list.map(function(h) {
+      var st = h.status || 'pending';
+      return (
+        '<div class="card ' + (st === 'done' ? 'hw-done' : '') + '">' +
+          '<div class="card-header">' +
+            '<div class="card-title">' + esc(h.title) + '</div>' +
+            '<span class="badge ' + (statusClasses[st] || 'badge-pending') + '">' + (statusLabels[st] || 'Nie rozpoczęte') + '</span>' +
+          '</div>' +
+          '<div style="font-size:13px;color:var(--muted);margin-bottom:8px;">' +
+            '📚 Przedmiot: <b>' + esc(h.subject || 'Ogólne') + '</b> &bull; ⏳ Termin: <b>' + esc(h.deadline || 'Brak') + '</b>' +
+          '</div>' +
+          (h.desc ? '<div class="hw-desc" style="font-size:14px;margin-bottom:12px;line-height:1.45;white-space:pre-wrap;">' + esc(h.desc) + '</div>' : '') +
+          '<div style="display:flex;gap:6px;flex-wrap:wrap;padding-top:8px;border-top:1px solid var(--border);">' +
+            '<button type="button" class="btn-action ' + (st === 'pending' ? 'active-status' : '') + '" data-act="set-hw-status" data-id="' + esc(h.id) + '" data-status="pending">Nie rozpoczęte</button>' +
+            '<button type="button" class="btn-action ' + (st === 'progress' ? 'active-status' : '') + '" data-act="set-hw-status" data-id="' + esc(h.id) + '" data-status="progress">W trakcie</button>' +
+            '<button type="button" class="btn-action ' + (st === 'done' ? 'active-status' : '') + '" data-act="set-hw-status" data-id="' + esc(h.id) + '" data-status="done">Skończone</button>' +
+            '<button type="button" class="btn-action" style="margin-left:auto;" data-act="edit-hw" data-id="' + esc(h.id) + '">Edytuj</button>' +
+            '<button type="button" class="btn-action danger" data-act="del-hw" data-id="' + esc(h.id) + '">Usuń</button>' +
+          '</div>' +
+        '</div>'
+      );
+    }).join('');
+  }
+
+  function renderSubjects() {
+    var c = $('subjects-list');
+    if (!state.subjects.length) {
+      c.innerHTML =
+        '<div class="empty-state">' +
+          '<div class="big">📚</div>' +
+          '<div>Brak dodanych przedmiotów</div>' +
+          '<div class="hint">Kliknij przycisk „+” w prawym dolnym rogu, aby dodać pierwszy przedmiot</div>' +
+        '</div>';
+      return;
+    }
+
+    var sorted = state.subjects.slice().sort(function(a, b) {
+      return (a.name || '').localeCompare(b.name || '', 'pl');
+    });
+
+    c.innerHTML = sorted.map(function(s) {
+      var activeHwCount = state.homework.filter(function(h) { return h.subject === s.name && h.status !== 'done'; }).length;
+      return (
+        '<div class="card" style="cursor:pointer;" data-act="filter-hw" data-sub="' + esc(s.name) + '">' +
+          '<div class="card-header">' +
+            '<div>' +
+              '<div class="card-title">' + esc(s.name) + '</div>' +
+              '<span class="badge ' + (activeHwCount ? 'badge-progress' : 'badge-done') + '" style="display:inline-block;margin-top:4px;">' +
+                (activeHwCount ? 'Aktywne zadania: ' + activeHwCount : 'Brak zaległych zadań') +
+              '</span>' +
+            '</div>' +
+            '<div style="display:flex;gap:6px;">' +
+              '<button type="button" class="btn-action" data-act="edit-sub" data-id="' + esc(s.id) + '">Edytuj</button>' +
+              '<button type="button" class="btn-action danger" data-act="del-sub" data-id="' + esc(s.id) + '">Usuń</button>' +
+            '</div>' +
+          '</div>' +
+          '<div style="font-size:14px;color:var(--muted);line-height:1.6;margin-top:6px;">' +
+            '👩‍🏫 Wykładowca: <b style="color:var(--text);">' + esc(s.lecturer || 'Brak') + '</b><br>' +
+            '🚪 Sala: <b style="color:var(--text);">' + esc(s.room || 'Brak') + '</b><br>' +
+            '⏰ Termin: <b style="color:var(--text);">' + esc(s.day || 'Brak') + ', ' + esc(s.time || 'Brak godziny') + '</b>' +
+          '</div>' +
+          '<div style="margin-top:10px;font-size:12px;color:var(--primary);font-weight:700;">' +
+            'Kliknij kartę, aby zobaczyć powiązane zadania domowe →' +
+          '</div>' +
+        '</div>'
+      );
+    }).join('');
+  }
+
+  function renderInfo() {
+    var c = $('info-list');
+    if (!state.infoList.length) {
+      c.innerHTML =
+        '<div class="empty-state">' +
+          '<div class="big">📢</div>' +
+          '<div>Brak ogłoszeń i komunikatów</div>' +
+          '<div class="hint">Dodaj informację o zastępstwie, kolokwium lub odwołanych zajęciach</div>' +
+        '</div>';
+      return;
+    }
+
+    var sorted = state.infoList.slice().sort(function(a, b) {
+      return (b.createdAt || 0) - (a.createdAt || 0);
+    });
+
+    c.innerHTML = sorted.map(function(item) {
+      return (
+        '<div class="card ' + (item.cancelled ? 'info-cancelled' : '') + '">' +
+          '<div class="card-header">' +
+            '<div class="card-title">' + esc(item.title) + '</div>' +
+            (item.cancelled
+              ? '<span class="badge badge-cancelled">⚠️ Zajęcia odwołane</span>'
+              : '<span class="badge badge-progress">📌 Informacja</span>') +
+          '</div>' +
+          '<div style="font-size:13px;color:var(--muted);margin-bottom:8px;">' +
+            '📅 Data: <b>' + esc(item.date || 'Brak') + '</b> &bull; 📚 Przedmiot: <b>' + esc(item.subject || 'Ogólne') + '</b>' +
+          '</div>' +
+          (item.content ? '<div style="font-size:14px;margin-bottom:12px;line-height:1.45;white-space:pre-wrap;">' + esc(item.content) + '</div>' : '') +
+          '<div style="display:flex;gap:6px;justify-content:flex-end;padding-top:8px;border-top:1px solid var(--border);">' +
+            '<button type="button" class="btn-action" data-act="edit-info" data-id="' + esc(item.id) + '">Edytuj</button>' +
+            '<button type="button" class="btn-action danger" data-act="del-info" data-id="' + esc(item.id) + '">Usuń komunikat</button>' +
+          '</div>' +
+        '</div>'
+      );
+    }).join('');
+  }
+
+  // Obsługa akcji na kartach i w formularzach
+  document.addEventListener('click', function(e) {
+    var target = e.target.nodeType === 1 ? e.target : e.target.parentElement;
+    if (!target) return;
+    var el = target.closest('[data-act]');
+    if (!el) return;
+
+    var act = el.getAttribute('data-act');
+
+    if (act === 'filter-hw') {
+      state.homeworkFilterSubject = el.getAttribute('data-sub');
+      renderHomework();
+      switchTab('homework');
+      toast('Zadania: ' + state.homeworkFilterSubject);
+    }
+    else if (act === 'edit-sub') {
+      e.stopPropagation();
+      openModal('subjects', el.getAttribute('data-id'));
+    }
+    else if (act === 'save-sub') {
+      var name = $('subName').value.trim();
+      if (!name) return toast('Podaj nazwę przedmiotu!');
+      var id = el.getAttribute('data-id') || uid();
+      var payload = {
+        name: name,
+        lecturer: $('subLecturer').value.trim(),
+        room: $('subRoom').value.trim(),
+        time: $('subTime').value.trim(),
+        day: $('subDay').value
+      };
+
+      var idx = state.subjects.findIndex(function(s) { return s.id === id; });
+      if (idx >= 0) {
+        state.subjects[idx] = Object.assign({ id: id }, payload);
+        var oldName = el.getAttribute('data-oldname');
+        if (oldName && oldName !== name) {
+          state.homework.forEach(function(hw) {
+            if (hw.subject === oldName) {
+              hw.subject = name;
+              fbBridge.upsert('homework', hw.id, {
+                subject: hw.subject,
+                title: hw.title,
+                deadline: hw.deadline,
+                desc: hw.desc,
+                status: hw.status,
+                createdAt: hw.createdAt
+              });
+            }
+          });
+        }
+        toast('Zaktualizowano przedmiot!');
+      } else {
+        state.subjects.push(Object.assign({ id: id }, payload));
+        toast('Dodano przedmiot!');
+      }
+
+      renderAll();
+      closeModal();
+      fbBridge.upsert('subjects', id, payload);
+    }
+    else if (act === 'del-sub') {
+      e.stopPropagation();
+      var subId = el.getAttribute('data-id');
+      var subItem = state.subjects.find(function(s) { return s.id === subId; });
+      confirmDelete(subItem ? subItem.name : 'przedmiot', function() {
+        state.subjects = state.subjects.filter(function(s) { return s.id !== subId; });
+        renderAll();
+        toast('Usunięto przedmiot');
+        fbBridge.remove('subjects', subId);
+      });
+    }
+    else if (act === 'edit-hw') {
+      openModal('homework', el.getAttribute('data-id'));
+    }
+    else if (act === 'save-hw') {
+      var hwTitle = $('hwTitle').value.trim();
+      if (!hwTitle) return toast('Podaj tytuł zadania!');
+      var hwId = el.getAttribute('data-id') || uid();
+      var existingHw = state.homework.find(function(h) { return h.id === hwId; });
+
+      var hwPayload = {
+        subject: $('hwSub').value,
+        title: hwTitle,
+        deadline: $('hwDeadline').value.trim(),
+        desc: $('hwDesc').value.trim(),
+        status: existingHw ? existingHw.status : 'pending',
+        createdAt: existingHw ? existingHw.createdAt : Date.now()
+      };
+
+      var hwIdx = state.homework.findIndex(function(h) { return h.id === hwId; });
+      if (hwIdx >= 0) {
+        state.homework[hwIdx] = Object.assign({ id: hwId }, hwPayload);
+        toast('Zaktualizowano zadanie!');
+      } else {
+        state.homework.push(Object.assign({ id: hwId }, hwPayload));
+        toast('Dodano zadanie!');
+      }
+
+      renderAll();
+      closeModal();
+      fbBridge.upsert('homework', hwId, hwPayload);
+    }
+    else if (act === 'set-hw-status') {
+      var stId = el.getAttribute('data-id');
+      var newStatus = el.getAttribute('data-status');
+      var targetHw = state.homework.find(function(h) { return h.id === stId; });
+      if (targetHw) {
+        targetHw.status = newStatus;
+        renderAll();
+        toast('Zmieniono status zadania');
+        fbBridge.upsert('homework', stId, {
+          subject: targetHw.subject,
+          title: targetHw.title,
+          deadline: targetHw.deadline,
+          desc: targetHw.desc,
+          status: targetHw.status,
+          createdAt: targetHw.createdAt
         });
       }
-      toast('Zaktualizowano przedmiot!');
-    } else {
-      state.subjects.push({ id, ...payload });
-      toast('Dodano przedmiot!');
     }
-
-    renderAll();
-    appActions.closeModal();
-    window.fbBridge.upsert('subjects', id, payload);
-  } else if (act === 'del-sub') {
-    e.stopPropagation();
-    const id = el.dataset.id;
-    const item = state.subjects.find(s => s.id === id);
-    appActions.confirmDelete(item?.name || 'przedmiot', () => {
-      state.subjects = state.subjects.filter(s => s.id !== id);
-      renderAll();
-      toast('Usunięto przedmiot');
-      window.fbBridge.remove('subjects', id);
-    });
-  }
-
-  // ZADANIA DOMOWE: Edycja / Zapis / Status / Usuwanie
-  else if (act === 'edit-hw') {
-    appActions.openModal('homework', el.dataset.id);
-  } else if (act === 'save-hw') {
-    const title = $('hwTitle').value.trim();
-    if (!title) return toast('Podaj tytuł zadania!');
-    const id = el.dataset.id || uid();
-    const existing = state.homework.find(h => h.id === id);
-
-    const payload = {
-      subject: $('hwSub').value,
-      title,
-      deadline: $('hwDeadline').value.trim(),
-      desc: $('hwDesc').value.trim(),
-      status: existing?.status || 'pending',
-      createdAt: existing?.createdAt || Date.now()
-    };
-
-    const idx = state.homework.findIndex(h => h.id === id);
-    if (idx >= 0) {
-      state.homework[idx] = { id, ...payload };
-      toast('Zaktualizowano zadanie!');
-    } else {
-      state.homework.push({ id, ...payload });
-      toast('Dodano zadanie!');
+    else if (act === 'del-hw') {
+      var delHwId = el.getAttribute('data-id');
+      var delHwItem = state.homework.find(function(h) { return h.id === delHwId; });
+      confirmDelete(delHwItem ? delHwItem.title : 'zadanie domowe', function() {
+        state.homework = state.homework.filter(function(h) { return h.id !== delHwId; });
+        renderAll();
+        toast('Usunięto zadanie');
+        fbBridge.remove('homework', delHwId);
+      });
     }
-
-    renderAll();
-    appActions.closeModal();
-    window.fbBridge.upsert('homework', id, payload);
-  } else if (act === 'set-hw-status') {
-    const id = el.dataset.id;
-    const status = el.dataset.status;
-    const hw = state.homework.find(h => h.id === id);
-    if (hw) {
-      hw.status = status;
-      renderAll();
-      toast('Zmieniono status zadania');
-      const { id: _, ...data } = hw;
-      window.fbBridge.upsert('homework', id, data);
+    else if (act === 'edit-info') {
+      openModal('info', el.getAttribute('data-id'));
     }
-  } else if (act === 'del-hw') {
-    const id = el.dataset.id;
-    const item = state.homework.find(h => h.id === id);
-    appActions.confirmDelete(item?.title || 'zadanie domowe', () => {
-      state.homework = state.homework.filter(h => h.id !== id);
+    else if (act === 'save-info') {
+      var infoTitle = $('infoTitle').value.trim();
+      if (!infoTitle) return toast('Podaj tytuł komunikatu!');
+      var infoId = el.getAttribute('data-id') || uid();
+      var existingInf = state.infoList.find(function(i) { return i.id === infoId; });
+
+      var infoPayload = {
+        title: infoTitle,
+        subject: $('infoSub').value,
+        date: $('infoDate').value,
+        cancelled: $('infoCancelled').checked,
+        content: $('infoContent').value.trim(),
+        createdAt: existingInf ? existingInf.createdAt : Date.now()
+      };
+
+      var infoIdx = state.infoList.findIndex(function(i) { return i.id === infoId; });
+      if (infoIdx >= 0) {
+        state.infoList[infoIdx] = Object.assign({ id: infoId }, infoPayload);
+        toast('Zaktualizowano komunikat!');
+      } else {
+        state.infoList.push(Object.assign({ id: infoId }, infoPayload));
+        toast('Opublikowano komunikat!');
+      }
+
       renderAll();
-      toast('Usunięto zadanie');
-      window.fbBridge.remove('homework', id);
-    });
-  }
-
-  // INFORMACJE: Edycja / Zapis / Usuwanie
-  else if (act === 'edit-info') {
-    appActions.openModal('info', el.dataset.id);
-  } else if (act === 'save-info') {
-    const title = $('infoTitle').value.trim();
-    if (!title) return toast('Podaj tytuł komunikatu!');
-    const id = el.dataset.id || uid();
-    const existing = state.infoList.find(i => i.id === id);
-
-    const payload = {
-      title,
-      subject: $('infoSub').value,
-      date: $('infoDate').value,
-      cancelled: $('infoCancelled').checked,
-      content: $('infoContent').value.trim(),
-      createdAt: existing?.createdAt || Date.now()
-    };
-
-    const idx = state.infoList.findIndex(i => i.id === id);
-    if (idx >= 0) {
-      state.infoList[idx] = { id, ...payload };
-      toast('Zaktualizowano komunikat!');
-    } else {
-      state.infoList.push({ id, ...payload });
-      toast('Opublikowano komunikat!');
+      closeModal();
+      fbBridge.upsert('info', infoId, infoPayload);
     }
+    else if (act === 'del-info') {
+      var delInfoId = el.getAttribute('data-id');
+      var delInfoItem = state.infoList.find(function(i) { return i.id === delInfoId; });
+      confirmDelete(delInfoItem ? delInfoItem.title : 'komunikat', function() {
+        state.infoList = state.infoList.filter(function(i) { return i.id !== delInfoId; });
+        renderAll();
+        toast('Usunięto komunikat');
+        fbBridge.remove('info', delInfoId);
+      });
+    }
+  });
 
-    renderAll();
-    appActions.closeModal();
-    window.fbBridge.upsert('info', id, payload);
-  } else if (act === 'del-info') {
-    const id = el.dataset.id;
-    const item = state.infoList.find(i => i.id === id);
-    appActions.confirmDelete(item?.title || 'komunikat', () => {
-      state.infoList = state.infoList.filter(i => i.id !== id);
-      renderAll();
-      toast('Usunięto komunikat');
-      window.fbBridge.remove('info', id);
-    });
-  }
-});
+  // Pierwsze wyrenderowanie na starcie
+  renderAll();
 
-// Pierwsze wyrenderowanie przy starcie
-renderAll();
+  // Udostępnienie uchwytów dla modułu Firebase
+  window.__studyPlanner = {
+    state: state,
+    renderAll: renderAll,
+    toast: toast,
+    setBridge: function(b) { fbBridge = b; }
+  };
+})();
 </script>
 
-<!-- 2. MODUŁ SYNCHRONIZACJI FIREBASE FIRESTORE (SDK v10) -->
+<!-- MODUŁ FIREBASE FIRESTORE (SDK v10) -->
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
 import {
@@ -1091,7 +1171,6 @@ import {
   deleteDoc
 } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
-// Konfiguracja Firebase dla projektu planjulki-7e81e
 const firebaseConfig = {
   apiKey: "AIzaSyDnlwPRXJEkosQ4grxnMz2vxyaWUP8wfzM",
   authDomain: "planjulki-7e81e.firebaseapp.com",
@@ -1101,53 +1180,58 @@ const firebaseConfig = {
   appId: "1:574338621523:web:935d7a788343e70a8a26a6"
 };
 
-try {
-  const app = initializeApp(firebaseConfig);
-  const db = getFirestore(app);
-  const syncBadge = document.getElementById('syncBadge');
+const statusEl = document.getElementById('jsStatus');
+const sp = window.__studyPlanner;
 
-  // Podpięcie metod zapisu i usuwania do głównego skryptu
-  window.fbBridge = {
-    async upsert(colName, id, data) {
-      try {
-        await setDoc(doc(db, colName, id), data, { merge: true });
-      } catch (err) {
-        console.warn("Błąd zapisu do Firestore:", err);
+if (sp) {
+  try {
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    sp.setBridge({
+      async upsert(colName, id, data) {
+        try {
+          await setDoc(doc(db, colName, id), data, { merge: true });
+        } catch (err) {
+          console.error("Błąd zapisu Firestore:", err);
+          if (statusEl) statusEl.textContent = '⚠️ Błąd zapisu FB';
+          sp.toast('Zapisano lokalnie (sprawdź reguły Firestore w konsoli)');
+        }
+      },
+      async remove(colName, id) {
+        try {
+          await deleteDoc(doc(db, colName, id));
+        } catch (err) {
+          console.error("Błąd usuwania Firestore:", err);
+        }
       }
-    },
-    async remove(colName, id) {
-      try {
-        await deleteDoc(doc(db, colName, id));
-      } catch (err) {
-        console.warn("Błąd usuwania z Firestore:", err);
-      }
-    }
-  };
+    });
 
-  // Nasłuchiwanie kolekcji w czasie rzeczywistym
-  onSnapshot(collection(db, "subjects"), snap => {
-    state.subjects = [];
-    snap.forEach(d => state.subjects.push({ id: d.id, ...d.data() }));
-    renderAll();
-    if (syncBadge) syncBadge.textContent = '☁️ Live';
-  }, err => {
-    console.warn("Firestore subjects error:", err);
-    if (syncBadge) syncBadge.textContent = '📱 Lokalnie';
-  });
+    onSnapshot(collection(db, "subjects"), snap => {
+      sp.state.subjects = [];
+      snap.forEach(d => sp.state.subjects.push({ id: d.id, ...d.data() }));
+      sp.renderAll();
+      if (statusEl) statusEl.textContent = '☁️ Firebase Live';
+    }, err => {
+      console.warn("Błąd odczytu subjects z Firestore:", err);
+      if (statusEl) statusEl.textContent = '📱 Tryb lokalny (' + (err.code || 'offline') + ')';
+    });
 
-  onSnapshot(collection(db, "homework"), snap => {
-    state.homework = [];
-    snap.forEach(d => state.homework.push({ id: d.id, ...d.data() }));
-    renderAll();
-  });
+    onSnapshot(collection(db, "homework"), snap => {
+      sp.state.homework = [];
+      snap.forEach(d => sp.state.homework.push({ id: d.id, ...d.data() }));
+      sp.renderAll();
+    });
 
-  onSnapshot(collection(db, "info"), snap => {
-    state.infoList = [];
-    snap.forEach(d => state.infoList.push({ id: d.id, ...d.data() }));
-    renderAll();
-  });
-} catch (err) {
-  console.warn("Inicjalizacja Firebase nie powiodła się, praca w trybie lokalnym:", err);
+    onSnapshot(collection(db, "info"), snap => {
+      sp.state.infoList = [];
+      snap.forEach(d => sp.state.infoList.push({ id: d.id, ...d.data() }));
+      sp.renderAll();
+    });
+  } catch (err) {
+    console.warn("Błąd inicjalizacji Firebase:", err);
+    if (statusEl) statusEl.textContent = '📱 Tryb lokalny';
+  }
 }
 </script>
 </body>
