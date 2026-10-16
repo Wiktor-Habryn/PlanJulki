@@ -126,6 +126,7 @@ button {
   -webkit-user-select: none;
 }
 button:active { transform: scale(0.96); }
+button:disabled { opacity: 0.45; pointer-events: none; }
 
 /* Górny pasek */
 .top-nav {
@@ -190,6 +191,40 @@ button:active { transform: scale(0.96); }
   to { opacity: 1; transform: none; }
 }
 
+/* Pasek narzędzi planu (Czyszczenie + Cofanie) */
+.plan-toolbar {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 14px;
+  flex-wrap: wrap;
+}
+.toolbar-btn {
+  flex: 1;
+  min-width: 140px;
+  padding: 10px 12px;
+  border-radius: 14px;
+  font-size: 13px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  background: var(--surface);
+  border: 1px solid var(--card-border);
+  box-shadow: var(--shadow);
+  color: var(--primary);
+}
+.toolbar-btn.danger {
+  color: var(--danger);
+  background: var(--danger-bg);
+  border-color: transparent;
+}
+.toolbar-btn.undo-active {
+  background: var(--primary-bg);
+  color: var(--primary);
+  border-color: var(--primary);
+}
+
 /* Karty */
 .card {
   background: var(--surface);
@@ -237,6 +272,7 @@ button:active { transform: scale(0.96); }
 .badge-progress { background: var(--primary-bg); color: var(--primary); }
 .badge-done { background: var(--success-bg); color: var(--success); }
 .badge-cancelled { background: var(--danger-bg); color: var(--danger); }
+.badge-muted { background: var(--seg-bg); color: var(--muted); }
 
 /* Przyciski */
 .btn-large {
@@ -255,8 +291,13 @@ button:active { transform: scale(0.96); }
   color: #fff;
   box-shadow: 0 4px 12px rgba(255, 92, 151, 0.3);
 }
+.btn-secondary {
+  background: var(--seg-bg);
+  color: var(--primary);
+  margin-bottom: 14px;
+}
 .btn-action {
-  padding: 7px 12px;
+  padding: 7px 11px;
   border-radius: 10px;
   font-size: 12px;
   font-weight: 600;
@@ -270,6 +311,10 @@ button:active { transform: scale(0.96); }
 .btn-action.danger {
   background: var(--danger-bg);
   color: var(--danger);
+}
+.btn-action.warning {
+  background: var(--warning-bg);
+  color: var(--warning);
 }
 
 /* Wiersze w planie zajęć */
@@ -293,7 +338,24 @@ button:active { transform: scale(0.96); }
   margin-bottom: 4px;
 }
 
-/* Formularze */
+/* Terminy wewnątrz karty przedmiotu */
+.slot-pill-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 8px;
+}
+.slot-pill {
+  font-size: 12px;
+  font-weight: 600;
+  background: var(--primary-soft);
+  border: 1px solid var(--border);
+  color: var(--text);
+  padding: 4px 10px;
+  border-radius: 10px;
+}
+
+/* Formularze i wiersze wielu terminów */
 .form-label {
   display: block;
   font-size: 12px;
@@ -320,6 +382,75 @@ select.input-styled {
   background-repeat: no-repeat;
   background-position: right 12px center;
   padding-right: 36px;
+}
+
+.seg-switch {
+  display: flex;
+  background: var(--seg-bg);
+  padding: 4px;
+  border-radius: 12px;
+  margin-bottom: 16px;
+}
+.seg-btn {
+  flex: 1;
+  padding: 8px 10px;
+  font-size: 13px;
+  font-weight: 700;
+  border-radius: 9px;
+  color: var(--muted);
+  text-align: center;
+}
+.seg-btn.active {
+  background: var(--surface);
+  color: var(--primary);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+.slot-editor-row {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+.slot-editor-top {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  margin-bottom: 8px;
+}
+.slot-editor-bottom {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+.slot-editor-row .input-styled {
+  margin-bottom: 0;
+  padding: 9px 11px;
+  font-size: 14px;
+}
+.slot-remove-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background: var(--danger-bg);
+  color: var(--danger);
+  font-weight: 700;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.no-slots-box {
+  background: var(--primary-soft);
+  border: 1px dashed var(--primary);
+  color: var(--muted);
+  border-radius: 12px;
+  padding: 12px;
+  font-size: 13px;
+  text-align: center;
+  margin-bottom: 12px;
+  line-height: 1.45;
 }
 
 /* Pasek filtrów */
@@ -356,7 +487,7 @@ select.input-styled {
   border-radius: 24px 24px 0 0;
   display: flex;
   flex-direction: column;
-  max-height: 88vh;
+  max-height: 90vh;
   animation: slideUp 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
 @keyframes slideUp {
@@ -483,7 +614,7 @@ select.input-styled {
   <div class="top-title-wrap">
     <div class="top-subtitle">
       <span>StudyPlanner Julii</span>
-      <span id="jsStatus" class="sync-pill">⚠️ Brak JS (Odśwież / Otwórz w przeglądarce)</span>
+      <span id="jsStatus" class="sync-pill">⚠️ Brak JS</span>
     </div>
     <div class="top-title" id="topTitle">Plan Zajęć</div>
   </div>
@@ -494,6 +625,14 @@ select.input-styled {
 
 <!-- 1. ZAKŁADKA: PLAN -->
 <main id="view-plan" class="container active">
+  <div class="plan-toolbar">
+    <button type="button" class="toolbar-btn" id="undoPlanBtn" disabled>
+      ↩️ Cofnij zmianę
+    </button>
+    <button type="button" class="toolbar-btn danger" id="clearPlanBtn">
+      🗑️ Wyczyść cały plan
+    </button>
+  </div>
   <div id="plan-list"></div>
 </main>
 
@@ -555,12 +694,11 @@ select.input-styled {
 <script>
 (function() {
   var $ = function(id) { return document.getElementById(id); };
+  var DNI = ['Poniedziałek', 'Wtorek', 'Środa', 'Czwartek', 'Piątek'];
 
-  // 1. Natychmiastowe potwierdzenie działania JS na pasku górnym
   var statusEl = $('jsStatus');
   if (statusEl) statusEl.textContent = '🌸 Aktywny';
 
-  // Bezpieczny wrapper na localStorage (nigdy nie wyrzuci błędu SecurityError)
   var safeStore = {
     get: function(key, fallback) {
       try {
@@ -587,20 +725,111 @@ select.input-styled {
     return 'id_' + Date.now().toString(36) + '_' + Math.random().toString(36).slice(2, 7);
   };
 
-  // Stan aplikacji
+  // Stan aplikacji + historia wersji planu do cofania (Undo)
   var state = {
     currentTab: 'plan',
     subjects: safeStore.get('sp_subjects', []),
     homework: safeStore.get('sp_homework', []),
     infoList: safeStore.get('sp_info', []),
+    planHistory: safeStore.get('sp_plan_history', []),
     homeworkFilterSubject: null
   };
 
-  // Mostek do Firebase
   var fbBridge = {
     upsert: function() {},
     remove: function() {}
   };
+
+  // Normalizacja terminów przedmiotu (obsługuje wiele dni/godzin lub brak dnia + starsze wpisy)
+  function getSubjectSlots(sub) {
+    if (!sub) return [];
+    if (Array.isArray(sub.slots)) {
+      return sub.slots.filter(function(sl) { return sl && sl.day && sl.day !== 'Brak'; });
+    }
+    if (sub.day && sub.day !== 'Brak' && sub.day !== '') {
+      return [{
+        slotId: 'legacy_' + (sub.id || '0'),
+        day: sub.day,
+        time: sub.time || '',
+        room: sub.room || ''
+      }];
+    }
+    return [];
+  }
+
+  // Zapis migawki planu przed zmianą (do przycisku "Cofnij zmianę")
+  function pushPlanSnapshot(reasonLabel) {
+    var snapshotItems = state.subjects.map(function(s) {
+      return {
+        id: s.id,
+        name: s.name || '',
+        lecturer: s.lecturer || '',
+        room: s.room || '',
+        slots: JSON.parse(JSON.stringify(getSubjectSlots(s)))
+      };
+    });
+    state.planHistory.push({
+      timestamp: Date.now(),
+      label: reasonLabel || 'Zmiana w planie',
+      items: snapshotItems
+    });
+    if (state.planHistory.length > 15) {
+      state.planHistory.shift();
+    }
+    safeStore.set('sp_plan_history', state.planHistory);
+    updateToolbarState();
+  }
+
+  // Przywrócenie poprzedniej wersji planu
+  function undoLastPlanChange() {
+    if (!state.planHistory.length) {
+      return toast('Brak wcześniejszych zmian do cofnięcia');
+    }
+    var lastSnap = state.planHistory.pop();
+    safeStore.set('sp_plan_history', state.planHistory);
+
+    lastSnap.items.forEach(function(savedSub) {
+      var slots = Array.isArray(savedSub.slots) ? savedSub.slots : [];
+      var payload = {
+        name: savedSub.name,
+        lecturer: savedSub.lecturer,
+        room: savedSub.room,
+        slots: slots,
+        day: slots.length ? slots[0].day : '',
+        time: slots.length ? slots[0].time : ''
+      };
+      var existingIdx = state.subjects.findIndex(function(s) { return s.id === savedSub.id; });
+      if (existingIdx >= 0) {
+        state.subjects[existingIdx] = Object.assign({ id: savedSub.id }, payload);
+      } else {
+        state.subjects.push(Object.assign({ id: savedSub.id }, payload));
+      }
+      fbBridge.upsert('subjects', savedSub.id, payload);
+    });
+
+    renderAll();
+    toast('Przywrócono: ' + (lastSnap.label || 'poprzednią wersję planu') + ' ↩️');
+  }
+
+  function updateToolbarState() {
+    var undoBtn = $('undoPlanBtn');
+    var clearBtn = $('clearPlanBtn');
+    if (undoBtn) {
+      var count = state.planHistory.length;
+      undoBtn.disabled = count === 0;
+      if (count > 0) {
+        undoBtn.classList.add('undo-active');
+        undoBtn.textContent = '↩️ Cofnij zmianę (' + count + ')';
+      } else {
+        undoBtn.classList.remove('undo-active');
+        undoBtn.textContent = '↩️ Cofnij zmianę';
+      }
+    }
+    if (clearBtn) {
+      var anySlot = state.subjects.some(function(s) { return getSubjectSlots(s).length > 0; });
+      clearBtn.disabled = !anySlot;
+    }
+  }
 
   function toast(msg) {
     var t = $('toast');
@@ -608,7 +837,7 @@ select.input-styled {
     t.textContent = msg;
     t.classList.add('show');
     clearTimeout(t._timer);
-    t._timer = setTimeout(function() { t.classList.remove('show'); }, 2400);
+    t._timer = setTimeout(function() { t.classList.remove('show'); }, 2500);
   }
 
   // Inicjalizacja motywu
@@ -618,7 +847,6 @@ select.input-styled {
     $('themeBtn').textContent = savedTheme === 'dark' ? '🌙' : '🌸';
   }
 
-  // Przełączanie motywu (Kwiatek / Księżyc)
   function toggleTheme() {
     var cur = document.documentElement.getAttribute('data-theme');
     var sysDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
@@ -630,7 +858,6 @@ select.input-styled {
     toast(next === 'dark' ? 'Tryb ciemny 🌙' : 'Tryb jasny 🌸');
   }
 
-  // Przełączanie zakładek
   function switchTab(tab) {
     state.currentTab = tab;
     var containers = document.querySelectorAll('.container');
@@ -662,23 +889,139 @@ select.input-styled {
     $('mainModal').classList.remove('open');
   }
 
-  function confirmDelete(label, onYes) {
-    $('modalTitle').textContent = 'Potwierdzenie usunięcia';
+  function confirmAction(titleText, messageHtml, confirmBtnText, onYes) {
+    $('modalTitle').textContent = titleText;
     $('modalBody').innerHTML =
-      '<p style="font-size:15px;margin-bottom:18px;line-height:1.45;">Czy na pewno chcesz usunąć: <b>' + esc(label) + '</b>?</p>' +
+      '<p style="font-size:15px;margin-bottom:18px;line-height:1.5;">' + messageHtml + '</p>' +
       '<div style="display:flex;gap:10px;">' +
-        '<button type="button" class="btn-large" style="background:var(--seg-bg);color:var(--text);" id="cancelDelBtn">Anuluj</button>' +
-        '<button type="button" class="btn-large" style="background:var(--danger);color:#fff;" id="confirmDelBtn">Usuń</button>' +
+        '<button type="button" class="btn-large" style="background:var(--seg-bg);color:var(--text);" id="cancelConfirmBtn">Anuluj</button>' +
+        '<button type="button" class="btn-large" style="background:var(--danger);color:#fff;" id="okConfirmBtn">' + esc(confirmBtnText) + '</button>' +
       '</div>';
     $('mainModal').classList.add('open');
-    $('cancelDelBtn').onclick = closeModal;
-    $('confirmDelBtn').onclick = function() {
+    $('cancelConfirmBtn').onclick = closeModal;
+    $('okConfirmBtn').onclick = function() {
       onYes();
       closeModal();
     };
   }
 
-  // Otwieranie formularza (+)
+  // Generator pojedynczego wiersza terminu (Dzień + Godzina + Sala) w modalu
+  function createSlotRowHtml(slotData) {
+    var dVal = (slotData && slotData.day) ? slotData.day : 'Poniedziałek';
+    var tVal = (slotData && slotData.time) ? slotData.time : '';
+    var rVal = (slotData && slotData.room) ? slotData.room : '';
+    var sId = (slotData && slotData.slotId) ? slotData.slotId : uid();
+
+    return (
+      '<div class="slot-editor-row" data-slot-id="' + esc(sId) + '">' +
+        '<div class="slot-editor-top">' +
+          '<select class="input-styled slot-day-input" style="flex:1;">' +
+            DNI.map(function(d) {
+              return '<option value="' + d + '" ' + (d === dVal ? 'selected' : '') + '>' + d + '</option>';
+            }).join('') +
+          '</select>' +
+          '<button type="button" class="slot-remove-btn" data-act="remove-slot-row" title="Usuń ten termin">&times;</button>' +
+        '</div>' +
+        '<div class="slot-editor-bottom">' +
+          '<input type="text" class="input-styled slot-time-input" style="flex:1.2;" placeholder="Godzina (np. 11:30 - 13:00)" value="' + esc(tVal) + '">' +
+          '<input type="text" class="input-styled slot-room-input" style="flex:0.8;" placeholder="Sala (opcj.)" value="' + esc(rVal) + '">' +
+        '</div>' +
+      '</div>'
+    );
+  }
+
+  function refreshEmptySlotsNotice() {
+    var container = $('slotsContainer');
+    var notice = $('noSlotsNotice');
+    if (!container || !notice) return;
+    var hasRows = container.querySelectorAll('.slot-editor-row').length > 0;
+    notice.style.display = hasRows ? 'none' : 'block';
+  }
+
+  function collectSlotsFromModal(defaultRoom) {
+    var container = $('slotsContainer');
+    if (!container) return [];
+    var rows = container.querySelectorAll('.slot-editor-row');
+    var result = [];
+    for (var i = 0; i < rows.length; i++) {
+      var r = rows[i];
+      var dayEl = r.querySelector('.slot-day-input');
+      var timeEl = r.querySelector('.slot-time-input');
+      var roomEl = r.querySelector('.slot-room-input');
+      var day = dayEl ? dayEl.value : 'Poniedziałek';
+      var time = timeEl ? timeEl.value.trim() : '';
+      var room = roomEl ? roomEl.value.trim() : '';
+      result.push({
+        slotId: r.getAttribute('data-slot-id') || uid(),
+        day: day,
+        time: time,
+        room: room || defaultRoom || ''
+      });
+    }
+    return result;
+  }
+
+  // Renderowanie formularza przedmiotu / planu wewnątrz modala
+  function renderSubjectModalContent(subMode, editId) {
+    var title = $('modalTitle');
+    var body = $('modalBody');
+    var existingSub = editId ? state.subjects.find(function(s) { return s.id === editId; }) : null;
+
+    var canPickExisting = !editId && state.subjects.length > 0;
+    var switchHtml = canPickExisting ? (
+      '<div class="seg-switch">' +
+        '<button type="button" class="seg-btn ' + (subMode === 'new' ? 'active' : '') + '" data-act="modal-sub-mode" data-mode="new">Nowy przedmiot</button>' +
+        '<button type="button" class="seg-btn ' + (subMode === 'existing' ? 'active' : '') + '" data-act="modal-sub-mode" data-mode="existing">Dopisz istniejący do planu</button>' +
+      '</div>'
+    ) : '';
+
+    if (subMode === 'existing' && canPickExisting) {
+      title.textContent = 'Dopisz przedmiot do planu';
+      var opts = state.subjects.map(function(s) {
+        return '<option value="' + esc(s.id) + '">' + esc(s.name) + (s.lecturer ? ' (' + esc(s.lecturer) + ')' : '') + '</option>';
+      }).join('');
+
+      body.innerHTML =
+        switchHtml +
+        '<label class="form-label">Wybierz przedmiot z bazy</label>' +
+        '<select id="existingSubSelect" class="input-styled">' + opts + '</select>' +
+        '<label class="form-label">Dni i godziny do dopisania w planie</label>' +
+        '<div id="slotsContainer">' + createSlotRowHtml(null) + '</div>' +
+        '<div id="noSlotsNotice" class="no-slots-box" style="display:none;">Brak wybranych terminów. Kliknij poniżej, aby dodać dzień i godzinę.</div>' +
+        '<button type="button" class="btn-large btn-secondary" data-act="add-slot-row">+ Dodaj kolejny dzień / godzinę</button>' +
+        '<button type="button" class="btn-large btn-primary" data-act="save-existing-to-plan">Dopisz terminy do planu</button>';
+      return;
+    }
+
+    title.textContent = existingSub ? 'Edytuj przedmiot i terminy' : 'Nowy przedmiot';
+    var initialSlots = existingSub ? getSubjectSlots(existingSub) : (state.currentTab === 'plan' ? [{ slotId: uid(), day: 'Poniedziałek', time: '', room: '' }] : []);
+
+    body.innerHTML =
+      switchHtml +
+      '<label class="form-label">Nazwa przedmiotu</label>' +
+      '<input type="text" id="subName" class="input-styled" placeholder="np. Psychologia ogólna" value="' + esc(existingSub ? existingSub.name : '') + '">' +
+      '<label class="form-label">Wykładowca</label>' +
+      '<input type="text" id="subLecturer" class="input-styled" placeholder="np. dr Anna Kowalska" value="' + esc(existingSub ? existingSub.lecturer : '') + '">' +
+      '<label class="form-label">Domyślna sala</label>' +
+      '<input type="text" id="subRoom" class="input-styled" placeholder="np. A-204" value="' + esc(existingSub ? existingSub.room : '') + '">' +
+      '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">' +
+        '<label class="form-label" style="margin:0 0 0 4px;">Dni i godziny w planie (opcjonalnie)</label>' +
+        '<button type="button" class="btn-action danger" style="padding:4px 8px;font-size:11px;" data-act="clear-modal-slots">Bez dnia w planie</button>' +
+      '</div>' +
+      '<div id="slotsContainer">' +
+        initialSlots.map(function(sl) { return createSlotRowHtml(sl); }).join('') +
+      '</div>' +
+      '<div id="noSlotsNotice" class="no-slots-box" style="display:' + (initialSlots.length ? 'none' : 'block') + ';">' +
+        '🌸 Ten przedmiot <b>nie ma przypisanego żadnego dnia</b> (będzie widoczny w bazie przedmiotów i zadaniach, ale poza planem). Kliknij poniżej, jeśli chcesz przypisać mu dni i godziny.' +
+      '</div>' +
+      '<button type="button" class="btn-large btn-secondary" data-act="add-slot-row">+ Dodaj dzień i godzinę</button>' +
+      '<button type="button" class="btn-large btn-primary" data-act="save-sub" ' +
+        (existingSub ? 'data-id="' + esc(existingSub.id) + '" data-oldname="' + esc(existingSub.name) + '"' : '') + '>' +
+        (existingSub ? 'Zapisz zmiany' : 'Zapisz przedmiot') +
+      '</button>';
+  }
+
+  // Otwieranie modala
   function openModal(mode, editId) {
     var m = $('mainModal');
     var title = $('modalTitle');
@@ -686,30 +1029,9 @@ select.input-styled {
     m.classList.add('open');
 
     var targetMode = mode || (state.currentTab === 'plan' ? 'subjects' : state.currentTab);
-    var dni = ['Poniedziałek', 'Wtorek', 'Środa', 'Czwartek', 'Piątek'];
 
     if (targetMode === 'subjects') {
-      var existingSub = editId ? state.subjects.find(function(s) { return s.id === editId; }) : null;
-      title.textContent = existingSub ? 'Edytuj przedmiot' : 'Nowy przedmiot w planie';
-      body.innerHTML =
-        '<label class="form-label">Nazwa przedmiotu</label>' +
-        '<input type="text" id="subName" class="input-styled" placeholder="np. Psychologia ogólna" value="' + esc(existingSub ? existingSub.name : '') + '">' +
-        '<label class="form-label">Wykładowca</label>' +
-        '<input type="text" id="subLecturer" class="input-styled" placeholder="np. dr Anna Kowalska" value="' + esc(existingSub ? existingSub.lecturer : '') + '">' +
-        '<label class="form-label">Sala</label>' +
-        '<input type="text" id="subRoom" class="input-styled" placeholder="np. A-204" value="' + esc(existingSub ? existingSub.room : '') + '">' +
-        '<label class="form-label">Dzień tygodnia</label>' +
-        '<select id="subDay" class="input-styled">' +
-          dni.map(function(d) {
-            return '<option value="' + d + '" ' + (existingSub && existingSub.day === d ? 'selected' : '') + '>' + d + '</option>';
-          }).join('') +
-        '</select>' +
-        '<label class="form-label">Godzina zajęć</label>' +
-        '<input type="text" id="subTime" class="input-styled" placeholder="np. 11:30 - 13:00" value="' + esc(existingSub ? existingSub.time : '') + '">' +
-        '<button type="button" class="btn-large btn-primary" data-act="save-sub" ' +
-          (existingSub ? 'data-id="' + esc(existingSub.id) + '" data-oldname="' + esc(existingSub.name) + '"' : '') + '>' +
-          (existingSub ? 'Zapisz zmiany' : 'Dodaj przedmiot') +
-        '</button>';
+      renderSubjectModalContent('new', editId);
     } else if (targetMode === 'homework') {
       var existingHw = editId ? state.homework.find(function(h) { return h.id === editId; }) : null;
       title.textContent = existingHw ? 'Edytuj zadanie domowe' : 'Nowe zadanie domowe';
@@ -761,7 +1083,7 @@ select.input-styled {
     }
   }
 
-  // 2. Bezpośrednie podpięcie głównych przycisków
+  // Podpięcie stałych przycisków
   $('themeBtn').addEventListener('click', toggleTheme);
   $('fabBtn').addEventListener('click', function() { openModal(); });
   $('closeModalBtn').addEventListener('click', closeModal);
@@ -773,6 +1095,34 @@ select.input-styled {
     if (e.target === $('mainModal')) closeModal();
   });
 
+  // Przyciski na pasku narzędzi Planu (Cofnij + Wyczyść cały plan)
+  $('undoPlanBtn').addEventListener('click', undoLastPlanChange);
+  $('clearPlanBtn').addEventListener('click', function() {
+    confirmAction(
+      'Wyczyścić cały plan zajęć?',
+      'Wszystkie przedmioty zostaną <b>wypisane z dni tygodnia</b>, ale <b>nie zostaną usunięte z bazy</b> (nadal będą w zakładce Przedmioty).<br><br>W razie pomyłki możesz od razu kliknąć <b>„↩️ Cofnij zmianę”</b>.',
+      'Wyczyść plan',
+      function() {
+        pushPlanSnapshot('Wyczyszczenie całego planu');
+        state.subjects.forEach(function(s) {
+          s.slots = [];
+          s.day = '';
+          s.time = '';
+          fbBridge.upsert('subjects', s.id, {
+            name: s.name,
+            lecturer: s.lecturer || '',
+            room: s.room || '',
+            slots: [],
+            day: '',
+            time: ''
+          });
+        });
+        renderAll();
+        toast('Wyczyszczono plan zajęć (przedmioty zostały w bazie)');
+      }
+    );
+  });
+
   var navButtons = document.querySelectorAll('.nav-tab');
   for (var i = 0; i < navButtons.length; i++) {
     navButtons[i].addEventListener('click', function() {
@@ -780,43 +1130,70 @@ select.input-styled {
     });
   }
 
-  // Renderowanie widoków
   function renderAll() {
     safeStore.set('sp_subjects', state.subjects);
     safeStore.set('sp_homework', state.homework);
     safeStore.set('sp_info', state.infoList);
+    updateToolbarState();
     renderPlan();
     renderHomework();
     renderSubjects();
     renderInfo();
   }
 
+  // 1. Renderowanie: PLAN ZAJĘĆ
   function renderPlan() {
     var c = $('plan-list');
-    var dni = ['Poniedziałek', 'Wtorek', 'Środa', 'Czwartek', 'Piątek'];
     var todayIdx = new Date().getDay();
 
-    c.innerHTML = dni.map(function(dzien, idx) {
+    c.innerHTML = DNI.map(function(dzien, idx) {
       var isToday = (idx + 1) === todayIdx;
-      var daySubjects = state.subjects
-        .filter(function(s) { return s.day === dzien; })
-        .sort(function(a, b) { return (a.time || '').localeCompare(b.time || ''); });
 
-      var rowsHtml = daySubjects.length ? daySubjects.map(function(s) {
-        var cancelledInfo = state.infoList.find(function(inf) { return inf.cancelled && inf.subject === s.name; });
+      // Zbieramy wszystkie terminy wszystkich przedmiotów przypadające na dany dzień
+      var dayEntries = [];
+      state.subjects.forEach(function(s) {
+        var slots = getSubjectSlots(s);
+        slots.forEach(function(sl) {
+          if (sl.day === dzien) {
+            dayEntries.push({
+              subId: s.id,
+              slotId: sl.slotId,
+              name: s.name,
+              lecturer: s.lecturer || '',
+              room: sl.room || s.room || '',
+              time: sl.time || ''
+            });
+          }
+        });
+      });
+
+      dayEntries.sort(function(a, b) {
+        return (a.time || '').localeCompare(b.time || '');
+      });
+
+      var rowsHtml = dayEntries.length ? dayEntries.map(function(entry) {
+        var cancelledInfo = state.infoList.find(function(inf) {
+          return inf.cancelled && inf.subject === entry.name;
+        });
+
         return (
-          '<div class="plan-row" style="cursor:pointer;" data-act="filter-hw" data-sub="' + esc(s.name) + '">' +
-            '<div>' +
-              (s.time ? '<span class="plan-time">⏰ ' + esc(s.time) + '</span>' : '') +
-              '<div style="font-weight:700;font-size:15px;' + (cancelledInfo ? 'text-decoration:line-through;color:var(--danger);' : '') + '">' + esc(s.name) + '</div>' +
+          '<div class="plan-row" style="cursor:pointer;" data-act="filter-hw" data-sub="' + esc(entry.name) + '">' +
+            '<div style="flex:1;">' +
+              (entry.time ? '<span class="plan-time">⏰ ' + esc(entry.time) + '</span>' : '') +
+              '<div style="font-weight:700;font-size:15px;' + (cancelledInfo ? 'text-decoration:line-through;color:var(--danger);' : '') + '">' +
+                esc(entry.name) +
+              '</div>' +
               '<div style="font-size:13px;color:var(--muted);margin-top:2px;">' +
-                '🚪 Sala: <b>' + esc(s.room || 'Brak') + '</b> &bull; 👩‍🏫 ' + esc(s.lecturer || 'Brak') +
+                '🚪 Sala: <b>' + esc(entry.room || 'Brak') + '</b> &bull; 👩‍🏫 ' + esc(entry.lecturer || 'Brak') +
               '</div>' +
               (cancelledInfo ? '<div style="font-size:12px;color:var(--danger);font-weight:600;margin-top:3px;">⚠️ Odwołane (' + esc(cancelledInfo.date || 'brak daty') + ')</div>' : '') +
             '</div>' +
-            '<span class="badge ' + (cancelledInfo ? 'badge-cancelled' : 'badge-progress') + '">' +
-              (cancelledInfo ? 'Odwołane' : 'Zajęcia') +
-            '</span>' +
+            '<div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px;">' +
+              (cancelledInfo ? '<span class="badge badge-cancelled">Odwołane</span>' : '') +
+              '<button type="button" class="btn-action warning" data-act="remove-slot-from-plan" data-subid="' + esc(entry.subId) + '" data-slotid="' + esc(entry.slotId) + '" title="Usuń z planu bez usuwania przedmiotu z bazy">' +
+                'Z planu &times;' +
+              '</button>' +
+            '</div>' +
           '</div>'
         );
       }).join('') : '<div style="font-size:13px;color:var(--muted);padding:4px 0;">Brak zaplanowanych zajęć 🌸</div>';
@@ -833,6 +1210,7 @@ select.input-styled {
     }).join('');
   }
 
+  // 2. Renderowanie: ZADANIA DOMOWE
   function renderHomework() {
     var c = $('homework-list');
     var banner = $('homework-filter-banner');
@@ -890,13 +1268,14 @@ select.input-styled {
     }).join('');
   }
 
+  // 3. Renderowanie: PRZEDMIOTY
   function renderSubjects() {
     var c = $('subjects-list');
     if (!state.subjects.length) {
       c.innerHTML =
         '<div class="empty-state">' +
           '<div class="big">📚</div>' +
-          '<div>Brak dodanych przedmiotów</div>' +
+          '<div>Brak dodanych przedmiotów w bazie</div>' +
           '<div class="hint">Kliknij przycisk „+” w prawym dolnym rogu, aby dodać pierwszy przedmiot</div>' +
         '</div>';
       return;
@@ -908,6 +1287,19 @@ select.input-styled {
 
     c.innerHTML = sorted.map(function(s) {
       var activeHwCount = state.homework.filter(function(h) { return h.subject === s.name && h.status !== 'done'; }).length;
+      var slots = getSubjectSlots(s);
+
+      var slotsHtml = slots.length ? (
+        '<div class="slot-pill-list">' +
+          slots.map(function(sl) {
+            return '<span class="slot-pill">📅 <b>' + esc(sl.day) + '</b>' +
+              (sl.time ? ' &bull; ' + esc(sl.time) : '') +
+              (sl.room ? ' (s. ' + esc(sl.room) + ')' : '') +
+            '</span>';
+          }).join('') +
+        '</div>'
+      ) : '<div style="margin-top:6px;"><span class="badge badge-muted">Poza planem (brak przypisanego dnia)</span></div>';
+
       return (
         '<div class="card" style="cursor:pointer;" data-act="filter-hw" data-sub="' + esc(s.name) + '">' +
           '<div class="card-header">' +
@@ -917,16 +1309,17 @@ select.input-styled {
                 (activeHwCount ? 'Aktywne zadania: ' + activeHwCount : 'Brak zaległych zadań') +
               '</span>' +
             '</div>' +
-            '<div style="display:flex;gap:6px;">' +
+            '<div style="display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end;">' +
               '<button type="button" class="btn-action" data-act="edit-sub" data-id="' + esc(s.id) + '">Edytuj</button>' +
-              '<button type="button" class="btn-action danger" data-act="del-sub" data-id="' + esc(s.id) + '">Usuń</button>' +
+              (slots.length ? '<button type="button" class="btn-action warning" data-act="clear-sub-plan" data-id="' + esc(s.id) + '">Wypisz z planu</button>' : '') +
+              '<button type="button" class="btn-action danger" data-act="del-sub" data-id="' + esc(s.id) + '">Usuń z bazy</button>' +
             '</div>' +
           '</div>' +
           '<div style="font-size:14px;color:var(--muted);line-height:1.6;margin-top:6px;">' +
-            '👩‍🏫 Wykładowca: <b style="color:var(--text);">' + esc(s.lecturer || 'Brak') + '</b><br>' +
-            '🚪 Sala: <b style="color:var(--text);">' + esc(s.room || 'Brak') + '</b><br>' +
-            '⏰ Termin: <b style="color:var(--text);">' + esc(s.day || 'Brak') + ', ' + esc(s.time || 'Brak godziny') + '</b>' +
+            '👩‍🏫 Wykładowca: <b style="color:var(--text);">' + esc(s.lecturer || 'Brak') + '</b> &bull; ' +
+            '🚪 Domyślna sala: <b style="color:var(--text);">' + esc(s.room || 'Brak') + '</b>' +
           '</div>' +
+          slotsHtml +
           '<div style="margin-top:10px;font-size:12px;color:var(--primary);font-weight:700;">' +
             'Kliknij kartę, aby zobaczyć powiązane zadania domowe →' +
           '</div>' +
@@ -935,6 +1328,7 @@ select.input-styled {
     }).join('');
   }
 
+  // 4. Renderowanie: INFORMACJE / ODWOŁANE
   function renderInfo() {
     var c = $('info-list');
     if (!state.infoList.length) {
@@ -973,7 +1367,7 @@ select.input-styled {
     }).join('');
   }
 
-  // Obsługa akcji na kartach i w formularzach
+  // Centralna obsługa kliknięć
   document.addEventListener('click', function(e) {
     var target = e.target.nodeType === 1 ? e.target : e.target.parentElement;
     if (!target) return;
@@ -982,12 +1376,124 @@ select.input-styled {
 
     var act = el.getAttribute('data-act');
 
-    if (act === 'filter-hw') {
+    // Przełącznik w modalu: Nowy przedmiot vs Dopisz istniejący do planu
+    if (act === 'modal-sub-mode') {
+      renderSubjectModalContent(el.getAttribute('data-mode'), null);
+    }
+    // Dodanie kolejnego wiersza (Dzień + Godzina + Sala) w modalu
+    else if (act === 'add-slot-row') {
+      var cont = $('slotsContainer');
+      if (cont) {
+        cont.insertAdjacentHTML('beforeend', createSlotRowHtml(null));
+        refreshEmptySlotsNotice();
+      }
+    }
+    // Usunięcie pojedynczego wiersza terminu w modalu
+    else if (act === 'remove-slot-row') {
+      var row = el.closest('.slot-editor-row');
+      if (row) {
+        row.remove();
+        refreshEmptySlotsNotice();
+      }
+    }
+    // Wyczyszczenie wszystkich terminów w modalu (przedmiot bez przypisanego dnia)
+    else if (act === 'clear-modal-slots') {
+      var sCont = $('slotsContainer');
+      if (sCont) {
+        sCont.innerHTML = '';
+        refreshEmptySlotsNotice();
+      }
+    }
+    // Dopisanie nowych dni/godzin do istniejącego już przedmiotu w bazie
+    else if (act === 'save-existing-to-plan') {
+      var subId = $('existingSubSelect').value;
+      var targetSub = state.subjects.find(function(s) { return s.id === subId; });
+      if (!targetSub) return toast('Wybierz przedmiot!');
+
+      var newSlots = collectSlotsFromModal(targetSub.room || '');
+      if (!newSlots.length) return toast('Dodaj przynajmniej jeden dzień/godzinę!');
+
+      pushPlanSnapshot('Dopisanie do planu: ' + targetSub.name);
+      var mergedSlots = getSubjectSlots(targetSub).concat(newSlots);
+      var updPayload = {
+        name: targetSub.name,
+        lecturer: targetSub.lecturer || '',
+        room: targetSub.room || '',
+        slots: mergedSlots,
+        day: mergedSlots.length ? mergedSlots[0].day : '',
+        time: mergedSlots.length ? mergedSlots[0].time : ''
+      };
+
+      var tIdx = state.subjects.findIndex(function(s) { return s.id === subId; });
+      state.subjects[tIdx] = Object.assign({ id: subId }, updPayload);
+      renderAll();
+      closeModal();
+      fbBridge.upsert('subjects', subId, updPayload);
+      toast('Dopisano terminy do planu!');
+    }
+
+    // Usunięcie pojedynczego terminu z Planu Zajęć BEZ usuwania przedmiotu z bazy
+    else if (act === 'remove-slot-from-plan') {
+      e.stopPropagation();
+      var rSubId = el.getAttribute('data-subid');
+      var rSlotId = el.getAttribute('data-slotid');
+      var subObj = state.subjects.find(function(s) { return s.id === rSubId; });
+      if (!subObj) return;
+
+      pushPlanSnapshot('Usunięcie z planu: ' + subObj.name);
+      var remainingSlots = getSubjectSlots(subObj).filter(function(sl) {
+        return sl.slotId !== rSlotId;
+      });
+
+      var updatedSub = {
+        name: subObj.name,
+        lecturer: subObj.lecturer || '',
+        room: subObj.room || '',
+        slots: remainingSlots,
+        day: remainingSlots.length ? remainingSlots[0].day : '',
+        time: remainingSlots.length ? remainingSlots[0].time : ''
+      };
+
+      var sIdx = state.subjects.findIndex(function(s) { return s.id === rSubId; });
+      state.subjects[sIdx] = Object.assign({ id: rSubId }, updatedSub);
+      renderAll();
+      fbBridge.upsert('subjects', rSubId, updatedSub);
+      toast('Usunięto z planu (przedmiot został w bazie)');
+    }
+
+    // Wypisanie przedmiotu ze wszystkich dni w planie (z poziomu zakładki Przedmioty)
+    else if (act === 'clear-sub-plan') {
+      e.stopPropagation();
+      var cSubId = el.getAttribute('data-id');
+      var cSub = state.subjects.find(function(s) { return s.id === cSubId; });
+      if (!cSub) return;
+
+      pushPlanSnapshot('Wypisanie z planu: ' + cSub.name);
+      var clearedPayload = {
+        name: cSub.name,
+        lecturer: cSub.lecturer || '',
+        room: cSub.room || '',
+        slots: [],
+        day: '',
+        time: ''
+      };
+
+      var cIdx = state.subjects.findIndex(function(s) { return s.id === cSubId; });
+      state.subjects[cIdx] = Object.assign({ id: cSubId }, clearedPayload);
+      renderAll();
+      fbBridge.upsert('subjects', cSubId, clearedPayload);
+      toast('Wypisano z planu (przedmiot został w bazie)');
+    }
+
+    // Wkliknięcie się w przedmiot -> pokazuje zadania domowe
+    else if (act === 'filter-hw') {
       state.homeworkFilterSubject = el.getAttribute('data-sub');
       renderHomework();
       switchTab('homework');
       toast('Zadania: ' + state.homeworkFilterSubject);
     }
+
+    // Edycja / Zapis / Usunięcie przedmiotu z bazy
     else if (act === 'edit-sub') {
       e.stopPropagation();
       openModal('subjects', el.getAttribute('data-id'));
@@ -996,12 +1502,18 @@ select.input-styled {
       var name = $('subName').value.trim();
       if (!name) return toast('Podaj nazwę przedmiotu!');
       var id = el.getAttribute('data-id') || uid();
+      var defaultRoom = $('subRoom').value.trim();
+      var collectedSlots = collectSlotsFromModal(defaultRoom);
+
+      pushPlanSnapshot(el.getAttribute('data-id') ? ('Edycja: ' + name) : ('Dodanie: ' + name));
+
       var payload = {
         name: name,
         lecturer: $('subLecturer').value.trim(),
-        room: $('subRoom').value.trim(),
-        time: $('subTime').value.trim(),
-        day: $('subDay').value
+        room: defaultRoom,
+        slots: collectedSlots,
+        day: collectedSlots.length ? collectedSlots[0].day : '',
+        time: collectedSlots.length ? collectedSlots[0].time : ''
       };
 
       var idx = state.subjects.findIndex(function(s) { return s.id === id; });
@@ -1026,7 +1538,7 @@ select.input-styled {
         toast('Zaktualizowano przedmiot!');
       } else {
         state.subjects.push(Object.assign({ id: id }, payload));
-        toast('Dodano przedmiot!');
+        toast(collectedSlots.length ? 'Dodano przedmiot i przypisano do planu!' : 'Dodano przedmiot (bez przypisanego dnia)!');
       }
 
       renderAll();
@@ -1035,15 +1547,23 @@ select.input-styled {
     }
     else if (act === 'del-sub') {
       e.stopPropagation();
-      var subId = el.getAttribute('data-id');
-      var subItem = state.subjects.find(function(s) { return s.id === subId; });
-      confirmDelete(subItem ? subItem.name : 'przedmiot', function() {
-        state.subjects = state.subjects.filter(function(s) { return s.id !== subId; });
-        renderAll();
-        toast('Usunięto przedmiot');
-        fbBridge.remove('subjects', subId);
-      });
+      var subIdToDel = el.getAttribute('data-id');
+      var subItem = state.subjects.find(function(s) { return s.id === subIdToDel; });
+      confirmAction(
+        'Usunąć całkowicie z bazy?',
+        'Czy na pewno chcesz trwale usunąć przedmiot <b>' + esc(subItem ? subItem.name : '') + '</b> z bazy?<br><br><span style="font-size:13px;color:var(--muted);">Jeśli chcesz tylko usunąć go z rozkładu dnia, użyj przycisku „Wypisz z planu”.</span>',
+        'Usuń z bazy',
+        function() {
+          pushPlanSnapshot('Usunięcie przedmiotu: ' + (subItem ? subItem.name : ''));
+          state.subjects = state.subjects.filter(function(s) { return s.id !== subIdToDel; });
+          renderAll();
+          toast('Usunięto przedmiot z bazy');
+          fbBridge.remove('subjects', subIdToDel);
+        }
+      );
     }
+
+    // ZADANIA DOMOWE
     else if (act === 'edit-hw') {
       openModal('homework', el.getAttribute('data-id'));
     }
@@ -1096,13 +1616,20 @@ select.input-styled {
     else if (act === 'del-hw') {
       var delHwId = el.getAttribute('data-id');
       var delHwItem = state.homework.find(function(h) { return h.id === delHwId; });
-      confirmDelete(delHwItem ? delHwItem.title : 'zadanie domowe', function() {
-        state.homework = state.homework.filter(function(h) { return h.id !== delHwId; });
-        renderAll();
-        toast('Usunięto zadanie');
-        fbBridge.remove('homework', delHwId);
-      });
+      confirmAction(
+        'Usunąć zadanie?',
+        'Czy na pewno chcesz usunąć zadanie: <b>' + esc(delHwItem ? delHwItem.title : '') + '</b>?',
+        'Usuń',
+        function() {
+          state.homework = state.homework.filter(function(h) { return h.id !== delHwId; });
+          renderAll();
+          toast('Usunięto zadanie');
+          fbBridge.remove('homework', delHwId);
+        }
+      );
     }
+
+    // INFORMACJE / ODWOŁANE
     else if (act === 'edit-info') {
       openModal('info', el.getAttribute('data-id'));
     }
@@ -1137,19 +1664,22 @@ select.input-styled {
     else if (act === 'del-info') {
       var delInfoId = el.getAttribute('data-id');
       var delInfoItem = state.infoList.find(function(i) { return i.id === delInfoId; });
-      confirmDelete(delInfoItem ? delInfoItem.title : 'komunikat', function() {
-        state.infoList = state.infoList.filter(function(i) { return i.id !== delInfoId; });
-        renderAll();
-        toast('Usunięto komunikat');
-        fbBridge.remove('info', delInfoId);
-      });
+      confirmAction(
+        'Usunąć komunikat?',
+        'Czy na pewno chcesz usunąć komunikat: <b>' + esc(delInfoItem ? delInfoItem.title : '') + '</b>?',
+        'Usuń',
+        function() {
+          state.infoList = state.infoList.filter(function(i) { return i.id !== delInfoId; });
+          renderAll();
+          toast('Usunięto komunikat');
+          fbBridge.remove('info', delInfoId);
+        }
+      );
     }
   });
 
-  // Pierwsze wyrenderowanie na starcie
   renderAll();
 
-  // Udostępnienie uchwytów dla modułu Firebase
   window.__studyPlanner = {
     state: state,
     renderAll: renderAll,
@@ -1195,7 +1725,7 @@ if (sp) {
         } catch (err) {
           console.error("Błąd zapisu Firestore:", err);
           if (statusEl) statusEl.textContent = '⚠️ Błąd zapisu FB';
-          sp.toast('Zapisano lokalnie (sprawdź reguły Firestore w konsoli)');
+          sp.toast('Zapisano lokalnie (sprawdź reguły Firestore)');
         }
       },
       async remove(colName, id) {
